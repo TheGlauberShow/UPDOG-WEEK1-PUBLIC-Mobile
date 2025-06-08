@@ -30,7 +30,7 @@
 	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" vsync="false"/>
 
 	<!--Mobile-specific-->
-	<window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0" resizable="false"/>
+	<window if="mobile" orientation="landscape" fullscreen="true" resizable="false" allow-shaders="true" require-shaders="true" allow-high-dpi="true"/>
 
 	<!--Switch-specific-->
 	<window if="switch" orientation="landscape" fullscreen="true" width="0" height="0" resizable="true" />
@@ -38,7 +38,7 @@
 	<!-- _____________________________ Path Settings ____________________________ -->
 
 	<!-- Use project assets folder instead of the build one if on a debug build. -->
-	<define name="ASSET_REDIRECT" if="debug"/>
+	<define name="ASSET_REDIRECT" if="desktop"/>
 
 	<!--<define name="RELEASE_BUILD"/>-->
 
@@ -50,15 +50,16 @@
 	<classpath name="source" />
 	
 	<!-- PSYCH ENGINE CUSTOMIZATION -->
-	<define name="MODS_ALLOWED" if="desktop" />
-	<define name="LUA_ALLOWED" if="desktop" />
+	<define name="MODS_ALLOWED" if="desktop || android" />
+	<define name="LUA_ALLOWED" if="desktop || android" />
 	<define name="VIDEOS_ALLOWED" if="cpp" />
-	<define name="DISCORD_ALLOWED" if="cpp"/>
+	<define name="DISCORD_ALLOWED" if="desktop"/>
 
-	<assets path='assets/embeds' 		rename='assets'			embed="true" />
-	<assets path="assets/embeds/songs" rename= "assets/songs" library="songs" embed="true"/>
+	<assets path='assets/embeds' 		rename='assets'			embed="false" />
 
-
+                        <!-- Mobile Controls Images -->
+    <assets path="assets/shared/images/mobileControls" include="*.png" if="mobile"/>
+    <assets path="assets/shared/images/mobileControls" include="*.txt" if="mobile"/>
 
 	<assets path="assets/fonts" />
 	<assets path="assets/shared"        exclude="*.ogg" 		if="web"/>
@@ -108,12 +109,12 @@
 
 	<!-- ______________________________ Haxedefines _____________________________ -->
 
-	<haxedef name="CRASH_HANDLER" if="desktop release"/>
+	<haxedef name="CRASH_HANDLER"/>
 
 	<haxedef name="HXCPP_CHECK_POINTER" if="CRASH_HANDLER" />
 	<haxedef name="HXCPP_STACK_LINE" if="CRASH_HANDLER" />
 	<haxedef name="HXCPP_STACK_TRACE" if="CRASH_HANDLER" />
-
+	<haxedef name="HXCPP_CATCH_SEGV" if="CRASH_HANDLER" />
 	
 	<!-- <define name="DISABLE_TRACES" if="desktop release"/> -->
 
@@ -159,6 +160,13 @@
 	<!--<haxedef name="FLX_NO_SOUND_SYSTEM" />-->
 
 	<!--Disable the Flixel core focus lost screen-->
+
+	<haxelib name="hxcpp-debug-server" if="debug"/>
+
+  	<haxedef name="loop_unroll_max_cost" value="25" />
+  	<haxedef name="DISABLED_MACRO_SUPERLATIVE" if="mobile" />
+
+	<certificate path="key.keystore" password="sourcingurpassword" alias="sourcingurkey" alias-password="sourcingurpassword" if="android" unless="debug" />
 	
 	<!-- _________________________________ Custom _______________________________ -->
 

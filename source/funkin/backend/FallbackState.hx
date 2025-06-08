@@ -39,11 +39,14 @@ class FallbackState extends MusicBeatState
         text.screenCenter(Y);
 
 
-        var text = new FlxText(0,FlxG.height - 25 - 32,FlxG.width,'Press Confirm to continue.',32);
+        var text = new FlxText(0,FlxG.height - 25 - 32,FlxG.width,'Press "A" button to continue.',32);
 		text.setFormat(Paths.font('vcr.ttf'), 32, FlxColor.WHITE, CENTER, OUTLINE, FlxColor.BLACK);
         add(text);
 
         super.create();
+        #if mobile
+		addVirtualPad(NONE,A); // Just the A button
+		#end
     }
 
     override function update(elapsed:Float) 
@@ -53,7 +56,9 @@ class FallbackState extends MusicBeatState
         if (controls.ACCEPT) 
         {
             persistentUpdate = false;
-            continueCallback();
+            // continueCallback(); // Commented for now, as it is not used in the original code
+            FlxG.sound.play(Paths.sound('confirmMenu'), 1); // Play confirmation sound
+            FlxG.switchState(new TitleState()); // Switch to title state
         }
     }
 
