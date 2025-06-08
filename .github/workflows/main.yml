@@ -1,9 +1,9 @@
 name: Android No Release
 on: 
   push:
-    branches: [ "titlestatefixedtest123" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "titlestatefixedtest123" ]
+    branches: [ "main" ]
 
   workflow_dispatch:
 
