@@ -9,6 +9,7 @@ import openfl.display.Sprite;
 import openfl.display.StageScaleMode;
 import lime.system.System as LimeSystem;
 import mobile.states.LoadingScreen;
+import Splash;
 
 class Main extends Sprite
 {
@@ -42,7 +43,7 @@ class Main extends Sprite
 	{
 		super();
 
-		LoadingState.nextState = Splash;
+		LoadingScreen.nextState = Splash;
 		ClientPrefs.loadDefaultKeys();
 
 		final game = new
