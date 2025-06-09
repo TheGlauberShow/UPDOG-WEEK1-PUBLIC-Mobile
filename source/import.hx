@@ -38,6 +38,7 @@ import funkin.backend.MusicBeatState;
 import mobile.flixel.FlxHitbox;
 import mobile.flixel.FlxVirtualPad;
 import mobile.flixel.input.FlxMobileInputID;
+import mobile.states.LoadingScreen;
 
 using StringTools;
 #end
