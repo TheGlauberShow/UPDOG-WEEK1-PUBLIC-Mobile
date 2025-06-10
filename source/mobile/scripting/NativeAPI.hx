@@ -5,6 +5,12 @@ import flixel.util.typeLimit.OneOfThree;
 import flixel.util.FlxColor;
 import flixel.FlxState;
 
+/*
+ * Example:
+ * `NativeAPI.showMessageBox("File Error", "An error occurred during state creation:\n" + Std.string(e));`
+ * author: GXDLOLOLOLOLOLXD2
+ */
+
 /**
  * Funções nativas multiplataforma (mobile e desktop).
  */

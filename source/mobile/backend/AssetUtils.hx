@@ -42,6 +42,7 @@ class AssetUtils
      */
     public static function assetExists(id:String, ?type:AssetType):Bool
     {
+        //NativeAPI.showMessageBox("Asset Exists", "Checking if asset '${id}' exists: ${Assets.exists(id, type)}");
         return Assets.exists(id, type);
     }
 
@@ -59,7 +60,7 @@ class AssetUtils
         try {
             return Assets.getBitmapData(id);
         } catch (e:Dynamic) {
-            trace('Erro ao carregar imagem "${id}": ${e}');
+            trace('Error in load image "${id}": ${e}');
             return null; // Retorna null em caso de erro
         }
     }
@@ -78,7 +79,7 @@ class AssetUtils
         try {
             return Assets.getSound(id);
         } catch (e:Dynamic) {
-            trace('Erro ao carregar som "${id}": ${e}');
+            trace('Error in load sound "${id}": ${e}');
             return null;
         }
     }
@@ -97,7 +98,7 @@ class AssetUtils
         try {
             return Assets.getFont(id);
         } catch (e:Dynamic) {
-            trace('Erro ao carregar fonte "${id}": ${e}');
+            trace('Error in load font "${id}": ${e}');
             return null;
         }
     }
@@ -115,7 +116,7 @@ class AssetUtils
         try {
             return Assets.getText(id);
         } catch (e:Dynamic) {
-            trace('Erro ao carregar texto "${id}": ${e}');
+            trace('Error in load text "${id}": ${e}');
             return null;
         }
     }
@@ -133,7 +134,7 @@ class AssetUtils
         try {
             return Assets.getBytes(id);
         } catch (e:Dynamic) {
-            trace('Erro ao carregar bytes "${id}": ${e}');
+            trace('Error in load bytes "${id}": ${e}');
             return null;
         }
     }
