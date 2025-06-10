@@ -6,6 +6,7 @@ import openfl.display.BitmapData;
 import openfl.media.Sound;
 import openfl.text.Font;
 import openfl.utils.ByteArray;
+import haxe.concurrent.Future;
 
 /**
  * `AssetUtils` é uma classe utilitária estática que fornece métodos convenientes
@@ -160,7 +161,7 @@ class AssetUtils
      * @param id O identificador do asset da imagem.
      * @return Um Future<BitmapData>.
      */
-    public static function loadBitmapAsync(id:String):haxe.Public.Future<BitmapData>
+    public static function loadBitmapAsync(id:String):Future<BitmapData>
     {
         return Assets.loadBitmapData(id);
     }
@@ -170,7 +171,7 @@ class AssetUtils
      * @param id O identificador do asset de som.
      * @return Um Future<Sound>.
      */
-    public static function loadSoundAsync(id:String):haxe.Public.Future<Sound>
+    public static function loadSoundAsync(id:String):Future<Sound>
     {
         return Assets.loadSound(id);
     }
@@ -180,7 +181,7 @@ class AssetUtils
      * @param id O identificador do asset de texto.
      * @return Um Future<String>.
      */
-    public static function loadTextAsync(id:String):haxe.Public.Future<String>
+    public static function loadTextAsync(id:String):Future<String>
     {
         return Assets.loadText(id);
     }
@@ -190,7 +191,7 @@ class AssetUtils
      * @param id O identificador do asset.
      * @return Um Future<ByteArray>.
      */
-    public static function loadBytesAsync(id:String):haxe.Public.Future<ByteArray>
+    public static function loadBytesAsync(id:String):Future<ByteArray>
     {
         return Assets.loadBytes(id);
     }

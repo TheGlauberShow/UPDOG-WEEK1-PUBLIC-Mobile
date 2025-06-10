@@ -243,7 +243,7 @@ class Paths
 	    try { // by me (just testing, I'm learning)
 		    var file:String = getPath('videos/$key.$VIDEO_EXT', AssetType.BINARY);
 		    #if MODS_ALLOWED
-		    var modfile:String = modVideo(key);
+		    var modfile:String = modsVideo(key);
 		    if (modfile != null && FileSystem.exists(modfile))
 		    {
 		    	return modfile;
@@ -319,7 +319,7 @@ class Paths
 
 	    // Error handling
 	    trace('Error: atlas not found for "$key" in any path ($finalPath)');
-	    NativeAPI.showMessageBox("Path Error", "The texture atlas \"" + key + "\" could not be found. Please check if the \".atlas\" file is present in the mods or assets folder.\n" + Std.string(e));
+	    NativeAPI.showMessageBox("Path Error", "The texture atlas \"" + key + "\" could not be found. Please check if the \".atlas\" file is present in the mods or assets folder.");
 
 	    return null;
 	}
@@ -337,7 +337,7 @@ class Paths
         }
 
         #if MODS_ALLOWED
-        var soundmod:String = modsSounds(key);
+        var soundmod:String = modsSounds("sounds", key);
         if (FileSystem.exists(soundmod))
         {
             if (!currentTrackedSounds.exists(soundmod))
@@ -453,9 +453,7 @@ class Paths
     }
 
 	static function listOggFilesInSongs():Array<String> {
-        var assetsSongs = mobile.backend.AssetUtils.listAssets.filter(path ->
-            path.startsWith("assets/songs") && path.endsWith(".ogg")
-        );
+        var assetsSongs = [for (path in mobile.backend.AssetUtils.listAssets()) if (path.startsWith("assets/songs") && path.endsWith(".ogg")) path];
         var contentSongs = mobile.backend.AssetUtils.listAssets.filter(path ->
             path.startsWith("content/songs") && path.endsWith(".ogg")
         );
@@ -499,7 +497,7 @@ class Paths
         }
 
         trace('Asset not found: $relPath');
-        NativeAPI.showMessageBox("Path Error", "The asset \"" + relPath + "\" could not be found. Please check the file path or ensure the asset exists in the assets or mods folder.\n" + Std.string(e));
+        NativeAPI.showMessageBox("Path Error", "The asset \"" + relPath + "\" could not be found. Please check the file path or ensure the asset exists in the assets or mods folder.");
         return null;
     }
 
@@ -550,7 +548,7 @@ class Paths
 			return mobile.backend.AssetUtils.getText(getPath(key));
 		}
 		trace('Text file ($key) not found');
-		NativeAPI.showMessageBox("Path Error", "The text file \"" + key + "\" could not be found. Please check the file path or ensure the text file exists in the assets or mods folder.\n" + Std.string(e));
+		NativeAPI.showMessageBox("Path Error", "The text file \"" + key + "\" could not be found. Please check the file path or ensure the text file exists in the assets or mods folder.");
 		return '';
 	}
 	
@@ -570,11 +568,11 @@ class Paths
             return fallback;
 
 		trace('Font file ($key) not found');
-		NativeAPI.showMessageBox("Path Error", "The font file \"" + key + "\" could not be found. Please check the file path or ensure the font file exists in the assets or mods folder.\n" + Std.string(e));
+		NativeAPI.showMessageBox("Path Error", "The font file \"" + key + "\" could not be found. Please check the file path or ensure the font file exists in the assets or mods folder.");
 	    return '$CORE_DIRECTORY/fonts/$key';
 	}
 	
-	inline static public function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String)
+	static public function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String)
 	{
 		#if MODS_ALLOWED
 		if (FileSystem.exists(mods(currentModDirectory + '/' + key)) || FileSystem.exists(mods(key)))
@@ -662,7 +660,7 @@ class Paths
 
         if (bitmap == null)
         {
-            var assetPath:String = findAsset('images/$key.png', IMAGE);
+            var assetPath:String = findAsset('images/$key.png');
             if (assetPath != null)
             {
                 file = assetPath;
@@ -678,7 +676,7 @@ class Paths
         }
 
         trace('oh no its returning null NOOOO ($file)');
-		NativeAPI.showMessageBox("Path Error", "The image \"" + key + "\" could not be found. Please check the file path or ensure the image exists in the assets or mods folder.\n" + Std.string(e));
+		NativeAPI.showMessageBox("Path Error", "The image \"" + key + "\" could not be found. Please check the file path or ensure the image exists in the assets or mods folder.");
         return null;
     }
 
@@ -768,7 +766,7 @@ class Paths
         }
 
         trace('returnSound: not possible to find "$key" in any valid location.');
-        NativeAPI.showMessageBox("Path Error", "The sound \"" + key + "\" could not be found. Please check the file path or ensure the sound file exists in the assets or mods folder.\n" + Std.string(e));
+        NativeAPI.showMessageBox("Path Error", "The sound \"" + key + "\" could not be found. Please check the file path or ensure the sound file exists in the assets or mods folder.");
         return null;
     }
 	
