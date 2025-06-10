@@ -454,31 +454,31 @@ class Paths
 
 	static function listOggFilesInSongs():Array<String> {
         var assetsSongs = [for (path in mobile.backend.AssetUtils.listAssets()) if (path.startsWith("assets/songs") && path.endsWith(".ogg")) path];
-        var contentSongs = mobile.backend.AssetUtils.listAssets.filter(path ->
-            path.startsWith("content/songs") && path.endsWith(".ogg")
-        );
+        var contentSongs = [for (path in mobile.backend.AssetUtils.listAssets()) if (path.startsWith("content/songs") && path.endsWith(".ogg")) path];
         return assetsSongs.concat(contentSongs);
     }
-	
-	inline static public function modsShaderFragment(key:String, ?library:String):Null<String>
+
+    static public function modsShaderFragment(key:String, ?library:String):Null<String>
     {
         return findAsset('shaders/$key.frag');
     }
 
-    inline static public function modsShaderVertex(key:String, ?library:String):Null<String>
+    static public function modsShaderVertex(key:String, ?library:String):Null<String>
     {
         return findAsset('shaders/$key.vert');
     }
-	
-	inline static public function image(key:String, ?library:String):FlxGraphic
+
+    static public function image(key:String, ?library:String):FlxGraphic
     {
         var path = findAsset('images/$key.png');
-        if (path != null)
-            return FlxGraphic.fromFile(path);
+        if (path != null) {
+            var bitmap = BitmapData.fromFile(path);
+            return FlxGraphic.fromBitmapData(bitmap, false, path);
+        }
         return returnGraphic(key, library); // default fallback
     }
 
-	inline static function findAsset(relPath:String):Null<String>
+    static function findAsset(relPath:String):Null<String>
     {
         var paths = [
             'assets/' + relPath,
@@ -501,7 +501,7 @@ class Paths
         return null;
     }
 
-	static function tryPaths(base:String, paths:Array<String>):Null<String>
+    /*static function tryPaths(base:String, paths:Array<String>):Null<String>
     {
 		// example call: var shaderPath = tryPaths('shaders/' + key + '.frag', ['assets/', 'assets/shared/', 'content/']);
         for (p in paths)
@@ -550,16 +550,16 @@ class Paths
 		trace('Text file ($key) not found');
 		NativeAPI.showMessageBox("Path Error", "The text file \"" + key + "\" could not be found. Please check the file path or ensure the text file exists in the assets or mods folder.");
 		return '';
-	}
-	
-	inline static public function font(key:String):Null<String>
+	}*/
+
+    static public function font(key:String):Null<String>
     {
         #if MODS_ALLOWED
         var file:String = modsFont(key);
         if (FileSystem.exists(file)) return file;
         #end
 
-        var assetPath:String = findAsset('fonts/$key.ttf', AssetType.FONT);
+        var assetPath:String = findAsset('fonts/$key.ttf');
         if (assetPath != null) return assetPath;
 
         var fallback:String = getPath('fonts/$key.ttf', AssetType.FONT);
@@ -567,32 +567,32 @@ class Paths
             OpenFlAssets.exists(fallback, AssetType.FONT))
             return fallback;
 
-		trace('Font file ($key) not found');
-		NativeAPI.showMessageBox("Path Error", "The font file \"" + key + "\" could not be found. Please check the file path or ensure the font file exists in the assets or mods folder.");
-	    return '$CORE_DIRECTORY/fonts/$key';
-	}
-	
-	static public function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String)
-	{
-		#if MODS_ALLOWED
-		if (FileSystem.exists(mods(currentModDirectory + '/' + key)) || FileSystem.exists(mods(key)))
-		{
-			return true;
-		}
-		#end
-		
-		if (OpenFlAssets.exists(getPath(key, type)))
-		{
-			return true;
-		}
-		else if (Assets.exists(getPath(key, type)))
-		{
-			return true;
-		}
-		return false;
-	}
-	
-	inline static public function getSparrowAtlas(key:String, ?library:String):FlxAtlasFrames
+        trace('Font file ($key) not found');
+        NativeAPI.showMessageBox("Path Error", "The font file \"" + key + "\" could not be found. Please check the file path or ensure the font file exists in the assets or mods folder.");
+        return '$CORE_DIRECTORY/fonts/$key';
+    }
+
+    static public function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String)
+    {
+        #if MODS_ALLOWED
+        if (FileSystem.exists(mods(currentModDirectory + '/' + key)) || FileSystem.exists(mods(key)))
+        {
+            return true;
+        }
+        #end
+
+        if (OpenFlAssets.exists(getPath(key, type)))
+        {
+            return true;
+        }
+        else if (Assets.exists(getPath(key, type)))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    inline static public function getSparrowAtlas(key:String, ?library:String):FlxAtlasFrames
     {
         #if MODS_ALLOWED
         var imageLoaded:FlxGraphic = returnGraphic(key);
@@ -742,7 +742,7 @@ class Paths
 
         // try searching in the default folders
         var soundRelPath:String = (path != null ? '$path/' : '') + '$key.$SOUND_EXT';
-        var fullPath:String = findAsset(soundRelPath, SOUND);
+        var fullPath:String = findAsset(soundRelPath);
         if (fullPath != null)
         {
             if (!currentTrackedSounds.exists(fullPath))
