@@ -196,5 +196,5 @@ class AssetUtils
     /*public static function loadBytesAsync(id:String):Future<ByteArray>
     {
         return Assets.loadBytes(id);
-    }
+    }*/
 }
