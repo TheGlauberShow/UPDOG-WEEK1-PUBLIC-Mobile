@@ -163,63 +163,68 @@ class Paths
 		return if (library == "shared") getSharedPath(file); else getLibraryPathForce(file, library);
 	}
 	
-	inline static function getLibraryPathForce(file:String, library:String)
+	static function getLibraryPathForce(file:String, library:String)
 	{
 		var returnPath = '$library:assets/$library/$file';
 		return returnPath;
 	}
 	
-	inline public static function getSharedPath(file:String = '')
+	public static function getSharedPath(file:String = '')
 	{
 		return '$CORE_DIRECTORY/shared/$file';
 	}
 	
-	inline static public function file(file:String, type:AssetType = TEXT, ?library:String)
+	static public function file(file:String, type:AssetType = TEXT, ?library:String)
 	{
 		return getPath(file, type, library);
 	}
 	
-	inline static public function txt(key:String, ?library:String)
+	static public function txt(key:String, ?library:String)
 	{
 		return getPath('data/$key.txt', TEXT, library);
 	}
 	
-	inline static public function xml(key:String, ?library:String)
+	static public function xml(key:String, ?library:String)
 	{
 		return getPath('data/$key.xml', TEXT, library);
 	}
 	
-	inline static public function json(key:String, ?library:String)
-	{
-		return getPath('songs/$key.json', TEXT, library);
+	static public function json(key:String, ?library:String)
+	{ // test build
+        /*var jsonfile = findAsset('songs/key.json')
+        for (json in jsonfile)
+            (mobile.backend.AssetUtils.assetExists('songs/$key.json'))
+            jsonfile.push('songs/$key.json');
+        else*/
+	    return getPath('songs/$key.json', TEXT, library);
 	}
 	
-	inline static public function noteskin(key:String, ?library:String)
+	static public function noteskin(key:String, ?library:String)
 	{
 		return getPath('noteskins/$key.json', TEXT, library);
 	}
 	
-	inline static public function modsNoteskin(key:String)
+	static public function modsNoteskin(key:String)
 	{
 		return modFolders('noteskins/$key.json');
 	}
 	
-	inline static public function shaderFragment(key:String, ?library:String)
+	static public function shaderFragment(key:String, ?library:String)
 	{
 		return getPath('shaders/$key.frag', TEXT, library);
 	}
 	
-	inline static public function shaderVertex(key:String, ?library:String)
+	static public function shaderVertex(key:String, ?library:String)
 	{
 		return getPath('shaders/$key.vert', TEXT, library);
 	}
 	
-	inline static public function lua(key:String, ?library:String)
+	static public function lua(key:String, ?library:String)
 	{
 		return getPath('$key.lua', TEXT, library);
 	}
 	
-	inline static public function getContent(asset:String):Null<String>
+	static public function getContent(asset:String):Null<String>
 	{
 		#if sys
 		if (FileSystem.exists(asset)) return File.getContent(asset);
@@ -264,7 +269,7 @@ class Paths
 		}
 	}
 	
-	inline static public function modTextureAtlas(key:String)
+	static public function modTextureAtlas(key:String)
 	{
 		try {
 	    	#if MODS_ALLOWED // by me :P (im learning)
@@ -372,18 +377,18 @@ class Paths
         return sound;
     }
 	
-	inline static public function soundRandom(key:String, min:Int, max:Int, ?library:String)
+	static public function soundRandom(key:String, min:Int, max:Int, ?library:String)
 	{
 		return sound(key + FlxG.random.int(min, max), library);
 	}
 	
-	inline static public function music(key:String, ?library:String):Sound
+	static public function music(key:String, ?library:String):Sound
 	{
 		var file:Sound = returnSound('music', key, library);
 		return file;
 	}
 	
-	inline static public function voices(song:String, ?postFix:String):Null<openfl.media.Sound>
+	static public function voices(song:String, ?postFix:String):Null<openfl.media.Sound>
     {
         var songPath = formatToSongPath(song);
         var baseName = 'Voices';
@@ -427,7 +432,7 @@ class Paths
         return returnSound(null, soundKey, 'songs');
     }
 
-	inline static public function inst(song:String):Null<openfl.media.Sound>
+	static public function inst(song:String):Null<openfl.media.Sound>
     {
 		// I'm learning :)
         var songPath = formatToSongPath(song); // ex: "mymusic"
@@ -501,7 +506,7 @@ class Paths
         return null;
     }
 
-    /*static function tryPaths(base:String, paths:Array<String>):Null<String>
+    static function tryPaths(base:String, paths:Array<String>):Null<String>
     {
 		// example call: var shaderPath = tryPaths('shaders/' + key + '.frag', ['assets/', 'assets/shared/', 'content/']);
         for (p in paths)
@@ -550,7 +555,7 @@ class Paths
 		trace('Text file ($key) not found');
 		NativeAPI.showMessageBox("Path Error", "The text file \"" + key + "\" could not be found. Please check the file path or ensure the text file exists in the assets or mods folder.");
 		return '';
-	}*/
+	}
 
     static public function font(key:String):Null<String>
     {
@@ -591,8 +596,8 @@ class Paths
         }
         return false;
     }
-
-    inline static public function getSparrowAtlas(key:String, ?library:String):FlxAtlasFrames
+//inline 
+    static public function getSparrowAtlas(key:String, ?library:String):FlxAtlasFrames
     {
         #if MODS_ALLOWED
         var imageLoaded:FlxGraphic = returnGraphic(key);
@@ -608,8 +613,8 @@ class Paths
         );
         #end
     }
-	
-	inline static public function getPackerAtlas(key:String, ?library:String)
+	//inline 
+	static public function getPackerAtlas(key:String, ?library:String)
     {
         #if MODS_ALLOWED
         var imageLoaded:FlxGraphic = returnGraphic(key);
@@ -626,7 +631,7 @@ class Paths
         #end
     }
 	
-	inline static public function formatToSongPath(path:String)
+	static public function formatToSongPath(path:String)//inline
 	{
 		return path.toLowerCase().replace(' ', '-'); // example: formatToSongPath("Ugh Oh") make this way: assets/songs/ugh-oh/Inst.ogg, Voices.ogg, or others
 	}
@@ -769,8 +774,8 @@ class Paths
         NativeAPI.showMessageBox("Path Error", "The sound \"" + key + "\" could not be found. Please check the file path or ensure the sound file exists in the assets or mods folder.");
         return null;
     }
-	
-	inline public static function strip(path:String) return path.indexOf(':') != -1 ? path.substr(path.indexOf(':') + 1, path.length) : path;
+	//inline 
+	public static function strip(path:String) return path.indexOf(':') != -1 ? path.substr(path.indexOf(':') + 1, path.length) : path;
 	
 	#if MODS_ALLOWED
     inline static public function mods(key:String = ""):String

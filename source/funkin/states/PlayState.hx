@@ -1616,8 +1616,12 @@ class PlayState extends MusicBeatState
 		if (SONG.needsVoices)
 		{
 			var playerSound = Paths.voices(PlayState.SONG.song, 'player');
-			vocals.addPlayerVocals(new FlxSound().loadEmbedded(playerSound ?? Paths.voices(PlayState.SONG.song)));
-			
+			if (playerSound == null) playerSound = Paths.voices(PlayState.SONG.song);
+			if (playerSound != null)
+                vocals.addPlayerVocals(new FlxSound().loadEmbedded(playerSound));
+            else
+                trace('PlayState WARNING: No player vocals found for ' + PlayState.SONG.song);
+
 			var opponentSound = Paths.voices(PlayState.SONG.song, 'opp');
 			if (opponentSound != null)
 			{
@@ -1670,7 +1674,7 @@ class PlayState extends MusicBeatState
 			{
 				if (doPush) break;
 				var baseFile = '$baseScriptFile.$ext';
-				var files = [#if MODS_ALLOWED Paths.modFolders(baseFile), #end Paths.getSharedPath(baseFile)];
+				var files = [#if MODS_ALLOWED Paths.modFolders(baseFile), #end Paths.getSharedPath(baseFile), Paths.findAsset(baseFile)];
 				for (file in files)
 				{
 					if (FileSystem.exists(file))
@@ -1717,7 +1721,7 @@ class PlayState extends MusicBeatState
 			{
 				if (doPush) break;
 				var baseFile = '$baseScriptFile.$ext';
-				var files = [#if MODS_ALLOWED Paths.modFolders(baseFile), #end Paths.getSharedPath(baseFile)];
+				var files = [#if MODS_ALLOWED Paths.modFolders(baseFile), #end Paths.getSharedPath(baseFile), Paths.findAsset(baseFile)];
 				for (file in files)
 				{
 					if (FileSystem.exists(file))
@@ -4928,5 +4932,4 @@ class PlayState extends MusicBeatState
                 
 
 	}*/
-
 }

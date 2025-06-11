@@ -6,7 +6,7 @@ import openfl.display.BitmapData;
 import openfl.media.Sound;
 import openfl.text.Font;
 import openfl.utils.ByteArray;
-import haxe.concurrent.Future;
+//import haxe.concurrent.Future;
 
 /**
  * `AssetUtils` é uma classe utilitária estática que fornece métodos convenientes
@@ -40,6 +40,8 @@ class AssetUtils
      * O "Contrário" (Método Externo): `openfl.filesystem.File.exists(path:String)`
      * - `File.exists()`: Verifica a existência de um arquivo ou diretório **NO SISTEMA DE ARQUIVOS** do dispositivo.
      * É para arquivos que não são parte do pacote do seu jogo (saves, downloads).
+     * 
+     * Comando: `mobile.backend.AssetUtils.assetExists("id", type)`
      */
     public static function assetExists(id:String, ?type:AssetType):Bool
     {
@@ -161,7 +163,7 @@ class AssetUtils
      * @param id O identificador do asset da imagem.
      * @return Um Future<BitmapData>.
      */
-    public static function loadBitmapAsync(id:String):Future<BitmapData>
+    /*public static function loadBitmapAsync(id:String):Future<BitmapData>
     {
         return Assets.loadBitmapData(id);
     }
@@ -171,7 +173,7 @@ class AssetUtils
      * @param id O identificador do asset de som.
      * @return Um Future<Sound>.
      */
-    public static function loadSoundAsync(id:String):Future<Sound>
+    /*public static function loadSoundAsync(id:String):Future<Sound>
     {
         return Assets.loadSound(id);
     }
@@ -181,7 +183,7 @@ class AssetUtils
      * @param id O identificador do asset de texto.
      * @return Um Future<String>.
      */
-    public static function loadTextAsync(id:String):Future<String>
+    /*public static function loadTextAsync(id:String):Future<String>
     {
         return Assets.loadText(id);
     }
@@ -191,7 +193,7 @@ class AssetUtils
      * @param id O identificador do asset.
      * @return Um Future<ByteArray>.
      */
-    public static function loadBytesAsync(id:String):Future<ByteArray>
+    /*public static function loadBytesAsync(id:String):Future<ByteArray>
     {
         return Assets.loadBytes(id);
     }

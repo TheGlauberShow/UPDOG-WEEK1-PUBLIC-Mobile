@@ -1848,7 +1848,11 @@ class ChartingState extends MusicBeatState
 		add(vocals);
 
 		var playerSound = Paths.voices(currentSongName, 'player');
-		vocals.addPlayerVocals(new FlxSound().loadEmbedded(playerSound ?? Paths.voices(currentSongName)));
+		if (playerSound == null) playerSound = Paths.voices(currentSongName);
+		if (playerSound != null)
+		    vocals.addPlayerVocals(new FlxSound().loadEmbedded(playerSound));
+		else
+		    trace('ChartingState WARNING: No player vocals found for ' + currentSongName);
 
 		var opponentSound = Paths.voices(currentSongName, 'opp');
 		if (opponentSound != null)
@@ -2415,9 +2419,9 @@ class ChartingState extends MusicBeatState
 					FlxG.sound.music.pause();
 
 					updateCurStep();
-					// FlxG.sound.music.time = (Math.round(curStep/quants[curQuant])*quants[curQuant]) * Conductor.stepCrotchet;
+					// FlxG.sound.music.time = (Math.round(curStep/quants[curQuant]*1.5) * quants[curQuant]) * Conductor.stepCrotchet;
 
-					// (Math.floor((curStep+quants[curQuant]*1.5/(quants[curQuant]/2))/quants[curQuant])*quants[curQuant]) * Conductor.stepCrotchet;//snap into quantization
+					// (Math.floor((curStep+quants[curQuant]*1.5/(quants[curQuant]/2))/quants[curQuant]*quants[curQuant]) * Conductor.stepCrotchet;//snap into quantization
 					var time:Float = FlxG.sound.music.time;
 					var beat:Float = curDecBeat;
 					var snap:Float = quantization / 4;
@@ -3990,6 +3994,7 @@ class ChartingInfoSubstate extends MusicBeatSubstate
 	{
 		ChartingState.textBox.updateHitbox();
 		if (FlxG.keys.justPressed.ESCAPE)
+		/*
 		{
 			for (text in textGrp)
 			{
@@ -4021,7 +4026,7 @@ class ChartingOptionsSubmenu extends MusicBeatSubstate
 		'Play from beginning',
 		'Play from here',
 		'Set start time',
-		'Play from start time' /*, 'Botplay'*/,
+		'Play from start time' /*, 'Botplay',
 		'Exit to main menu'
 	]; // shamelessly stolen from andromeda im sorry
 	var curSelected:Int = 0;
@@ -4062,6 +4067,7 @@ class ChartingOptionsSubmenu extends MusicBeatSubstate
 	override public function update(elapsed:Float)
 	{
 		if (FlxG.keys.justPressed.ESCAPE && canexit)
+		*/
 		{
 			close();
 		}
