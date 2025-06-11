@@ -174,22 +174,22 @@ class Paths
 		return '$CORE_DIRECTORY/shared/$file';
 	}
 	
-	static public function file(file:String, type:AssetType = TEXT, ?library:String)
+	public static function file(file:String, type:AssetType = TEXT, ?library:String)
 	{
 		return getPath(file, type, library);
 	}
 	
-	static public function txt(key:String, ?library:String)
+	public static function txt(key:String, ?library:String)
 	{
 		return getPath('data/$key.txt', TEXT, library);
 	}
 	
-	static public function xml(key:String, ?library:String)
+	public static function xml(key:String, ?library:String)
 	{
 		return getPath('data/$key.xml', TEXT, library);
 	}
 	
-	static public function json(key:String, ?library:String)
+	public static function json(key:String, ?library:String)
 	{ // test build
         /*var jsonfile = findAsset('songs/key.json')
         for (json in jsonfile)
@@ -199,32 +199,37 @@ class Paths
 	    return getPath('songs/$key.json', TEXT, library);
 	}
 	
-	static public function noteskin(key:String, ?library:String)
+	public static function noteskin(key:String, ?library:String)
 	{
 		return getPath('noteskins/$key.json', TEXT, library);
 	}
 	
-	static public function modsNoteskin(key:String)
+	public static function modsNoteskin(key:String)
 	{
 		return modFolders('noteskins/$key.json');
 	}
 	
-	static public function shaderFragment(key:String, ?library:String)
+	public static function shaderFragment(key:String, ?library:String)
 	{
 		return getPath('shaders/$key.frag', TEXT, library);
 	}
 	
-	static public function shaderVertex(key:String, ?library:String)
+	public static function shaderVertex(key:String, ?library:String)
 	{
 		return getPath('shaders/$key.vert', TEXT, library);
 	}
+
+    //public static function script(key:String, ?library:String)
+    //{
+    //    return getPath('scripts/$key.js', TEXT, library);
+    //}
 	
-	static public function lua(key:String, ?library:String)
+	public static function lua(key:String, ?library:String)
 	{
 		return getPath('$key.lua', TEXT, library);
 	}
 	
-	static public function getContent(asset:String):Null<String>
+	public static function getContent(asset:String):Null<String>
 	{
 		#if sys
 		if (FileSystem.exists(asset)) return File.getContent(asset);
@@ -269,7 +274,7 @@ class Paths
 		}
 	}
 	
-	static public function modTextureAtlas(key:String)
+	public static function modTextureAtlas(key:String)
 	{
 		try {
 	    	#if MODS_ALLOWED // by me :P (im learning)
@@ -302,7 +307,7 @@ class Paths
         }
 	}
 	
-	static public function textureAtlas(key:String, ?library:String)
+	public static function textureAtlas(key:String, ?library:String)
 	{
 		/*var modp = modTextureAtlas(key);
 		if (FileSystem.exists(modp)) return modp;
@@ -329,7 +334,7 @@ class Paths
 	    return null;
 	}
 	
-	static public function sound(key:String, ?library:String):Sound
+	public static function sound(key:String, ?library:String):Sound
     {
         var sound:Sound = returnSound('sounds', key, library);
         if (sound == null)
@@ -377,18 +382,18 @@ class Paths
         return sound;
     }
 	
-	static public function soundRandom(key:String, min:Int, max:Int, ?library:String)
+	public static function soundRandom(key:String, min:Int, max:Int, ?library:String)
 	{
 		return sound(key + FlxG.random.int(min, max), library);
 	}
 	
-	static public function music(key:String, ?library:String):Sound
+	public static function music(key:String, ?library:String):Sound
 	{
 		var file:Sound = returnSound('music', key, library);
 		return file;
 	}
 	
-	static public function voices(song:String, ?postFix:String):Null<openfl.media.Sound>
+	public static function voices(song:String, ?postFix:String):Null<openfl.media.Sound>
     {
         var songPath = formatToSongPath(song);
         var baseName = 'Voices';
@@ -432,7 +437,7 @@ class Paths
         return returnSound(null, soundKey, 'songs');
     }
 
-	static public function inst(song:String):Null<openfl.media.Sound>
+	public static function inst(song:String):Null<openfl.media.Sound>
     {
 		// I'm learning :)
         var songPath = formatToSongPath(song); // ex: "mymusic"
@@ -457,23 +462,23 @@ class Paths
         return returnSound(null, soundKey, 'songs');
     }
 
-	static function listOggFilesInSongs():Array<String> {
+	public static function listOggFilesInSongs():Array<String> {
         var assetsSongs = [for (path in mobile.backend.AssetUtils.listAssets()) if (path.startsWith("assets/songs") && path.endsWith(".ogg")) path];
         var contentSongs = [for (path in mobile.backend.AssetUtils.listAssets()) if (path.startsWith("content/songs") && path.endsWith(".ogg")) path];
         return assetsSongs.concat(contentSongs);
     }
 
-    static public function modsShaderFragment(key:String, ?library:String):Null<String>
+    public static function modsShaderFragment(key:String, ?library:String):Null<String>
     {
         return findAsset('shaders/$key.frag');
     }
 
-    static public function modsShaderVertex(key:String, ?library:String):Null<String>
+    public static function modsShaderVertex(key:String, ?library:String):Null<String>
     {
         return findAsset('shaders/$key.vert');
     }
 
-    static public function image(key:String, ?library:String):FlxGraphic
+    public static function image(key:String, ?library:String):FlxGraphic
     {
         var path = findAsset('images/$key.png');
         if (path != null) {
@@ -483,7 +488,7 @@ class Paths
         return returnGraphic(key, library); // default fallback
     }
 
-    static function findAsset(relPath:String):Null<String>
+    public static function findAsset(relPath:String):Null<String>
     {
         var paths = [
             'assets/' + relPath,
@@ -506,7 +511,7 @@ class Paths
         return null;
     }
 
-    static function tryPaths(base:String, paths:Array<String>):Null<String>
+    public static function tryPaths(base:String, paths:Array<String>):Null<String>
     {
 		// example call: var shaderPath = tryPaths('shaders/' + key + '.frag', ['assets/', 'assets/shared/', 'content/']);
         for (p in paths)
@@ -518,7 +523,7 @@ class Paths
         return null;
     }
 	
-	static public function getTextFromFile(key:String, ?ignoreMods:Bool = false):String
+	public static function getTextFromFile(key:String, ?ignoreMods:Bool = false):String
 	{
 		#if sys
 		#if MODS_ALLOWED
@@ -557,7 +562,7 @@ class Paths
 		return '';
 	}
 
-    static public function font(key:String):Null<String>
+    public static function font(key:String):Null<String>
     {
         #if MODS_ALLOWED
         var file:String = modsFont(key);
@@ -577,7 +582,7 @@ class Paths
         return '$CORE_DIRECTORY/fonts/$key';
     }
 
-    static public function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String)
+    public static function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String)
     {
         #if MODS_ALLOWED
         if (FileSystem.exists(mods(currentModDirectory + '/' + key)) || FileSystem.exists(mods(key)))
@@ -597,7 +602,7 @@ class Paths
         return false;
     }
 //inline 
-    static public function getSparrowAtlas(key:String, ?library:String):FlxAtlasFrames
+    public static function getSparrowAtlas(key:String, ?library:String):FlxAtlasFrames
     {
         #if MODS_ALLOWED
         var imageLoaded:FlxGraphic = returnGraphic(key);
@@ -614,7 +619,7 @@ class Paths
         #end
     }
 	//inline 
-	static public function getPackerAtlas(key:String, ?library:String)
+	public static function getPackerAtlas(key:String, ?library:String)
     {
         #if MODS_ALLOWED
         var imageLoaded:FlxGraphic = returnGraphic(key);
@@ -630,8 +635,8 @@ class Paths
         );
         #end
     }
-	
-	static public function formatToSongPath(path:String)//inline
+
+	public static function formatToSongPath(path:String)//inline
 	{
 		return path.toLowerCase().replace(' ', '-'); // example: formatToSongPath("Ugh Oh") make this way: assets/songs/ugh-oh/Inst.ogg, Voices.ogg, or others
 	}
@@ -685,7 +690,7 @@ class Paths
         return null;
     }
 
-    static public function cacheBitmap(file:String, ?bitmap:BitmapData = null, ?allowGPU:Bool = true)
+    public static function cacheBitmap(file:String, ?bitmap:BitmapData = null, ?allowGPU:Bool = true)
     {
         if (bitmap == null)
         {

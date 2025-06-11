@@ -57,6 +57,8 @@ import funkin.backend.MusicBeatSubstate;
 import funkin.backend.SyncedFlxSoundGroup;
 import flixel.addons.ui.FlxUIDropDownMenu;
 
+import funkin.states.editors.ChartingOptionsSubmenu;
+
 using StringTools;
 
 #if sys
@@ -68,6 +70,10 @@ import sys.io.File;
 // this was neat //probably will rewrite the uhhh sing4 being idle later
 class OurLittleFriend extends FlxSprite
 {
+    var curSelected:Int = 0;
+    var menuItems:Array<Dynamic> = [];
+    var grpMenuShit:FlxTypedGroup<FlxSprite>; // ou outro tipo se não for FlxSprite :P
+
 	var _colors:Array<FlxColor> = [FlxColor.MAGENTA, FlxColor.CYAN, FlxColor.LIME, FlxColor.RED, FlxColor.WHITE];
 	var _dances:Array<String> = ['left', 'down', 'up', 'right', 'idle'];
 
