@@ -96,16 +96,21 @@ class FunkinVideoSprite extends FlxVideoSprite {
 	}
 	
 	public function preload(path:Location, ?options:Array<String>):FunkinVideoSprite {
-		// if u didnt use path try to find the path and the extension
 		if (path is String) {
 			var stringPath:String = cast path;
 			if (!stringPath.endsWith('.mp4') && !stringPath.endsWith('.mov')) {
 				var found = false;
 				for (ext in ['mp4', 'mov']) {
-					
-					final fullPath = 'assets/videos/$stringPath.$ext'; 
-					if (FileSystem.exists(fullPath)) {
-						stringPath = fullPath;
+					var assetPath = Paths.findAsset('videos/' + stringPath + '.' + ext);
+					#if sys
+					if (assetPath != null && sys.FileSystem.exists(assetPath)) {
+						stringPath = assetPath;
+						found = true;
+						break;
+					} else
+					#end
+					if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
+						stringPath = assetPath;
 						found = true;
 						break;
 					}
@@ -114,12 +119,9 @@ class FunkinVideoSprite extends FlxVideoSprite {
 					path = stringPath;
 			}
 		}
-		
-		// essentially this is a workaround for hxvlc's inconsistent video playback
-		// sometimes its delayed and sometimes loading,playing,stopping to try to preload causes openfl texture corruption garbage
+
 		if (load(path, options)) {
-			_preloaded = true; // im going to play a risk and assume the video does infact play
-			
+			_preloaded = true;
 			if (play()) {
 				pause();
 				visible = false;
@@ -127,7 +129,7 @@ class FunkinVideoSprite extends FlxVideoSprite {
 					bitmap.time = 0;
 			}
 		}
-		
+
 		return this;
 	}
 	

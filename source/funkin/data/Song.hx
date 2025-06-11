@@ -99,62 +99,42 @@ class Song
 	public static function loadFromJson(jsonInput:String, ?folder:String, ?mod:Bool = false):SwagSong
 	{
 		var rawJson = null;
-		
+
 		var formattedFolder:String = Paths.formatToSongPath(folder);
 		var formattedSong:String = Paths.formatToSongPath(jsonInput);
-		#if MODS_ALLOWED
-		var moddyFile:String = Paths.modsJson(formattedFolder + '/' + formattedSong);
-		if (FileSystem.exists(moddyFile))
-		{
-			rawJson = File.getContent(moddyFile).trim();
-		}
+
+		var assetPath = Paths.findAsset(formattedFolder + '/' + formattedSong + '.json');
+
+		#if sys
+		if (assetPath != null && sys.FileSystem.exists(assetPath)) {
+			rawJson = sys.io.File.getContent(assetPath).trim();
+		} else
 		#end
-		
-		if (rawJson == null)
-		{
-			if (mod)
-			{
-				rawJson = File.getContent(moddyFile).trim();
-			}
-			else
-			{
-				try
-				{
-					rawJson = openfl.Assets.getText('assets/songs/$formattedFolder/$formattedSong.json'); //shitty as hell but the pathing system in this ver of the engine is annoying
-				}
-				catch (e)
-				{
-					#if sys
+		if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
+			rawJson = mobile.backend.AssetUtils.getAssetContent(assetPath);
+			if (rawJson != null) rawJson = rawJson.trim();
+		}
+
+		if (rawJson == null) {
+			try {
+				rawJson = openfl.Assets.getText('assets/songs/$formattedFolder/$formattedSong.json');
+				if (rawJson != null) rawJson = rawJson.trim();
+			} catch (e) {
+				#if sys
+				if (FileSystem.exists(Paths.json(formattedFolder + '/' + formattedSong)))
 					rawJson = File.getContent(Paths.json(formattedFolder + '/' + formattedSong)).trim();
-					#else
-					rawJson = openfl.Assets.getText(Paths.json(formattedFolder + '/' + formattedSong)).trim();
-					#end
-				}
+				#else
+				rawJson = openfl.Assets.getText(Paths.json(formattedFolder + '/' + formattedSong));
+				if (rawJson != null) rawJson = rawJson.trim();
+				#end
 			}
 		}
-		
-		while (!rawJson.endsWith("}"))
+
+		while (rawJson != null && !rawJson.endsWith("}"))
 		{
 			rawJson = rawJson.substr(0, rawJson.length - 1);
-			// LOL GOING THROUGH THE BULLSHIT TO CLEAN IDK WHATS STRANGE
 		}
-		
-		// FIX THE CASTING ON WINDOWS/NATIVE
-		// Windows???
-		// trace(songData);
-		
-		// trace('LOADED FROM JSON: ' + songData.notes);
-		/* 
-			for (i in 0...songData.notes.length)
-			{
-				trace('LOADED FROM JSON: ' + songData.notes[i].sectionNotes);
-				// songData.notes[i].sectionNotes = songData.notes[i].sectionNotes
-			}
 
-				daNotes = songData.notes;
-				daSong = songData.song;
-				daBpm = songData.bpm; */
-		
 		var songJson:Dynamic = parseJSONshit(rawJson);
 		if (jsonInput != 'events') StageData.loadDirectory(songJson);
 		onLoadJson(songJson);

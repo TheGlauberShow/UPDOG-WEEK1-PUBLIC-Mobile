@@ -54,27 +54,28 @@ class MenuCharacter extends FlxSprite
 			default:
 				var characterPath:String = 'images/menucharacters/' + character + '.json';
 				var rawJson = null;
+				var assetPath = Paths.findAsset(characterPath);
 
-				#if MODS_ALLOWED
-				var path:String = Paths.modFolders(characterPath);
-				if (!FileSystem.exists(path))
-				{
-					path = Paths.getSharedPath(characterPath);
-				}
-
-				if (!FileSystem.exists(path))
-				{
-					path = Paths.getSharedPath('images/menucharacters/' + DEFAULT_CHARACTER + '.json');
-				}
-				rawJson = File.getContent(path);
-				#else
-				var path:String = Paths.getSharedPath(characterPath);
-				if (!Assets.exists(path))
-				{
-					path = Paths.getSharedPath('images/menucharacters/' + DEFAULT_CHARACTER + '.json');
-				}
-				rawJson = Assets.getText(path);
+				#if sys
+				if (assetPath != null && sys.FileSystem.exists(assetPath)) {
+					rawJson = sys.io.File.getContent(assetPath);
+				} else
 				#end
+				if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
+					rawJson = mobile.backend.AssetUtils.getAssetContent(assetPath);
+				}
+
+				if (rawJson == null) {
+					var defaultPath = Paths.findAsset('images/menucharacters/' + DEFAULT_CHARACTER + '.json');
+					#if sys
+					if (defaultPath != null && sys.FileSystem.exists(defaultPath)) {
+						rawJson = sys.io.File.getContent(defaultPath);
+					} else
+					#end
+					if (defaultPath != null && mobile.backend.AssetUtils.assetExists(defaultPath)) {
+						rawJson = mobile.backend.AssetUtils.getAssetContent(defaultPath);
+					}
+				}
 
 				var charFile:MenuCharacterFile = cast Json.parse(rawJson);
 				frames = Paths.getSparrowAtlas('menucharacters/' + charFile.image);

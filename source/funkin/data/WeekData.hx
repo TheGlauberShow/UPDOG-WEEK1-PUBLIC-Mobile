@@ -234,17 +234,27 @@ class WeekData
 	private static function getWeekFile(path:String):WeekFile
 	{
 		var rawJson:String = null;
+
 		#if MODS_ALLOWED
+		// try read a external mod
 		if (FileSystem.exists(path))
 		{
 			rawJson = File.getContent(path);
 		}
-		#else
-		if (OpenFlAssets.exists(path))
-		{
-			rawJson = Assets.getText(path);
-		}
+		else
 		#end
+		{
+			// search in internal assets (assets/, assets/shared/, content/)
+			var assetPath = Paths.findAsset(path);
+			#if sys
+			if (assetPath != null && sys.FileSystem.exists(assetPath)) {
+				var conteudo = sys.io.File.getContent(assetPath);
+			} else
+			#end
+			if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
+				var conteudo = mobile.backend.AssetUtils.getAssetContent(assetPath);
+			}
+		}
 
 		if (rawJson != null && rawJson.length > 0)
 		{

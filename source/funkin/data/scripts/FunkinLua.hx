@@ -237,10 +237,16 @@ class FunkinLua extends FunkinScript
 			}
 			else
 			{
-				cervix = Paths.getSharedPath(cervix);
-				if (FileSystem.exists(cervix))
-				{
-					doPush = true;
+				var assetPath = Paths.findAsset(cervix);
+				#if sys
+				if (assetPath != null && sys.FileSystem.exists(assetPath)) {
+				    cervix = assetPath;
+				    doPush = true;
+				} else
+				#end
+				if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
+				    cervix = assetPath;
+				    doPush = true;
 				}
 			}
 			#else
@@ -295,10 +301,16 @@ class FunkinLua extends FunkinScript
 			}
 			else
 			{
-				cervix = Paths.getSharedPath(cervix);
-				if (FileSystem.exists(cervix))
-				{
-					doPush = true;
+				var assetPath = Paths.findAsset(cervix);
+				#if sys
+				if (assetPath != null && sys.FileSystem.exists(assetPath)) {
+				    cervix = assetPath;
+				    doPush = true;
+				} else
+				#end
+				if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
+				    cervix = assetPath;
+				    doPush = true;
 				}
 			}
 			#else
@@ -357,10 +369,16 @@ class FunkinLua extends FunkinScript
 			}
 			else
 			{
-				cervix = Paths.getSharedPath(cervix);
-				if (FileSystem.exists(cervix))
-				{
-					doPush = true;
+				var assetPath = Paths.findAsset(cervix);
+				#if sys
+				if (assetPath != null && sys.FileSystem.exists(assetPath)) {
+				    cervix = assetPath;
+				    doPush = true;
+				} else
+				#end
+				if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
+				    cervix = assetPath;
+				    doPush = true;
 				}
 			}
 			#else
@@ -398,10 +416,16 @@ class FunkinLua extends FunkinScript
 			}
 			else
 			{
-				cervix = Paths.getSharedPath(cervix);
-				if (FileSystem.exists(cervix))
-				{
-					doPush = true;
+				var assetPath = Paths.findAsset(cervix);
+				#if sys
+				if (assetPath != null && sys.FileSystem.exists(assetPath)) {
+				    cervix = assetPath;
+				    doPush = true;
+				} else
+				#end
+				if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
+				    cervix = assetPath;
+				    doPush = true;
 				}
 			}
 			#else
@@ -494,10 +518,16 @@ class FunkinLua extends FunkinScript
 			}
 			else
 			{
-				cervix = Paths.getSharedPath(cervix);
-				if (FileSystem.exists(cervix))
-				{
-					doPush = true;
+				var assetPath = Paths.findAsset(cervix);
+				#if sys
+				if (assetPath != null && sys.FileSystem.exists(assetPath)) {
+				    cervix = assetPath;
+				    doPush = true;
+				} else
+				#end
+				if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
+				    cervix = assetPath;
+				    doPush = true;
 				}
 			}
 			#else
@@ -534,10 +564,16 @@ class FunkinLua extends FunkinScript
 			}
 			else
 			{
-				cervix = Paths.getSharedPath(cervix);
-				if (FileSystem.exists(cervix))
-				{
-					doPush = true;
+				var assetPath = Paths.findAsset(cervix);
+				#if sys
+				if (assetPath != null && sys.FileSystem.exists(assetPath)) {
+				    cervix = assetPath;
+				    doPush = true;
+				} else
+				#end
+				if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
+				    cervix = assetPath;
+				    doPush = true;
 				}
 			}
 			#else
@@ -585,10 +621,16 @@ class FunkinLua extends FunkinScript
 			}
 			else
 			{
-				cervix = Paths.getSharedPath(cervix);
-				if (FileSystem.exists(cervix))
-				{
-					doPush = true;
+				var assetPath = Paths.findAsset(cervix);
+				#if sys
+				if (assetPath != null && sys.FileSystem.exists(assetPath)) {
+				    cervix = assetPath;
+				    doPush = true;
+				} else
+				#end
+				if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
+				    cervix = assetPath;
+				    doPush = true;
 				}
 			}
 			#else

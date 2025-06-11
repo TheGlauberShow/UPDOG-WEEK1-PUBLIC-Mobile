@@ -69,38 +69,24 @@ class FNFSprite extends FlxSprite
 	{
 		var json:Character.CharacterFile = getCharacterFile(character, mod);
 		var spriteType = "sparrow";
-		// sparrow
-		// packer
-		// texture
-		#if MODS_ALLOWED
-		var modTxtToFind:String = Paths.modsTxt(json.image);
-		var txtToFind:String = Paths.getPath('images/' + json.image + '.txt', TEXT);
 
-		// var modTextureToFind:String = Paths.modFolders("images/"+json.image);
-		// var textureToFind:String = Paths.getPath('images/' + json.image, new AssetType();
-
-		if (FileSystem.exists(modTxtToFind) || FileSystem.exists(txtToFind) || Assets.exists(txtToFind))
-		#else
-		if (Assets.exists(Paths.getPath('images/' + json.image + '.txt', TEXT)))
-		#end
-		{
+		var txtAssetPath = Paths.findAsset('images/' + json.image + '.txt');
+		#if sys
+		if (txtAssetPath != null && sys.FileSystem.exists(txtAssetPath))
 			spriteType = "packer";
-		}
-
-		#if MODS_ALLOWED
-		var modAnimToFind:String = Paths.modFolders('images/' + json.image + '/Animation.json');
-		var animToFind:String = Paths.getPath('images/' + json.image + '/Animation.json', TEXT);
-
-		// var modTextureToFind:String = Paths.modFolders("images/"+json.image);
-		// var textureToFind:String = Paths.getPath('images/' + json.image, new AssetType();
-
-		if (FileSystem.exists(modAnimToFind) || FileSystem.exists(animToFind) || Assets.exists(animToFind))
-		#else
-		if (Assets.exists(Paths.getPath('images/' + json.image + '/Animation.json', TEXT)))
+		else
 		#end
-		{
+		if (txtAssetPath != null && mobile.backend.AssetUtils.assetExists(txtAssetPath))
+			spriteType = "packer";
+
+		var animAssetPath = Paths.findAsset('images/' + json.image + '/Animation.json');
+		#if sys
+		if (animAssetPath != null && sys.FileSystem.exists(animAssetPath))
 			spriteType = "texture";
-		}
+		else
+		#end
+		if (animAssetPath != null && mobile.backend.AssetUtils.assetExists(animAssetPath))
+			spriteType = "texture";
 
 		switch (spriteType)
 		{
@@ -140,7 +126,7 @@ class FNFSprite extends FlxSprite
 				var animAnim:String = '' + anim.anim;
 				var animName:String = '' + anim.name;
 				var animFps:Int = anim.fps;
-				var animLoop:Bool = !!anim.loop; // Bruh
+				var animLoop:Bool = !!anim.loop;
 				var animIndices:Array<Int> = anim.indices;
 				if (animIndices != null && animIndices.length > 0)
 				{
@@ -162,30 +148,28 @@ class FNFSprite extends FlxSprite
 	public function getCharacterFile(character:String, ?mod:Bool = false)
 	{
 		var characterPath:String = 'characters/' + character + '.json';
-		var rawJson:Dynamic;
+		var rawJson:Dynamic = null;
+		var assetPath = Paths.findAsset(characterPath);
 
-		if (mod)
-		{
-			var path:String = Paths.modFolders(characterPath);
-			trace(':)');
-			if (!FileSystem.exists(path))
-			{
-				trace(':(  ${path}');
-				path = Paths.getSharedPath(characterPath);
-			}
-
-			rawJson = File.getContent(path);
+		#if sys
+		if (assetPath != null && sys.FileSystem.exists(assetPath)) {
+			rawJson = sys.io.File.getContent(assetPath);
+		} else
+		#end
+		if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
+			rawJson = mobile.backend.AssetUtils.getAssetContent(assetPath);
 		}
-		else
-		{
-			var path:String = Paths.getSharedPath(characterPath);
-			if (!Assets.exists(path))
-			{
-				path = Paths.getSharedPath('characters/' + DEFAULT_CHARACTER +
-					'.json'); // If a character couldn't be found, change him to BF just to prevent a crash
-			}
 
-			rawJson = Assets.getText(path);
+		if (rawJson == null) {
+			var defaultPath = Paths.findAsset('characters/' + DEFAULT_CHARACTER + '.json');
+			#if sys
+			if (defaultPath != null && sys.FileSystem.exists(defaultPath)) {
+				rawJson = sys.io.File.getContent(defaultPath);
+			} else
+			#end
+			if (defaultPath != null && mobile.backend.AssetUtils.assetExists(defaultPath)) {
+				rawJson = mobile.backend.AssetUtils.getAssetContent(defaultPath);
+			}
 		}
 
 		return cast Json.parse(rawJson);

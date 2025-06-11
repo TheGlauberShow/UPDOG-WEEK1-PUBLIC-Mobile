@@ -599,6 +599,10 @@ class Paths
         {
             return true;
         }
+        else if (mobile.backend.AssetUtils.assetExists(getPath(key, type)))
+        {
+            return true;
+        }
         return false;
     }
 //inline 

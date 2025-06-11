@@ -1,6 +1,6 @@
 package funkin.states.editors;
 
-import funkin.states.ChartingState;
+import funkin.states.editors.ChartingState;
 import openfl.utils.Assets;
 
 class ChartingOptionsSubmenu extends ChartingState

@@ -10,6 +10,8 @@ import openfl.utils.Assets;
 import haxe.Json;
 import funkin.data.Song;
 
+import funkin.Paths;
+
 typedef StageFile =
 {
 	var directory:String;
@@ -43,29 +45,22 @@ class StageData
 	public static function getStageFile(stage:String):StageFile
 	{
 		var rawJson:String = null;
-		var path:String = Paths.getSharedPath('stages/' + stage + '.json');
+		var assetPath:String = Paths.findAsset('stages/' + stage + '.json');
 
-		#if MODS_ALLOWED
-		var modPath:String = Paths.modFolders('stages/' + stage + '.json');
-		if (FileSystem.exists(modPath))
-		{
-			rawJson = File.getContent(modPath);
+		#if sys
+		if (assetPath != null && sys.FileSystem.exists(assetPath)) {
+			rawJson = sys.io.File.getContent(assetPath);
+		} else
+		#end
+		if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
+			rawJson = mobile.backend.AssetUtils.getAssetContent(assetPath);
+			if (rawJson != null) rawJson = rawJson.trim();
 		}
-		else if (FileSystem.exists(path))
-		{
-			rawJson = File.getContent(path);
-		}
-		else #end
-		if (Assets.exists(path))
-		{
-			rawJson = Assets.getText(path);
-		}
-	else
-	{
-		return null;
-	}
 
-		trace(rawJson);
+		if (rawJson == null) {
+			return null;
+		}
+
 		return cast Json.parse(rawJson);
 	}
 

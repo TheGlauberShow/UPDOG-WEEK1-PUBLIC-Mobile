@@ -7,6 +7,9 @@ import openfl.media.Sound;
 import openfl.text.Font;
 import openfl.utils.ByteArray;
 //import haxe.concurrent.Future;
+#if sys
+import sys.io.File;
+#end
 
 /**
  * `AssetUtils` é uma classe utilitária estática que fornece métodos convenientes
@@ -154,6 +157,31 @@ class AssetUtils
     public static function listAssets(?type:AssetType):Array<String>
     {
         return Assets.list(type);
+    }
+
+    /**
+     * Lê o conteúdo de um asset interno (arquivo embutido no app) como texto.
+     * 
+     * @param id O caminho do asset (ex: "assets/data.txt").
+     * @return O conteúdo do arquivo como String, ou null se não encontrado.
+     *
+     * Exemplo de uso:
+     * ```haxe
+     * var texto = mobile.backend.AssetUtils.getAssetContent("assets/data.txt");
+     * if (texto != null) trace(texto);
+     * else trace("Arquivo não encontrado!");
+     * ```
+     *
+     * Este método é o "contrário" de File.getContent para assets internos:
+     * - File.getContent lê arquivos do sistema de arquivos do dispositivo (externo).
+     * - getAssetContent lê arquivos embutidos no app (interno), usando OpenFL Assets.
+     */
+    public static function getAssetContent(id:String):String
+    {
+        if (Assets.exists(id)) {
+            return Assets.getText(id);
+        }
+        return null;
     }
 
     // --- Métodos assíncronos (retornam Future) ---

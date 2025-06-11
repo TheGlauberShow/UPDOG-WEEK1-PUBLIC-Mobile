@@ -226,18 +226,15 @@ class FunkinIris extends FunkinScript
 
 			final file = '$path.$extension';
 
-			for (i in [Paths.modFolders(file, global), Paths.getSharedPath(file)])
-			{
-				if (!FileSystem.exists(i))
-					continue;
-				return i;
-			}
+			var assetPath = Paths.findAsset(file);
 
-			var tempPath = Paths.getPath(file);
-			if (Assets.exists(tempPath))
-			{
-				return tempPath;
-			}
+			#if sys
+			if (assetPath != null && sys.FileSystem.exists(assetPath))
+				return assetPath;
+			else
+			#end
+			if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath))
+				return assetPath;
 		}
 		return path;
 	}
