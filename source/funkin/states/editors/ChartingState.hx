@@ -3409,7 +3409,7 @@ class ChartingState extends MusicBeatState
 		{
 			for (p in _song.notes[curSec].sectionNotes)
 			{
-				if (p[0] == daStrumTime && p[1] == daNoteInfo && !p[4])
+				if (p[0] == daStrumTime && p[1] == noteDataToCheck && !p[4]) // daNoteInfo
 				{
 					_song.notes[curSec].sectionNotes[_song.notes[curSec].sectionNotes.indexOf(p)][1] = intendedData;
 					_song.notes[curSec].sectionNotes[_song.notes[curSec].sectionNotes.indexOf(p)][4] = true;
@@ -3698,7 +3698,6 @@ class ChartingState extends MusicBeatState
 		undos.pop();
 		// _song.notes = undos[undos.length - 1];
 		///trace(_song.notes);
-		// updateGrid();
 	}
 
 	function getStrumTime(yPos:Float, doZoomCalc:Bool = true):Float
