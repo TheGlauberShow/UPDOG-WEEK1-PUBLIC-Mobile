@@ -1,12 +1,12 @@
 package funkin.states.editors;
 
 import flixel.FlxSubState;
-import flixel.group.FlxTypedGroup;
+import flixel.group.FlxGroup;
 import funkin.objects.Alphabet;
 
 class ChartingOptionsSubmenu extends FlxSubState
 {
-    var grpMenuShit:FlxTypedGroup<Alphabet>;
+    var grpMenuShit:FlxGroup;
     var menuItems:Array<String> = [
         'Resume',
         'Play from beginning',
