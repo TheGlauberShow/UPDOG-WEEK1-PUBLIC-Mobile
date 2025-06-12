@@ -212,6 +212,15 @@ class Paths
         return getPath('noteskins/$key.json', TEXT, library);
     }
 
+    public static function modsNoteskin(key:String)
+	{
+        var path = findAsset('noteskins/$key.json');
+        if (path != null)
+            return path;
+        // If not found, return the default path
+		return modFolders('noteskins/$key.json');
+	}
+
     public static function shaderFragment(key:String, ?library:String)
     {
         var path = findAsset('shaders/$key.frag');
