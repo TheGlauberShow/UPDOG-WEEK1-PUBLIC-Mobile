@@ -180,14 +180,20 @@ class Paths
 	}
 	
 	public static function txt(key:String, ?library:String)
-	{
-		return getPath('data/$key.txt', TEXT, library);
-	}
-	
-	public static function xml(key:String, ?library:String)
-	{
-		return getPath('data/$key.xml', TEXT, library);
-	}
+    {
+        var path = findAsset('data/$key.txt');
+        if (path != null)
+            return path;
+        return getPath('data/$key.txt', TEXT, library);
+    }
+
+    public static function xml(key:String, ?library:String)
+    {
+        var path = findAsset('data/$key.xml');
+        if (path != null)
+            return path;
+        return getPath('data/$key.xml', TEXT, library);
+    }
 	
 	public static function json(key:String, ?library:String)
     {
@@ -199,35 +205,57 @@ class Paths
     }
 	
 	public static function noteskin(key:String, ?library:String)
-	{
-		return getPath('noteskins/$key.json', TEXT, library);
-	}
-	
-	public static function modsNoteskin(key:String)
-	{
-		return modFolders('noteskins/$key.json');
-	}
-	
-	public static function shaderFragment(key:String, ?library:String)
-	{
-		return getPath('shaders/$key.frag', TEXT, library);
-	}
-	
-	public static function shaderVertex(key:String, ?library:String)
-	{
-		return getPath('shaders/$key.vert', TEXT, library);
-	}
+    {
+        var path = findAsset('noteskins/$key.json');
+        if (path != null)
+            return path;
+        return getPath('noteskins/$key.json', TEXT, library);
+    }
 
-    //public static function script(key:String, ?library:String)
-    //{
-    //    return getPath('scripts/$key.js', TEXT, library);
-    //}
-	
-	public static function lua(key:String, ?library:String)
-	{
-		return getPath('$key.lua', TEXT, library);
-	}
-	
+    public static function shaderFragment(key:String, ?library:String)
+    {
+        var path = findAsset('shaders/$key.frag');
+        if (path != null)
+            return path;
+        return getPath('shaders/$key.frag', TEXT, library);
+    }
+
+    public static function shaderVertex(key:String, ?library:String)
+    {
+        var path = findAsset('shaders/$key.vert');
+        if (path != null)
+            return path;
+        return getPath('shaders/$key.vert', TEXT, library);
+    }
+
+    public static function lua(key:String, ?library:String)
+    {
+        var path = findAsset('$key.lua');
+        if (path != null)
+            return path;
+        return getPath('$key.lua', TEXT, library);
+    }
+
+    /*
+    public static function python(key:String, ?library:String)
+    {
+        // by me (just testing, I'm learning)
+        var path = findAsset('$key.py');
+        if (path != null)
+            return path;
+        return getPath('$key.py', TEXT, library);
+    } if needs:P*/
+
+    /*public static function javaScript(key:String, ?library:String)
+    {
+        // by me (just testing, I'm learning)
+        var path = findAsset('scripts/$key.js');
+        if (path != null)
+            return path;
+        else
+            return getPath('scripts/$key.js', TEXT, library);
+    } // if needs :P */
+
 	public static function getContent(asset:String):Null<String>
 	{
 		#if sys
@@ -238,7 +266,7 @@ class Paths
 		trace('oh no its returning null NOOOO ($asset)');
 		return null;
 	}
-	
+
 	public static function video(key:String)
 	{
 		/*#if MODS_ALLOWED
@@ -249,6 +277,7 @@ class Paths
 		}
 		#end
 		return '$CORE_DIRECTORY/videos/$key.$VIDEO_EXT';*/
+
 	    try { // by me (just testing, I'm learning)
 		    var file:String = getPath('videos/$key.$VIDEO_EXT', AssetType.BINARY);
 		    #if MODS_ALLOWED
@@ -358,8 +387,8 @@ class Paths
         }
         #end
 
-        var soundPath = getPath('sounds/$key.$SOUND_EXT', SOUND, library);
-        if (mobile.backend.AssetUtils.assetExists(soundPath)) // can be FileSystem.exists
+        var soundPath = findAsset('sounds/$key.$SOUND_EXT');
+        if (soundPath != null)
         {
             if (!currentTrackedSounds.exists(soundPath))
             {
@@ -368,17 +397,19 @@ class Paths
             localTrackedAssets.push(soundPath);
             return currentTrackedSounds.get(soundPath);
         }
-        else if (OpenFlAssets.exists(soundPath, SOUND))
+
+        var fallbackPath = getPath('sounds/$key.$SOUND_EXT', SOUND, library);
+        if (OpenFlAssets.exists(fallbackPath, SOUND))
         {
-            if (!currentTrackedSounds.exists(soundPath))
+            if (!currentTrackedSounds.exists(fallbackPath))
             {
-                currentTrackedSounds.set(soundPath, OpenFlAssets.getSound(soundPath));
+                currentTrackedSounds.set(fallbackPath, OpenFlAssets.getSound(fallbackPath));
             }
-            localTrackedAssets.push(soundPath);
-            return currentTrackedSounds.get(soundPath);
+            localTrackedAssets.push(fallbackPath);
+            return currentTrackedSounds.get(fallbackPath);
         }
 
-        return sound;
+        return sound; // can be null
     }
 	
 	public static function soundRandom(key:String, min:Int, max:Int, ?library:String)
@@ -497,9 +528,11 @@ class Paths
 
         for (path in paths)
         {
-            if (FileSystem.exists(path))
+            #if sys
+            if (sys.FileSystem.exists(path))
                 return path;
-            else if (mobile.backend.AssetUtils.assetExists(path))
+            #end
+            if (mobile.backend.AssetUtils.assetExists(path))
                 return path;
             else if (OpenFlAssets.exists(path)) // fallback for assets embedded
                 return path;
@@ -516,7 +549,7 @@ class Paths
         for (p in paths)
         {
             var full = p + base;
-            if (FileSystem.exists(full) || mobile.backend.AssetUtils.assetExists(full) || OpenFlAssets.exists(full))
+            if (#if sys sys.FileSystem.exists(full) || #end mobile.backend.AssetUtils.assetExists(full) || OpenFlAssets.exists(full))
                 return full;
         }
         return null;
@@ -563,7 +596,7 @@ class Paths
 
     public static function font(key:String):Null<String>
     {
-        #if MODS_ALLOWED
+        #if MODS_ALLOWED // MODS_ALLOWED // U are not allowed to use this
         var file:String = modsFont(key);
         if (FileSystem.exists(file)) return file;
         #end
@@ -583,7 +616,7 @@ class Paths
 
     public static function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String)
     {
-        #if MODS_ALLOWED
+        #if MODS_ALLOWED // MODS_ALLOWED // FileSystem -> shhhhhhhhhhh!! u are not allowed to use this
         if (FileSystem.exists(mods(currentModDirectory + '/' + key)) || FileSystem.exists(mods(key)))
         {
             return true;
@@ -607,36 +640,51 @@ class Paths
 //inline 
     public static function getSparrowAtlas(key:String, ?library:String):FlxAtlasFrames
     {
-        #if MODS_ALLOWED
-        var imageLoaded:FlxGraphic = returnGraphic(key);
+        // Search PNG and TXT in mods, assets/shared and assets
+        var imagePath:String = findAsset('images/$key.png');
         var xmlPath:String = findAsset('images/$key.xml');
-        return FlxAtlasFrames.fromSparrow(
-            imageLoaded != null ? imageLoaded : image(key, library),
-            xmlPath != null ? File.getContent(xmlPath) : getPath('images/$key.xml', null, library)
-        );
-        #else
-        return FlxAtlasFrames.fromSparrow(
-            image(key, library),
-            file('images/$key.xml', library)
-        );
-        #end
+
+        var imageLoaded:FlxGraphic = null;
+        if (imagePath != null) {
+            var bitmap = BitmapData.fromFile(imagePath);
+            imageLoaded = FlxGraphic.fromBitmapData(bitmap, false, imagePath);
+        } else {
+            imageLoaded = image(key, library); // fallback
+        }
+
+        var xmlContent:String = null;
+        if (xmlPath != null) {
+            xmlContent = getContent(xmlPath);
+        } else {
+            xmlContent = file('images/$key.xml', library);
+        }
+
+        return FlxAtlasFrames.fromSparrow(imageLoaded, xmlContent);
     }
+
 	//inline 
-	public static function getPackerAtlas(key:String, ?library:String)
+	public static function getPackerAtlas(key:String, ?library:String):FlxAtlasFrames
     {
-        #if MODS_ALLOWED
-        var imageLoaded:FlxGraphic = returnGraphic(key);
+        // Search PNG and TXT in mods, assets/shared and assets
+        var imagePath:String = findAsset('images/$key.png');
         var txtPath:String = findAsset('images/$key.txt');
-        return FlxAtlasFrames.fromSpriteSheetPacker(
-            imageLoaded != null ? imageLoaded : image(key, library),
-            txtPath != null ? File.getContent(txtPath) : file('images/$key.txt', library)
-        );
-        #else
-        return FlxAtlasFrames.fromSpriteSheetPacker(
-            image(key, library),
-            file('images/$key.txt', library)
-        );
-        #end
+
+        var imageLoaded:FlxGraphic = null;
+        if (imagePath != null) {
+            var bitmap = BitmapData.fromFile(imagePath);
+            imageLoaded = FlxGraphic.fromBitmapData(bitmap, false, imagePath);
+        } else {
+            imageLoaded = image(key, library); // fallback
+        }
+
+        var txtContent:String = null;
+        if (txtPath != null) {
+            txtContent = getContent(txtPath);
+        } else {
+            txtContent = file('images/$key.txt', library);
+        }
+
+        return FlxAtlasFrames.fromSpriteSheetPacker(imageLoaded, txtContent);
     }
 
 	public static function formatToSongPath(path:String)//inline
