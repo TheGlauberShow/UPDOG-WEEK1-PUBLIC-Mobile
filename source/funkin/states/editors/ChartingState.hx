@@ -132,6 +132,18 @@ class OurLittleFriend extends FlxSprite
 @:access(openfl.media.Sound.__buffer)
 class ChartingState extends MusicBeatState
 {
+	var grpMenuShit:FlxTypedGroup<Alphabet>;
+    var menuItems:Array<String> = [
+        'Resume',
+        'Play from beginning',
+        'Play from here',
+        'Set start time',
+        'Play from start time'
+        // ...
+    ];
+    var curSelected:Int = 0;
+    var canexit:Bool = false;
+
 	public static var instance:ChartingState;
 
 	var hiddenChars:Array<String> = ['dk', 'bfdiddy'];
@@ -4113,30 +4125,24 @@ class ChartingOptionsSubmenu extends MusicBeatSubstate
 	}
 
 	function changeSelection(change:Int = 0):Void
-	{
-		curSelected += change;
+    {
+        curSelected += change;
+        FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 
-		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+        if (curSelected < 0) curSelected = menuItems.length - 1;
+        if (curSelected >= menuItems.length) curSelected = 0;
 
-		if (curSelected < 0) curSelected = menuItems.length - 1;
-		if (curSelected >= menuItems.length) curSelected = 0;
-
-		var bullShit:Int = 0;
-
-		for (item in grpMenuShit.members)
-		{
-			item.targetY = bullShit - curSelected;
-			bullShit++;
-
-			item.alpha = 0.6;
-			// item.setGraphicSize(Std.int(item.width * 0.8));
-
-			if (item.targetY == 0)
-			{
-				item.alpha = 1;
-				// item.setGraphicSize(Std.int(item.width));
-			}
-		}
-		trace(menuItems[curSelected]);
-	}
+        var bullShit:Int = 0;
+        for (item in grpMenuShit.members)
+        {
+            item.targetY = bullShit - curSelected;
+            bullShit++;
+            item.alpha = 0.6;
+            if (item.targetY == 0)
+            {
+                item.alpha = 1;
+            }
+        }
+        trace(menuItems[curSelected]);
+    }
 }
