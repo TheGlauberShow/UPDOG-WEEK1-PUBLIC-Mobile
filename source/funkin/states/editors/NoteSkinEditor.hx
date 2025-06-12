@@ -208,7 +208,7 @@ class NoteSkinEditor extends MusicBeatState
 
 		infoText = new FlxText();
 		infoText.text = "Select a note for information!";
-		infoText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		infoText.setFormat(Paths.font("vcr"), 32, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(infoText);
 		infoText.camera = hud;
 

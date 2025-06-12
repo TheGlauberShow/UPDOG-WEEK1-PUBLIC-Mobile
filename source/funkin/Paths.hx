@@ -190,14 +190,13 @@ class Paths
 	}
 	
 	public static function json(key:String, ?library:String)
-	{ // test build
-        /*var jsonfile = findAsset('songs/key.json')
-        for (json in jsonfile)
-            (mobile.backend.AssetUtils.assetExists('songs/$key.json'))
-            jsonfile.push('songs/$key.json');
-        else*/
-	    return getPath('songs/$key.json', TEXT, library);
-	}
+    {
+        var path = findAsset('songs/$key.json');
+        if (path != null)
+            return path;
+        else
+           return getPath('songs/$key.json', TEXT, library);
+    }
 	
 	public static function noteskin(key:String, ?library:String)
 	{

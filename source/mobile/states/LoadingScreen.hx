@@ -37,7 +37,7 @@ class LoadingScreen extends MusicBeatState
         add(loadingBar);
 
         loadedText = new FlxText(loadingBar.x, loadingBar.y + 4, FlxG.width, 'Loading...', 16);
-        loadedText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, "center");
+        loadedText.setFormat(Paths.font("vcr"), 16, FlxColor.WHITE, "center");
         add(loadedText);
 
         ready = false;

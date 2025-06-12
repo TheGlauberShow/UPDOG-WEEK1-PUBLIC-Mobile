@@ -48,7 +48,7 @@ class DebugDisplay extends Sprite
 		currentFPS = 0;
 		text.selectable = false;
 		text.mouseEnabled = false;
-		text.defaultTextFormat = new TextFormat("assets/fonts/vcr.ttf", 16, color);
+		text.defaultTextFormat = new TextFormat("assets/fonts/vcr", 16, color);
 		text.autoSize = LEFT;
 		text.multiline = true;
 		text.text = "FPS: ";
