@@ -70,10 +70,6 @@ import sys.io.File;
 // this was neat //probably will rewrite the uhhh sing4 being idle later
 class OurLittleFriend extends FlxSprite
 {
-    var curSelected:Int = 0;
-    var menuItems:Array<Dynamic> = [];
-    var grpMenuShit:FlxTypedGroup<FlxSprite>; // ou outro tipo se não for FlxSprite :P
-
 	var _colors:Array<FlxColor> = [FlxColor.MAGENTA, FlxColor.CYAN, FlxColor.LIME, FlxColor.RED, FlxColor.WHITE];
 	var _dances:Array<String> = ['left', 'down', 'up', 'right', 'idle'];
 
@@ -3409,7 +3405,7 @@ class ChartingState extends MusicBeatState
 		{
 			for (p in _song.notes[curSec].sectionNotes)
 			{
-				if (p[0] == daStrumTime && p[1] == noteDataToCheck && !p[4]) // daNoteInfo
+				if (p[0] == daStrumTime && p[1] == daNoteInfo && !p[4])
 				{
 					_song.notes[curSec].sectionNotes[_song.notes[curSec].sectionNotes.indexOf(p)][1] = intendedData;
 					_song.notes[curSec].sectionNotes[_song.notes[curSec].sectionNotes.indexOf(p)][4] = true;
