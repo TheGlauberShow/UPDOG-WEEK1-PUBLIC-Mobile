@@ -57,8 +57,6 @@ import funkin.backend.MusicBeatSubstate;
 import funkin.backend.SyncedFlxSoundGroup;
 import flixel.addons.ui.FlxUIDropDownMenu;
 
-import funkin.states.editors.ChartingOptionsSubmenu;
-
 using StringTools;
 
 #if sys
@@ -4007,7 +4005,7 @@ class ChartingInfoSubstate extends MusicBeatSubstate
 	{
 		ChartingState.textBox.updateHitbox();
 		if (FlxG.keys.justPressed.ESCAPE)
-		/*
+		// hmm
 		{
 			for (text in textGrp)
 			{
@@ -4039,7 +4037,7 @@ class ChartingOptionsSubmenu extends MusicBeatSubstate
 		'Play from beginning',
 		'Play from here',
 		'Set start time',
-		'Play from start time' /*, 'Botplay',
+		'Play from start time' /*, 'Botplay'*/,
 		'Exit to main menu'
 	]; // shamelessly stolen from andromeda im sorry
 	var curSelected:Int = 0;
@@ -4080,7 +4078,7 @@ class ChartingOptionsSubmenu extends MusicBeatSubstate
 	override public function update(elapsed:Float)
 	{
 		if (FlxG.keys.justPressed.ESCAPE && canexit)
-		*/
+		// hmm
 		{
 			close();
 		}
