@@ -64,6 +64,7 @@
 	<assets path="assets/shared"        exclude="*.ogg" 		if="web"/>
 	<assets path="assets/shared"        exclude="*.mp3" 		unless="web"/>
 	<assets path="assets/videos"        library="videos"        if="VIDEOS_ALLOWED"/>
+	<assets path="content/fonts" /> <!-- fonts for the game, not the engine -->
 
 	<library name="videos"        preload="true" if="VIDEOS_ALLOWED"/>
 	<library name="songs"         preload="true" />

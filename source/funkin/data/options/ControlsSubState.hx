@@ -478,7 +478,7 @@ class ControlText extends FlxText // quick and easy
 	{
 		super(x, y, 0, text, 25);
 		
-		this.setFormat(Paths.font("bahn.ttf"), 25, 0xFFFFFF, LEFT, OUTLINE, FlxColor.BLACK);
+		this.setFormat(Paths.font("bahn"), 25, 0xFFFFFF, LEFT, OUTLINE, FlxColor.BLACK);
 	}
 	
 	override function update(elapsed:Float)

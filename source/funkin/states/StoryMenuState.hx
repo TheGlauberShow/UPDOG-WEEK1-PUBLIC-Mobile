@@ -123,24 +123,24 @@ class StoryMenuState extends MusicBeatState
 		
 		// KEEP AS VARS
 		var storyText:FlxText = new FlxText(40, 20, -1, 'Story');
-		storyText.setFormat(Paths.font("bahn.ttf"), 60, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		storyText.setFormat(Paths.font("bahn"), 60, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		var diffText2:FlxText = new FlxText(70, 450, -1, 'Difficulty:');
-		diffText2.setFormat(Paths.font("bahn.ttf"), 50, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		diffText2.setFormat(Paths.font("bahn"), 50, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		// THE WEEK NAME
 		weekText = new FlxText(70, 170, -1, 't');
-		weekText.setFormat(Paths.font("bahn.ttf"), 60, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		weekText.setFormat(Paths.font("bahn"), 60, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		// THE WEEK NAME TEXT
 		weekNameText = new FlxText(70, 250, -1, '"Polus Problem"');
-		weekNameText.setFormat(Paths.font("bahn.ttf"), 50, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		weekNameText.setFormat(Paths.font("bahn"), 50, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		// SONGS LIST
 		songsText = new FlxText(300, 315, -1, '');
-		songsText.setFormat(Paths.font("bahn.ttf"), 25, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		songsText.setFormat(Paths.font("bahn"), 25, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		// DIF
 		diffText = new FlxText(370, 15, -1, 'Difficulty');
-		diffText.setFormat(Paths.font("bahn.ttf"), 35, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		diffText.setFormat(Paths.font("bahn"), 35, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		// SCORE LIST
 		scoreText = new FlxText(23, 515, 543, 'FIX YO CODE FATASS!');
-		scoreText.setFormat(Paths.font("bahn.ttf"), 50, 0xFFFFFF, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scoreText.setFormat(Paths.font("bahn"), 50, 0xFFFFFF, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		for (i in [storyText, diffText2, weekText, weekNameText, songsText, scoreText, diffText])
 		{
 			i.borderSize = 2.5;

@@ -750,7 +750,7 @@ class PlayState extends MusicBeatState
 		moveCameraSection();
 		
 		botplayTxt = new FlxText(400, 525, FlxG.width - 800, "BOTPLAY", 32);
-		botplayTxt.setFormat(Paths.font("liber.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		botplayTxt.setFormat(Paths.font("liber"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;
 		botplayTxt.visible = cpuControlled;

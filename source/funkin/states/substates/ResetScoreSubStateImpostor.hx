@@ -44,7 +44,7 @@ class ResetScoreSubStateImpostor extends MusicBeatSubstate
 		add(bg);
 
 		var yo = new FlxText(0, 0, FlxG.width, "Do you want to reset your current score?", 48);
-		yo.setFormat(Paths.font("liber.ttf"), 48, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		yo.setFormat(Paths.font("liber"), 48, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		yo.screenCenter();
 		yo.y -= 75;
 		yo.borderSize = 1.25;
@@ -52,7 +52,7 @@ class ResetScoreSubStateImpostor extends MusicBeatSubstate
 		add(yo);
 
 		yesText = new FlxText(0, 0, FlxG.width, "Yes", 48);
-		yesText.setFormat(Paths.font("liber.ttf"), 48, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		yesText.setFormat(Paths.font("liber"), 48, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		yesText.screenCenter();
 		yesText.x -= 200;
 		yesText.borderSize = 1.25;
@@ -60,7 +60,7 @@ class ResetScoreSubStateImpostor extends MusicBeatSubstate
 		add(yesText);
 		
 		noText = new FlxText(0, 0, FlxG.width, "No", 48);
-		noText.setFormat(Paths.font("liber.ttf"), 48, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		noText.setFormat(Paths.font("liber"), 48, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		noText.screenCenter();
 		noText.x += 200;
 		noText.borderSize = 1.25;

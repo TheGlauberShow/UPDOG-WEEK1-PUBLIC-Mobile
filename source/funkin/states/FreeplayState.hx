@@ -122,12 +122,12 @@ class FreeplayState extends MusicBeatState
 		var overlay:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image(ext + 'menu'));
 		
 		diffText = new FlxText(370, 15, -1, 'Difficulty');
-		diffText.setFormat(Paths.font("bahn.ttf"), 35, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		diffText.setFormat(Paths.font("bahn"), 35, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scText = new FlxText(370, 60, -1, 'Score');
-		scText.setFormat(Paths.font("bahn.ttf"), 35, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scText.setFormat(Paths.font("bahn"), 35, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		
 		var storyText:FlxText = new FlxText(40, 20, -1, 'Freeplay');
-		storyText.setFormat(Paths.font("bahn.ttf"), 60, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		storyText.setFormat(Paths.font("bahn"), 60, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		
 		for (i in [starBG, starFG, mainbackground, dark, port])
 		{
@@ -147,7 +147,7 @@ class FreeplayState extends MusicBeatState
 		}
 		
 		weekText = new FlxText(40, 125, -1, 'Week FUCK!');
-		weekText.setFormat(Paths.font("bahn.ttf"), 60, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		weekText.setFormat(Paths.font("bahn"), 60, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		
 		for (i in [storyText, diffText, scText, weekText])
 		{
@@ -232,7 +232,7 @@ class FreeplayState extends MusicBeatState
 			rankgrp.add(rank);
 			
 			var s:FlxText = new FlxText(-400, 282 - (curSong * 125) + (i * 125), -1, isWeekLocked ? '???' : songs[i][0]);
-			s.setFormat(Paths.font("bahn.ttf"), 35, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			s.setFormat(Paths.font("bahn"), 35, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			s.borderSize = 2.5;
 			s.alpha = (i >= 1 ? 0.5 : 1);
 			s.ID = i;
@@ -241,7 +241,7 @@ class FreeplayState extends MusicBeatState
 			
 			var c:FlxText = new FlxText(-400, 345 - (curSong * 125) + (i * 125), -1,
 				(isWeekLocked ? 'Complete ' + CoolUtil.capitalize(WeekData.weeksList[curWeek]) + ' to unlock this song!' : songs[i][3]));
-			c.setFormat(Paths.font("bahn.ttf"), 20, 0xFFFFFF, FlxTextAlign.LEFT);
+			c.setFormat(Paths.font("bahn"), 20, 0xFFFFFF, FlxTextAlign.LEFT);
 			c.antialiasing = ClientPrefs.globalAntialiasing;
 			c.alpha = (i >= 1 ? 0.5 : 1);
 			c.ID = i;

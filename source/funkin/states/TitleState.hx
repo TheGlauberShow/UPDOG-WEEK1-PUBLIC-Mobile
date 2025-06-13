@@ -252,7 +252,7 @@ class TitleState extends MusicBeatState
 		ct.scrollFactor.set();
 		
 		lt = new FlxText(0, 715, 1280, 'Press Enter to Start');
-		lt.setFormat(Paths.font("bahn.ttf"), 25, 0xFFFFFF, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		lt.setFormat(Paths.font("bahn"), 25, 0xFFFFFF, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		lt.y -= lt.height;
 		lt.borderSize = 2.5;
 		lt.antialiasing = ClientPrefs.globalAntialiasing;
@@ -279,7 +279,7 @@ class TitleState extends MusicBeatState
 		colorSwap.saturation = -1;
 		
 		var versionText:FlxText = new FlxText(0, (alreadyBeenInMenu ? 0 : -70), 1280, versionString);
-		versionText.setFormat(Paths.font("bahn.ttf"), 25, FlxColor.WHITE, FlxTextAlign.CENTER);
+		versionText.setFormat(Paths.font("bahn"), 25, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(versionText);
 		versionText.antialiasing = ClientPrefs.globalAntialiasing;
 		versionText.scrollFactor.set();
@@ -310,10 +310,10 @@ class TitleState extends MusicBeatState
 			but.ID = i;
 			//  It's not letting me do it the normal and not stupid way
 			var txt:FlxText = new FlxText(buttons[i][0] + (i > 2 ? 0 : 9.4) - (alreadyBeenInMenu ? 0 : 500), buttons[i][1] + 11.35, (i > 2 ? 113 : -1), buttons[i][3]);
-			txt.setFormat(Paths.font("notosans.ttf"), 35, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			txt.setFormat(Paths.font("notosans"), 35, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			if (i > 2)
 			{ // UGH
-				txt.setFormat(Paths.font("notosans.ttf"), 35, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+				txt.setFormat(Paths.font("notosans"), 35, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 				txt.y += but.height;
 				if (v2Check)
 				{

@@ -58,7 +58,7 @@ class SusHUD extends BaseHUD
 		add(iconP2);
 		
 		scoreTxt = new FlxText(0, !ClientPrefs.downScroll ? healthBar.y + 45 : healthBar.y - 45, FlxG.width, "", 24);
-		scoreTxt.setFormat(Paths.font("liber.ttf"), 24, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scoreTxt.setFormat(Paths.font("liber"), 24, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		// scoreTxt.borderSize = 1.25;
 		scoreTxt.visible = !ClientPrefs.hideHud;
@@ -66,7 +66,7 @@ class SusHUD extends BaseHUD
 		add(scoreTxt);
 		
 		ratingText = new FlxText(0, ClientPrefs.downScroll ? FlxG.height * 0.8 : FlxG.height * 0.1, FlxG.width, '');
-		ratingText.setFormat(Paths.font("bahn.ttf"), 48, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		ratingText.setFormat(Paths.font("bahn"), 48, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		ratingText.screenCenter(X);
 		ratingText.antialiasing = ClientPrefs.globalAntialiasing;
 		ratingText.borderSize = 2.5;
@@ -255,7 +255,7 @@ class SusHUD extends BaseHUD
 	inline function setupScoreNum()
 	{
 		var num = new FlxText(0, ClientPrefs.downScroll ? FlxG.height * 0.85 : FlxG.height * 0.14, 0, '0');
-		num.setFormat(Paths.font("liber.ttf"), 65, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		num.setFormat(Paths.font("liber"), 65, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		num.borderSize = 5;
 		num.antialiasing = ClientPrefs.globalAntialiasing;
 		

@@ -962,7 +962,7 @@ function buildMeltdownBG()
 	greenTable.zIndex = 14;
 	
 	investigationText = new FlxText(180, 1000, 480, "Investigation ends in 0", true);
-	investigationText.setFormat(Paths.font("bahn.ttf"), 24, 0xFFFFFF, "center");
+	investigationText.setFormat(Paths.font("bahn"), 24, 0xFFFFFF, "center");
 	investigationText.cameras = [game.camHUD];
 	investigationText.alpha = 1;
 	investigationText.antialiasing = ClientPrefs.globalAntialiasing;

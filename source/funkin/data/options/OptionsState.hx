@@ -100,7 +100,7 @@ class OptionsState extends MusicBeatState
 		add(phone);
 		// please come up with better variable names im begging bro
 		boiText = new FlxText(500,110,640,welcomeHereBruh[0]);
-		boiText.setFormat(Paths.font("bahn.ttf"), 50, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		boiText.setFormat(Paths.font("bahn"), 50, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		boiText.borderSize = 1;
 		boiText.y -= boiText.height/2;
 		boiText.antialiasing = ClientPrefs.globalAntialiasing;
@@ -111,7 +111,7 @@ class OptionsState extends MusicBeatState
 		add(boiImage);
 
 		boiText2 = new FlxText(500,510,640,welcomeHereBruh[1]);
-		boiText2.setFormat(Paths.font("bahn.ttf"), 25, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		boiText2.setFormat(Paths.font("bahn"), 25, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		boiText2.borderSize = 1;
 		boiText2.antialiasing = ClientPrefs.globalAntialiasing;
 		add(boiText2);
@@ -126,7 +126,7 @@ class OptionsState extends MusicBeatState
 			but.ID = i;
 			//  It's not letting me do it the normal and not stupid way
 			var txt:FlxText = new FlxText(buttons[i][0] + 9.4, buttons[i][1] + 11.35, -1, buttons[i][3]);
-			txt.setFormat(Paths.font("notosans.ttf"), 35, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			txt.setFormat(Paths.font("notosans"), 35, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			txt.borderSize = 2.5;
 			txt.ID = i;
 			txt.antialiasing = ClientPrefs.globalAntialiasing;

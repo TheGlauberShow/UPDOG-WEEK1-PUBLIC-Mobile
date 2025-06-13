@@ -613,10 +613,10 @@ class Paths
         var assetPath:String = findAsset('fonts/$key.ttf');
         if (assetPath != null) return assetPath;
 
-        var fallback:String = getPath('fonts/$key.ttf', AssetType.FONT);
+        /*var fallback:String = getPath('fonts/$key.ttf', AssetType.FONT);
         if (mobile.backend.AssetUtils.assetExists(fallback) ||
             OpenFlAssets.exists(fallback, AssetType.FONT))
-            return fallback;
+            return fallback;*/
 
         trace('Font file ($key) not found');
         NativeAPI.showMessageBox("Path Error", "The font file \"" + key + "\" could not be found. Please check the file path or ensure the font file exists in the assets or mods folder.");

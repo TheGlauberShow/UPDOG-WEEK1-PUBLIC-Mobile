@@ -72,12 +72,12 @@ class BaseOptionsMenu extends MusicBeatSubstate
 
 
 		var titleText:FlxText = new FlxText(500,106,0,title);
-		titleText.setFormat(Paths.font("bahn.ttf"), 25, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		titleText.setFormat(Paths.font("bahn"), 25, 0xFFFFFF, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		titleText.antialiasing = ClientPrefs.globalAntialiasing;
 		add(titleText);
 
 		descText = new FlxText(500,630,640,'Ghost Tapping is an overall bad option and you should');
-		descText.setFormat(Paths.font("bahn.ttf"), 25, 0xFFFFFF, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		descText.setFormat(Paths.font("bahn"), 25, 0xFFFFFF, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		descText.borderSize = 1;
 		descText.y = 630 - descText.height;
 		descText.antialiasing = ClientPrefs.globalAntialiasing;
@@ -87,7 +87,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		{
 			trace('opp');
 			var optionText:FlxText = new FlxText(0, 160+(30 * i), -1, optionsArray[i].name);
-			optionText.setFormat(Paths.font("bahn.ttf"), 25, 0xFFFFFF, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			optionText.setFormat(Paths.font("bahn"), 25, 0xFFFFFF, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			optionText.borderSize = 1;
 			optionText.ID = i;
 			optionText.antialiasing = ClientPrefs.globalAntialiasing;
@@ -108,7 +108,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			{
 				trace('bra');
 				var valueText:FlxText = new FlxText(500,optionText.y, 640, optionsArray[i].getValue());// optionText.width + 60);
-				valueText.setFormat(Paths.font("bahn.ttf"), 25, 0x62E0CF, FlxTextAlign.RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+				valueText.setFormat(Paths.font("bahn"), 25, 0x62E0CF, FlxTextAlign.RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 				//valueText.copyAlpha = true;
 				valueText.ID = i;
 				valueText.borderSize = 1;
