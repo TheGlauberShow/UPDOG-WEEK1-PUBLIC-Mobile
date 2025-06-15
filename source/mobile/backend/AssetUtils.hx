@@ -158,6 +158,12 @@ class AssetUtils
     {
         return Assets.list(type);
     }
+    // ou este usando o OpenFLAssets
+    // Exemplo: (later...)
+    public static function listAssetsOpenFL(prefix:String):Array<String>
+    {
+        return openfl.utils.Assets.list(prefix);
+    }
 
     /**
      * Lê o conteúdo de um asset interno (arquivo embutido no app) como texto.

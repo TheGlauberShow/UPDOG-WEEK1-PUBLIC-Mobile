@@ -249,7 +249,19 @@ class FunkinIris extends FunkinScript
 		if (name == null)
 			name = file;
 
-		return new FunkinIris(File.getContent(file), name, additionalVars);
+		var scriptContent:String = null;
+		var assetPath = Paths.findAsset(file);
+		if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath))
+			scriptContent = mobile.backend.AssetUtils.getAssetContent(assetPath);
+
+		if (scriptContent == null)
+		{
+			trace('Script not found: $file');
+			NativeAPI.showMessageBox("Script Error", "The script \"" + file + "\" could not be found.");
+			return null;
+		}
+
+		return fromString(scriptContent, name, additionalVars);
 	}
 
 	public static function InitLogger()
@@ -561,14 +573,25 @@ class FunkinIris extends FunkinScript
 		{ // returns a FlxRuntimeShader but with file names lol
 			var runtime:flixel.addons.display.FlxRuntimeShader = null;
 
+			function getShaderContent(path:String):String
+			{
+				if (path == null) return null;
+				var assetPath = Paths.findAsset(path);
+				if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath))
+					return mobile.backend.AssetUtils.getAssetContent(assetPath);
+				return null;
+			}
+
 			try
 			{
-				runtime = new flixel.addons.display.FlxRuntimeShader(fragFile == null ? null : Paths.getContent(Paths.modsShaderFragment(fragFile)),
-					vertFile == null ? null : Paths.getContent(Paths.modsShaderVertex(vertFile)));
+				var fragContent = fragFile == null ? null : getShaderContent(Paths.modsShaderFragment(fragFile));
+				var vertContent = vertFile == null ? null : getShaderContent(Paths.modsShaderVertex(vertFile));
+				runtime = new flixel.addons.display.FlxRuntimeShader(fragContent, vertContent);
 			}
 			catch (e:Dynamic)
 			{
 				trace("Shader compilation error:" + e.message);
+				NativeAPI.showMessageBox('Shader compilation error: ' + Std.string(e));
 			}
 
 			return runtime ?? new flixel.addons.display.FlxRuntimeShader();

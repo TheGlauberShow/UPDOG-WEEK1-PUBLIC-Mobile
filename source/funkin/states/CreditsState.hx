@@ -49,7 +49,7 @@ class CreditsState extends MusicBeatState
 
 		#if MODS_ALLOWED
 		var path:String = 'modsList.txt';
-		if (FileSystem.exists(path))
+		if (mobile.backend.AssetUtils.assetExists(path))
 		{
 			var leMods:Array<String> = CoolUtil.coolTextFile(path);
 			for (i in 0...leMods.length)
@@ -77,6 +77,14 @@ class CreditsState extends MusicBeatState
 		// were gonna need to update these credits later lol //data todo //still todo lol
 		var pisspoop:Array<Array<String>> = [
 			// Name - Icon name - Description - Link - BG Color
+			['SOURCING TEAM']
+			[
+				'source-xyz'
+				'sys'
+				'Android Porter'
+				'https://youtube.com/sysource-xyz'
+				'0x19A5DD'
+			]
 			['NIGHTMARISH FEDS'],
 			[
 				'DuskieWhy',
@@ -434,15 +442,16 @@ class CreditsState extends MusicBeatState
 
 	function pushModCreditsToList(folder:String)
 	{
+		// Internal Version -- @TheGlauberShow (pending)
 		if (modsAdded.contains(folder)) return;
 
 		var creditsFile:String = null;
 		if (folder != null && folder.trim().length > 0) creditsFile = Paths.mods(folder + '/data/credits.txt');
 		else creditsFile = Paths.mods('data/credits.txt');
 
-		if (FileSystem.exists(creditsFile))
+		if (mobile.backend.AssetUtils.assetExists(creditsFile))
 		{
-			var firstarray:Array<String> = File.getContent(creditsFile).split('\n');
+			var firstarray:Array<String> = mobile.backend.AssetUtils.getAssetContent(creditsFile).split('\n');
 			for (i in firstarray)
 			{
 				var arr:Array<String> = i.replace('\\n', '\n').split("::");

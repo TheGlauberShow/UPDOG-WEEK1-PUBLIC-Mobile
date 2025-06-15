@@ -578,8 +578,10 @@ class PlayState extends MusicBeatState
 		// "GLOBAL" SCRIPTS
 		var filesPushed:Array<String> = [];
 		var foldersToCheck:Array<String> = [Paths.getSharedPath('scripts/')];
+
+		var listContents:Array<String> = mobile.backend.AssetUtils.listAssetsOpenFL('scripts/');
 		
-		#if MODS_ALLOWED
+		#if MODS_ALLOWED // not needed
 		foldersToCheck.insert(0, Paths.mods('scripts/'));
 		if (Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0) foldersToCheck.insert(0, Paths.mods(Paths.currentModDirectory + '/scripts/'));
 		
@@ -587,36 +589,34 @@ class PlayState extends MusicBeatState
 			foldersToCheck.insert(0, Paths.mods(mod + '/scripts/'));
 		#end
 		
-		for (folder in foldersToCheck)
+		for (file in listContents)
 		{
-			if (FileSystem.exists(folder))
+			var fileName = file.substr('scripts/'.length);
+			if (!filesPushed.contains(fileName))
 			{
-				for (file in FileSystem.readDirectory(folder))
+				if (file.endsWith('.lua'))
 				{
-					if (!filesPushed.contains(file))
+					if (file.endsWith('.lua'))
 					{
-						if (file.endsWith('.lua'))
+						#if LUA_ALLOWED
+						var script = new FunkinLua(folder + file);
+						luaArray.push(script);
+						funkyScripts.push(script);
+						filesPushed.push(file);
+						#end
+					}
+					else
+					{
+						for (ext in FunkinIris.exts)
 						{
-							#if LUA_ALLOWED
-							var script = new FunkinLua(folder + file);
-							luaArray.push(script);
-							funkyScripts.push(script);
-							filesPushed.push(file);
-							#end
-						}
-						else
-						{
-							for (ext in FunkinIris.exts)
+							if (file.endsWith('.$ext'))
 							{
-								if (file.endsWith('.$ext'))
+								var script = initFunkinIris(folder + file);
+								if (script != null)
 								{
-									var script = initFunkinIris(folder + file);
-									if (script != null)
-									{
-										filesPushed.push(file);
-									}
-									break;
+									filesPushed.push(file);
 								}
+								break;
 							}
 						}
 					}
@@ -778,7 +778,7 @@ class PlayState extends MusicBeatState
 		var filesPushed:Array<String> = [];
 		var foldersToCheck:Array<String> = [Paths.getSharedPath('songs/' + Paths.formatToSongPath(SONG.song) + '/')];
 		
-		#if MODS_ALLOWED
+		#if MODS_ALLOWED // not needed
 		foldersToCheck.insert(0, Paths.mods('songs/' + Paths.formatToSongPath(SONG.song) + '/'));
 		if (Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0) foldersToCheck.insert(0,
 			Paths.mods(Paths.currentModDirectory + '/songs/' + Paths.formatToSongPath(SONG.song) + '/'));
@@ -786,38 +786,50 @@ class PlayState extends MusicBeatState
 		for (mod in Paths.getGlobalMods())
 			foldersToCheck.insert(0, Paths.mods(mod + '/songs/' + Paths.formatToSongPath(SONG.song) + '/')); // using push instead of insert because these should run after everything else
 		#end
+
+		// List of all assets when starts with "songs/name-of-the-song/"
+		var songAssetPrefix = '';
+		var possiblePrefixes = [
+			'songs/' + Paths.formatToSongPath(SONG.song) + '/',
+			'content/songs/' + Paths.formatToSongPath(SONG.song) + '/',
+			'assets/songs/' + Paths.formatToSongPath(SONG.song) + '/',
+			'assets/shared/songs/' + Paths.formatToSongPath(SONG.song) + '/'
+		];
+		for (prefix in possiblePrefixes) {
+			if (Paths.findAsset(prefix) != null) {
+				songAssetPrefix = prefix;
+				break;
+			}
+		}
+		if (songAssetPrefix == '') songAssetPrefix = 'songs/' + Paths.formatToSongPath(SONG.song) + '/';
+		var listofSongs:Array<String> = mobile.backend.AssetUtils.listAssets(songAssetPrefix);
 		
-		for (folder in foldersToCheck)
+		for (file in listofSongs)
 		{
-			if (FileSystem.exists(folder))
+			var fileName = file.substr(songAssetPrefix.length);
+			if (!filesPushed.contains(fileName))
 			{
-				for (file in FileSystem.readDirectory(folder))
+				if (file.endsWith('.lua'))
 				{
-					if (!filesPushed.contains(file))
+					#if LUA_ALLOWED
+					var script = new FunkinLua(folder + file);
+					luaArray.push(script);
+					funkyScripts.push(script);
+					filesPushed.push(file);
+					#end
+				}
+				else
+				{
+					for (ext in FunkinIris.exts)
 					{
-						if (file.endsWith('.lua'))
+						if (file.endsWith('.$ext'))
 						{
-							#if LUA_ALLOWED
-							var script = new FunkinLua(folder + file);
-							luaArray.push(script);
-							funkyScripts.push(script);
-							filesPushed.push(file);
-							#end
-						}
-						else
-						{
-							for (ext in FunkinIris.exts)
+							var sc = initFunkinIris(folder + file);
+							if (sc != null)
 							{
-								if (file.endsWith('.$ext'))
-								{
-									var sc = initFunkinIris(folder + file);
-									if (sc != null)
-									{
-										filesPushed.push(file);
-									}
-									break;
-								}
+								filesPushed.push(file);
 							}
+							break;
 						}
 					}
 				}
@@ -1097,29 +1109,41 @@ class PlayState extends MusicBeatState
 	
 	public function startVideo(name:String):Void
 	{
-	#if VIDEOS_ALLOWED
-	var foundFile:Bool = false;
-	var fileName:String = #if MODS_ALLOWED Paths.modFolders('videos/' + name + '.' + Paths.VIDEO_EXT); #else ''; #end
-	#if sys
-	if (FileSystem.exists(fileName))
-	{
-		foundFile = true;
-	}
-	#end
-	
-	if (!foundFile)
-	{
-		fileName = Paths.video(name);
-		#if sys
-		if (FileSystem.exists(fileName))
+		// Internal Version -- @TheGlauberShow
+		#if VIDEOS_ALLOWED
+		var foundFile:Bool = false;
+		var fileName:String = '';
+
+		var possiblePaths = [
+			'videos/' + name + '.' + Paths.VIDEO_EXT,
+			'assets/videos/' + name + '.' + Paths.VIDEO_EXT,
+			'content/videos/' + name + '.' + Paths.VIDEO_EXT
+		];
+
+		for (path in possiblePaths)
 		{
-		#else
-		if (OpenFlAssets.exists(fileName))
-		{
-		#end
-			foundFile = true;
+			var assetPath = Paths.findAsset(path);
+			if (assetPath != null)
+			{
+				fileName = assetPath;
+				foundFile = true;
+				break;
+			}
 		}
-		} if (foundFile)
+
+		// no #if MODS_ALLOWED
+	
+		if (!foundFile)
+		{
+			var assetPath = Paths.findAsset('videos/' + name + '.' + Paths.VIDEO_EXT);
+			if (assetPath != null)
+			{
+				fileName = assetPath;
+				foundFile = true;
+			}
+		}
+
+		if (foundFile)
 		{
 			inCutscene = true;
 			var bg = new funkin.states.transitions.FadeTransition.FixedFlxBGSprite();
@@ -1533,17 +1557,22 @@ class PlayState extends MusicBeatState
 	
 	function getEvents()
 	{
+		// Internal Version -- @TheGlauberShow
 		var songData = SONG;
 		var events:Array<EventNote> = [];
 		var songName:String = Paths.formatToSongPath(SONG.song);
 		var file:String = Paths.json(songName + '/events');
-		#if MODS_ALLOWED
-		if (FileSystem.exists(Paths.modsJson(songName + '/events')) || FileSystem.exists(file) || OpenFlAssets.exists(file))
+		var loaded:Bool = false;
+		if (
+			OpenFlAssets.exists(file) ||
+			mobile.backend.AssetUtils.assetExists(file) ||
+			Paths.findAsset(file) != null
+		)
 		{
-		#else
-		if (OpenFlAssets.exists(file))
+			loaded = true;
+		}
+		if (loaded)
 		{
-		#end
 			trace('events loaded');
 			var eventsData:Array<Dynamic> = Song.loadFromJson('events', songName).events;
 			for (event in eventsData) // Event Notes
@@ -1563,11 +1592,6 @@ class PlayState extends MusicBeatState
 				}
 			}
 			// this is mainly to shut my syntax highlighting up
-		#if MODS_ALLOWED
-		}
-		#else
-		}
-		#end
 		
 		for (event in songData.events) // Event Notes
 		{
@@ -1674,10 +1698,13 @@ class PlayState extends MusicBeatState
 			{
 				if (doPush) break;
 				var baseFile = '$baseScriptFile.$ext';
-				var files = [#if MODS_ALLOWED Paths.modFolders(baseFile), #end Paths.getSharedPath(baseFile), Paths.findAsset(baseFile)];
+				var files = [
+					Paths.getSharedPath(baseFile),
+					Paths.findAsset(baseFile)
+				];
 				for (file in files)
 				{
-					if (FileSystem.exists(file))
+					if (file != null && (mobile.backend.AssetUtils.assetExists(file) || OpenFlAssets.exists(file)))
 					{
 						if (ext == LUA)
 						{
@@ -1721,10 +1748,13 @@ class PlayState extends MusicBeatState
 			{
 				if (doPush) break;
 				var baseFile = '$baseScriptFile.$ext';
-				var files = [#if MODS_ALLOWED Paths.modFolders(baseFile), #end Paths.getSharedPath(baseFile), Paths.findAsset(baseFile)];
+				var files = [
+					Paths.getSharedPath(baseFile),
+					Paths.findAsset(baseFile)
+				];
 				for (file in files)
 				{
-					if (FileSystem.exists(file))
+					if (file != null && (mobile.backend.AssetUtils.assetExists(file) || OpenFlAssets.exists(file)))
 					{
 						if (ext == LUA)
 						{

@@ -59,15 +59,19 @@ class MusicBeatSubstate extends FlxSubState
 		scriptName = s;
 
 		var scriptFile = FunkinIris.getPath('scripts/menus/substates/$scriptName', false);
+		var foundScript:Bool = false;
 
-		if (FileSystem.exists(scriptFile))
+		var assetPath = Paths.findAsset(scriptFile);
+		if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath))
 		{
-			script = OverrideStateScript.fromFile(scriptFile);
-			trace('$scriptName script [$scriptFile] found!');
+			script = OverrideStateScript.fromFile(assetPath);
+			trace('$scriptName script [$assetPath] found!');
+			foundScript = true;
 		}
-		else
+		if (!foundScript)
 		{
 			trace('$scriptName script [$scriptFile] is null!');
+			NativeAPI.showMessageBox("MusicBeatSubstate Error", "$scriptName script [$scriptFile] is null!.");
 		}
 
 		setOnScript('add', this.add);

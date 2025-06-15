@@ -225,37 +225,14 @@ class FunkinLua extends FunkinScript
 			var cervix = luaFile + ".lua";
 			if (luaFile.endsWith(".lua")) cervix = luaFile;
 			var doPush = false;
-			#if MODS_ALLOWED
-			if (FileSystem.exists(Paths.modFolders(cervix)))
-			{
-				cervix = Paths.modFolders(cervix);
-				doPush = true;
-			}
-			else if (FileSystem.exists(cervix))
-			{
-				doPush = true;
-			}
-			else
+			if (mobile.backend.AssetUtils.assetExists(cervix))
 			{
 				var assetPath = Paths.findAsset(cervix);
-				#if sys
-				if (assetPath != null && sys.FileSystem.exists(assetPath)) {
-				    cervix = assetPath;
-				    doPush = true;
-				} else
-				#end
 				if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
 				    cervix = assetPath;
 				    doPush = true;
 				}
 			}
-			#else
-			cervix = Paths.getSharedPath(cervix);
-			if (Assets.exists(cervix))
-			{
-				doPush = true;
-			}
-			#end
 			if (doPush)
 			{
 				for (luaInstance in PlayState.instance.luaArray)
@@ -289,37 +266,14 @@ class FunkinLua extends FunkinScript
 			var cervix = luaFile + ".lua";
 			if (luaFile.endsWith(".lua")) cervix = luaFile;
 			var doPush = false;
-			#if MODS_ALLOWED
-			if (FileSystem.exists(Paths.modFolders(cervix)))
-			{
-				cervix = Paths.modFolders(cervix);
-				doPush = true;
-			}
-			else if (FileSystem.exists(cervix))
-			{
-				doPush = true;
-			}
-			else
+			if (mobile.backend.AssetUtils.assetExists(cervix))
 			{
 				var assetPath = Paths.findAsset(cervix);
-				#if sys
-				if (assetPath != null && sys.FileSystem.exists(assetPath)) {
-				    cervix = assetPath;
-				    doPush = true;
-				} else
-				#end
 				if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
 				    cervix = assetPath;
 				    doPush = true;
 				}
 			}
-			#else
-			cervix = Paths.getSharedPath(cervix);
-			if (Assets.exists(cervix))
-			{
-				doPush = true;
-			}
-			#end
 			if (doPush)
 			{
 				for (luaInstance in PlayState.instance.luaArray)
@@ -357,37 +311,14 @@ class FunkinLua extends FunkinScript
 			var cervix = luaFile + ".lua";
 			if (luaFile.endsWith(".lua")) cervix = luaFile;
 			var doPush = false;
-			#if MODS_ALLOWED
-			if (FileSystem.exists(Paths.modFolders(cervix)))
-			{
-				cervix = Paths.modFolders(cervix);
-				doPush = true;
-			}
-			else if (FileSystem.exists(cervix))
-			{
-				doPush = true;
-			}
-			else
+			if (mobile.backend.AssetUtils.assetExists(cervix))
 			{
 				var assetPath = Paths.findAsset(cervix);
-				#if sys
-				if (assetPath != null && sys.FileSystem.exists(assetPath)) {
-				    cervix = assetPath;
-				    doPush = true;
-				} else
-				#end
 				if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
 				    cervix = assetPath;
 				    doPush = true;
 				}
 			}
-			#else
-			cervix = Paths.getSharedPath(cervix);
-			if (Assets.exists(cervix))
-			{
-				doPush = true;
-			}
-			#end
 			if (doPush)
 			{
 				for (luaInstance in PlayState.instance.luaArray)
@@ -404,37 +335,14 @@ class FunkinLua extends FunkinScript
 			var cervix = luaFile + ".lua";
 			if (luaFile.endsWith(".lua")) cervix = luaFile;
 			var doPush = false;
-			#if MODS_ALLOWED
-			if (FileSystem.exists(Paths.modFolders(cervix)))
-			{
-				cervix = Paths.modFolders(cervix);
-				doPush = true;
-			}
-			else if (FileSystem.exists(cervix))
-			{
-				doPush = true;
-			}
-			else
+			if (mobile.backend.AssetUtils.assetExists(cervix))
 			{
 				var assetPath = Paths.findAsset(cervix);
-				#if sys
-				if (assetPath != null && sys.FileSystem.exists(assetPath)) {
-				    cervix = assetPath;
-				    doPush = true;
-				} else
-				#end
 				if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
 				    cervix = assetPath;
 				    doPush = true;
 				}
 			}
-			#else
-			cervix = Paths.getSharedPath(cervix);
-			if (Assets.exists(cervix))
-			{
-				doPush = true;
-			}
-			#end
 			if (doPush)
 			{
 				for (luaInstance in PlayState.instance.luaArray)
@@ -506,37 +414,14 @@ class FunkinLua extends FunkinScript
 			var cervix = luaFile + ".lua";
 			if (luaFile.endsWith(".lua")) cervix = luaFile;
 			var doPush = false;
-			#if MODS_ALLOWED
-			if (FileSystem.exists(Paths.modFolders(cervix)))
-			{
-				cervix = Paths.modFolders(cervix);
-				doPush = true;
-			}
-			else if (FileSystem.exists(cervix))
-			{
-				doPush = true;
-			}
-			else
+			if (mobile.backend.AssetUtils.assetExists(cervix))
 			{
 				var assetPath = Paths.findAsset(cervix);
-				#if sys
-				if (assetPath != null && sys.FileSystem.exists(assetPath)) {
-				    cervix = assetPath;
-				    doPush = true;
-				} else
-				#end
 				if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
 				    cervix = assetPath;
 				    doPush = true;
 				}
 			}
-			#else
-			cervix = Paths.getSharedPath(cervix);
-			if (Assets.exists(cervix))
-			{
-				doPush = true;
-			}
-			#end
 
 			if (doPush)
 			{
@@ -552,37 +437,14 @@ class FunkinLua extends FunkinScript
 			var cervix = luaFile + ".lua";
 			if (luaFile.endsWith(".lua")) cervix = luaFile;
 			var doPush = false;
-			#if MODS_ALLOWED
-			if (FileSystem.exists(Paths.modFolders(cervix)))
-			{
-				cervix = Paths.modFolders(cervix);
-				doPush = true;
-			}
-			else if (FileSystem.exists(cervix))
-			{
-				doPush = true;
-			}
-			else
+			if (mobile.backend.AssetUtils.assetExists(cervix))
 			{
 				var assetPath = Paths.findAsset(cervix);
-				#if sys
-				if (assetPath != null && sys.FileSystem.exists(assetPath)) {
-				    cervix = assetPath;
-				    doPush = true;
-				} else
-				#end
 				if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
 				    cervix = assetPath;
 				    doPush = true;
 				}
 			}
-			#else
-			cervix = Paths.getSharedPath(cervix);
-			if (Assets.exists(cervix))
-			{
-				doPush = true;
-			}
-			#end
 
 			if (doPush)
 			{
@@ -609,37 +471,14 @@ class FunkinLua extends FunkinScript
 			var cervix = luaFile + ".lua";
 			if (luaFile.endsWith(".lua")) cervix = luaFile;
 			var doPush = false;
-			#if MODS_ALLOWED
-			if (FileSystem.exists(Paths.modFolders(cervix)))
-			{
-				cervix = Paths.modFolders(cervix);
-				doPush = true;
-			}
-			else if (FileSystem.exists(cervix))
-			{
-				doPush = true;
-			}
-			else
+			if (mobile.backend.AssetUtils.assetExists(cervix))
 			{
 				var assetPath = Paths.findAsset(cervix);
-				#if sys
-				if (assetPath != null && sys.FileSystem.exists(assetPath)) {
-				    cervix = assetPath;
-				    doPush = true;
-				} else
-				#end
 				if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
 				    cervix = assetPath;
 				    doPush = true;
 				}
 			}
-			#else
-			cervix = Paths.getSharedPath(cervix);
-			if (Assets.exists(cervix))
-			{
-				doPush = true;
-			}
-			#end
 
 			if (doPush)
 			{
