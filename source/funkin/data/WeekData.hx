@@ -221,7 +221,7 @@ class WeekData
 		#if MODS_ALLOWED
 		if (mobile.backend.AssetUtils.assetExists("modsList.txt"))
 		{
-			var list:Array<String> = CoolUtil.listFromString(mobile.backend.AssetUtils.getContent("modsList.txt"));
+			var list:Array<String> = CoolUtil.listFromString(mobile.backend.AssetUtils.getText("modsList.txt"));
 			var foundTheTop = false;
 			for (i in list)
 			{

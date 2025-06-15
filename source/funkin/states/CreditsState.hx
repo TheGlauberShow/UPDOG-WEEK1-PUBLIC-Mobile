@@ -47,6 +47,7 @@ class CreditsState extends MusicBeatState
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
 
+		// Removed FileSystem.exists or other -- @TheGlauberShow
 		#if MODS_ALLOWED
 		var path:String = 'modsList.txt';
 		if (mobile.backend.AssetUtils.assetExists(path))
@@ -437,30 +438,44 @@ class CreditsState extends MusicBeatState
 		descBox.updateHitbox();
 	}
 
-	#if MODS_ALLOWED
+	#if MODS_ALLOWED // if needs in android, just remove this line <--
 	private var modsAdded:Array<String> = [];
 
 	function pushModCreditsToList(folder:String)
 	{
-		// Internal Version -- @TheGlauberShow (pending)
-		if (modsAdded.contains(folder)) return;
+		// Internal Version -- @TheGlauberShow
+		var listdata = [
+			'assets/shared/data/credits.txt',
+			'assets/data/credits.txt',
+			'content/data/credits.txt'
+		];
 
-		var creditsFile:String = null;
-		if (folder != null && folder.trim().length > 0) creditsFile = Paths.mods(folder + '/data/credits.txt');
-		else creditsFile = Paths.mods('data/credits.txt');
-
-		if (mobile.backend.AssetUtils.assetExists(creditsFile))
+		for (file in listdata)
 		{
-			var firstarray:Array<String> = mobile.backend.AssetUtils.getAssetContent(creditsFile).split('\n');
-			for (i in firstarray)
+			var creditsFile = Paths.findAsset(file);
+			if (mobile.backend.AssetUtils.exists(creditsFile))
 			{
-				var arr:Array<String> = i.replace('\\n', '\n').split("::");
-				if (arr.length >= 5) arr.push(folder);
-				creditsStuff.push(arr);
+				var firstarray:Array<String> = mobile.backend.AssetUtils.getText(creditsFile).split('\n');
+				for (i in firstarray)
+				{
+					var arr:Array<String> = i.replace('\\n', '\n').split("::");
+					if (arr.length >= 5) arr.push(folder);
+					creditsStuff.push(arr);
+				}
+				creditsStuff.push(['']);
+				return;
 			}
-			creditsStuff.push(['']);
+			else {
+				trace('Credits file not found: ' + creditsFile);
+				if (folder != null && folder.trim().length > 0)
+				{
+					creditsStuff.push([folder]);
+				}
+				else {
+					creditsStuff.push(['']);
+				}
+			}
 		}
-		modsAdded.push(folder);
 	}
 	#end
 

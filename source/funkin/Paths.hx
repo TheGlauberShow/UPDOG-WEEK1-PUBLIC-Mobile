@@ -661,17 +661,18 @@ class Paths
 	//inline 
 	public static function strip(path:String) return path.indexOf(':') != -1 ? path.substr(path.indexOf(':') + 1, path.length) : path;
 	
-	#if MODS_ALLOWED
+	#if MODS_ALLOWED // in project.xml this #if is just for desktop
     inline static public function mods(key:String = ""):String
     {
         return "$MODS_DIRECTORY/" + key;
     }
 
     inline static public function modsFont(key:String):String
-    {// two internal types
-        /*var fontPath = getPath('fonts/$key.ttf', AssetType.FONT);
-        return fontPath;*/
-        return "$MODS_DIRECTORY/fonts/" + key;
+    {
+        // two internal types
+        var fontPath = getPath('fonts/$key.ttf', AssetType.FONT);
+        return fontPath;
+        // return "$MODS_DIRECTORY/fonts/" + key;
     }
 
     inline static public function modsJson(key:String):String

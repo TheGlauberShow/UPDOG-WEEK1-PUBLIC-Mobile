@@ -596,28 +596,25 @@ class PlayState extends MusicBeatState
 			{
 				if (file.endsWith('.lua'))
 				{
-					if (file.endsWith('.lua'))
+					#if LUA_ALLOWED
+					var script = new FunkinLua(folder + file);
+					luaArray.push(script);
+					funkyScripts.push(script);
+					filesPushed.push(file);
+					#end
+				}
+				else
+				{
+					for (ext in FunkinIris.exts)
 					{
-						#if LUA_ALLOWED
-						var script = new FunkinLua(folder + file);
-						luaArray.push(script);
-						funkyScripts.push(script);
-						filesPushed.push(file);
-						#end
-					}
-					else
-					{
-						for (ext in FunkinIris.exts)
+						if (file.endsWith('.$ext'))
 						{
-							if (file.endsWith('.$ext'))
+							var script = initFunkinIris(folder + file);
+							if (script != null)
 							{
-								var script = initFunkinIris(folder + file);
-								if (script != null)
-								{
-									filesPushed.push(file);
-								}
-								break;
+								filesPushed.push(file);
 							}
+							break;
 						}
 					}
 				}
@@ -1706,7 +1703,7 @@ class PlayState extends MusicBeatState
 				{
 					if (file != null && (mobile.backend.AssetUtils.assetExists(file) || OpenFlAssets.exists(file)))
 					{
-						if (ext == LUA)
+						if (ext == LUA) // "lua"
 						{
 							var script = new FunkinLua(file, notetype);
 							luaArray.push(script);
@@ -1756,7 +1753,7 @@ class PlayState extends MusicBeatState
 				{
 					if (file != null && (mobile.backend.AssetUtils.assetExists(file) || OpenFlAssets.exists(file)))
 					{
-						if (ext == LUA)
+						if (ext == LUA) // "lua"
 						{
 							var script = new FunkinLua(file, event);
 							luaArray.push(script);

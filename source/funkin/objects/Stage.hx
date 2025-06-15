@@ -69,22 +69,19 @@ class Stage extends FlxTypedGroup<FlxBasic>
 
 	public function buildStage()
 	{
+		// Removed FileSystem.exists -- @TheGlauberShow
 		final baseScriptFile:String = 'stages/' + curStage;
 
 		var scriptFile = FunkinIris.getPath(baseScriptFile);
-		if (FileSystem.exists(scriptFile))
-		{
-			trace('FUCKL');
-			var script = FunkinIris.fromFile(scriptFile);
-			setupScript(script);
-		}
-		else if (Assets.exists(scriptFile))
+		var scriptLoaded = false;
+		if (Assets.exists(scriptFile))
 		{
 			var script = FunkinIris.fromString(Assets.getText(scriptFile));
 			setupScript(script);
+			scriptLoaded = true;
 		}
 		#if LUA_ALLOWED
-		else if (Paths.fileExists('$baseScriptFile.lua', TEXT))
+		if (!scriptLoaded && Paths.fileExists('$baseScriptFile.lua', TEXT))
 		{
 			var script = new FunkinLua('$baseScriptFile.lua');
 			setupScript(script);
