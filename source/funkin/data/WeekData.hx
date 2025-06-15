@@ -113,7 +113,7 @@ class WeekData
 		for (p in weekListPaths) {
 			var assetPath = Paths.findAsset(p);
 			if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
-				var txt = mobile.backend.AssetUtils.getAssetContent(assetPath);
+				var txt = mobile.backend.AssetUtils.getText(assetPath);
 				sexList = txt.split("\n").map(function(s) return s.trim()).filter(function(s) return s.length > 0);
 				break;
 			}
@@ -128,9 +128,11 @@ class WeekData
 		];
 		for (weekName in sexList) {
 			if (!weeksLoaded.exists(weekName)) {
-				var found = false;
 				for (p in weekFilePaths) {
-					var path = p.replace("{NAME}", weekName);
+				var path = p.replace("{NAME}", weekName);
+				var assetPath = Paths.findAsset(path);
+				if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
+					var week:WeekFile = getWeekFile(assetPath);
 					var assetPath = Paths.findAsset(path);
 				    if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
 						var week:WeekFile = getWeekFile(assetPath);

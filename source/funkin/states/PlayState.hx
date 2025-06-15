@@ -577,17 +577,8 @@ class PlayState extends MusicBeatState
 		
 		// "GLOBAL" SCRIPTS
 		var filesPushed:Array<String> = [];
-		var foldersToCheck:Array<String> = [Paths.getSharedPath('scripts/')];
-
+		//var foldersToCheck:Array<String> = [Paths.getSharedPath('scripts/')];
 		var listContents:Array<String> = mobile.backend.AssetUtils.listAssetsOpenFL('scripts/');
-		
-		#if MODS_ALLOWED // not needed
-		foldersToCheck.insert(0, Paths.mods('scripts/'));
-		if (Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0) foldersToCheck.insert(0, Paths.mods(Paths.currentModDirectory + '/scripts/'));
-		
-		for (mod in Paths.getGlobalMods())
-			foldersToCheck.insert(0, Paths.mods(mod + '/scripts/'));
-		#end
 		
 		for (file in listContents)
 		{
@@ -597,7 +588,7 @@ class PlayState extends MusicBeatState
 				if (file.endsWith('.lua'))
 				{
 					#if LUA_ALLOWED
-					var script = new FunkinLua(folder + file);
+					var script = new FunkinLua(file); // file is the way to reach in the script file
 					luaArray.push(script);
 					funkyScripts.push(script);
 					filesPushed.push(file);
@@ -609,7 +600,7 @@ class PlayState extends MusicBeatState
 					{
 						if (file.endsWith('.$ext'))
 						{
-							var script = initFunkinIris(folder + file);
+							var script = initFunkinIris(file); // file is the way to reach in the script file
 							if (script != null)
 							{
 								filesPushed.push(file);
@@ -773,16 +764,7 @@ class PlayState extends MusicBeatState
 		
 		// SONG SPECIFIC SCRIPTS
 		var filesPushed:Array<String> = [];
-		var foldersToCheck:Array<String> = [Paths.getSharedPath('songs/' + Paths.formatToSongPath(SONG.song) + '/')];
-		
-		#if MODS_ALLOWED // not needed
-		foldersToCheck.insert(0, Paths.mods('songs/' + Paths.formatToSongPath(SONG.song) + '/'));
-		if (Paths.currentModDirectory != null && Paths.currentModDirectory.length > 0) foldersToCheck.insert(0,
-			Paths.mods(Paths.currentModDirectory + '/songs/' + Paths.formatToSongPath(SONG.song) + '/'));
-			
-		for (mod in Paths.getGlobalMods())
-			foldersToCheck.insert(0, Paths.mods(mod + '/songs/' + Paths.formatToSongPath(SONG.song) + '/')); // using push instead of insert because these should run after everything else
-		#end
+		//var foldersToCheck:Array<String> = [Paths.getSharedPath('songs/' + Paths.formatToSongPath(SONG.song) + '/')];
 
 		// List of all assets when starts with "songs/name-of-the-song/"
 		var songAssetPrefix = '';
@@ -800,7 +782,7 @@ class PlayState extends MusicBeatState
 		}
 		if (songAssetPrefix == '') songAssetPrefix = 'songs/' + Paths.formatToSongPath(SONG.song) + '/';
 		var listofSongs:Array<String> = mobile.backend.AssetUtils.listAssets(songAssetPrefix);
-		
+
 		for (file in listofSongs)
 		{
 			var fileName = file.substr(songAssetPrefix.length);
@@ -809,7 +791,7 @@ class PlayState extends MusicBeatState
 				if (file.endsWith('.lua'))
 				{
 					#if LUA_ALLOWED
-					var script = new FunkinLua(folder + file);
+					var script = new FunkinLua(file); // file is the way to reach in the script file
 					luaArray.push(script);
 					funkyScripts.push(script);
 					filesPushed.push(file);
@@ -821,7 +803,7 @@ class PlayState extends MusicBeatState
 					{
 						if (file.endsWith('.$ext'))
 						{
-							var sc = initFunkinIris(folder + file);
+							var sc = initFunkinIris(file); // file is the way to reach in the script file
 							if (sc != null)
 							{
 								filesPushed.push(file);
@@ -885,8 +867,8 @@ class PlayState extends MusicBeatState
 	
 	function noteskinLoading(skin:String = 'default')
 	{
-		if (FileSystem.exists(Paths.modsNoteskin(skin))) noteSkin = new NoteSkinHelper(Paths.modsNoteskin(skin));
-		else if (FileSystem.exists(Paths.noteskin(skin))) noteSkin = new NoteSkinHelper(Paths.noteskin(skin));
+		if (mobile.backend.AssetUtils.assetExists(Paths.modsNoteskin(skin))) noteSkin = new NoteSkinHelper(Paths.modsNoteskin(skin));
+		else if (mobile.backend.AssetUtils.assetExists(Paths.noteskin(skin))) noteSkin = new NoteSkinHelper(Paths.noteskin(skin));
 		
 		arrowSkin = skin;
 		

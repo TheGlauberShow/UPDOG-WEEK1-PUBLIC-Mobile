@@ -6,6 +6,8 @@ import funkin.data.scripts.*;
 import flixel.FlxSubState;
 import flixel.addons.transition.FlxTransitionableState;
 
+import mobile.scripting.NativeAPI;
+
 class MusicBeatSubstate extends FlxSubState
 {
 	public function new()

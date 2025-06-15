@@ -98,9 +98,9 @@ class NoteSkinEditor extends MusicBeatState
 	{
 		var noteskin:NoteSkinHelper = null;
 
-		if (FileSystem.exists(Paths.modsNoteskin(n)))
+		if (mobile.backend.AssetUtils.assetExists(Paths.modsNoteskin(n)))
 			noteskin = new NoteSkinHelper(Paths.modsNoteskin(n));
-		else if (FileSystem.exists(Paths.noteskin(n)))
+		else if (mobile.backend.AssetUtils.assetExists(Paths.noteskin(n)))
 			noteskin = new NoteSkinHelper(Paths.noteskin(n));
 
 		noteskin ??= new NoteSkinHelper(Paths.noteskin('default'));
@@ -1226,41 +1226,34 @@ class NoteSkinEditor extends MusicBeatState
 		}
 	}
 
-	function reloadDropdown(){
+	function reloadDropdown()
+	{
 		var skinsLoaded:Map<String, Bool> = new Map();
 
-		// #if MODS_ALLOWED
 		skinList = [];
 		var directories:Array<String> = [
-			Paths.mods('noteskins/'),
-			Paths.mods(Paths.currentModDirectory + '/noteskins/'),
-			Paths.getSharedPath('noteskins/')
+			'noteskins/',
+			'assets/noteskins/',
+			'assets/shared/noteskins/',
+			'content/noteskins/'
 		];
-		for (mod in Paths.getGlobalMods())
-			directories.push(Paths.mods(mod + '/noteskins/'));
-		for (i in 0...directories.length)
+		for (dir in directories)
 		{
-			var directory:String = directories[i];
-			if (FileSystem.exists(directory))
+			var list = mobile.backend.AssetUtils.listAssets(dir);
+			for (file in list)
 			{
-				for (file in FileSystem.readDirectory(directory))
+				if (file.endsWith('.json'))
 				{
-					var path = haxe.io.Path.join([directory, file]);
-					if (!sys.FileSystem.isDirectory(path) && file.endsWith('.json'))
+					var charToCheck:String = file.substr(dir.length, file.length - dir.length - 5);
+					if (!skinsLoaded.exists(charToCheck))
 					{
-						var charToCheck:String = file.substr(0, file.length - 5);
-						if (!skinsLoaded.exists(charToCheck))
-						{
-							skinList.push(charToCheck);
-							skinsLoaded.set(charToCheck, true);
-						}
+						skinList.push(charToCheck);
+						skinsLoaded.set(charToCheck, true);
 					}
 				}
 			}
 		}
-		// #else
 		// skinList = CoolUtil.coolTextFile(Paths.txt('noteskin_list'));
-		// #end
 
 		skinDropDown.setData(FlxUIDropDownMenu.makeStrIdLabelArray(skinList, true));
 		skinDropDown.selectedLabel = name;

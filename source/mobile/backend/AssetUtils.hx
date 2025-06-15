@@ -6,6 +6,9 @@ import openfl.display.BitmapData;
 import openfl.media.Sound;
 import openfl.text.Font;
 import openfl.utils.ByteArray;
+
+import openfl.utils.Assets as OpenFlAssets;
+
 //import haxe.concurrent.Future;
 #if sys
 import sys.io.File;
@@ -162,7 +165,7 @@ class AssetUtils
     // Exemplo: (later...)
     public static function listAssetsOpenFL(prefix:String):Array<String>
     {
-        return openfl.utils.Assets.list(prefix);
+        return openfl.utils.Assets.list(prefix, null);
     }
 
     /**

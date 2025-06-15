@@ -10,6 +10,8 @@ import flixel.addons.transition.FlxTransitionableState;
 import funkin.data.*;
 import funkin.data.scripts.*;
 
+import mobile.scripting.NativeAPI;
+
 class MusicBeatState extends FlxUIState
 {
 	static final _defaultTransState:Class<BaseTransitionState> = SwipeTransition;

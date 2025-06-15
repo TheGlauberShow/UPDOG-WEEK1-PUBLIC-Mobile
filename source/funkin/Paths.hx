@@ -15,6 +15,8 @@ import haxe.Json;
 import openfl.display.BitmapData;
 import openfl.media.Sound;
 
+import mobile.backend.AssetUtils;
+
 // Error Screen Debug
 import mobile.scripting.NativeAPI;
 
@@ -125,8 +127,7 @@ class Paths
 		if (graphic != null && graphic.bitmap != null && graphic.bitmap.__texture != null) graphic.bitmap.__texture.dispose();
 		FlxG.bitmap.remove(graphic);
 	}
-	
-	static public var currentModDirectory:String = '';
+
 	static public var currentLevel:String;
 	
 	static public function setCurrentLevel(name:String)
@@ -218,7 +219,7 @@ class Paths
         var path = findAsset('noteskins/$key.json');
         if (path != null)
             return path;
-		return modFolders('noteskins/$key.json');
+		return getPath('noteskins/$key.json'); // modFolders
 	}
 
     public static function shaderFragment(key:String, ?library:String)
@@ -260,6 +261,7 @@ class Paths
                 return findAsset(path);
             } catch (e:Dynamic) {
                 NativeAPI.showMessageBox("Paths Error", "The video \"" + key + "\" could not be found. Please check the file path or ensure the video exists in the assets directory.\n" + Std.string(e));
+                return '$CORE_DIRECTORY/videos'; // or other(can be null)
             }
 	}
 	
@@ -287,24 +289,23 @@ class Paths
 	
 	public static function textureAtlas(key:String, ?library:String)
 	{
+        var finalPath = getPath('images/$key.atlas', AssetType.BINARY, library);
         try {
-	        var finalPath = getPath('images/$key.atlas', AssetType.BINARY, library);
 	        if (mobile.backend.AssetUtils.assetExists(finalPath))
 	        	return finalPath;
 	        else if (OpenFlAssets.exists(finalPath, AssetType.BINARY))
 	        	return finalPath;
-
-            } catch (e:Dynamic){
-	            trace('Error: atlas not found for "$key" in any path ($finalPath)');
-	            NativeAPI.showMessageBox("Path Error", "The texture atlas \"" + key + "\" could not be found. Please check if the \".atlas\" file is present in the mods or assets folder.");
-	            return null;
-            }
+        } catch (e:Dynamic) {
+	        trace('Error: atlas not found for "$key" in any path ($finalPath)');
+	        NativeAPI.showMessageBox("Path Error", "The texture atlas \"" + key + "\" could not be found. Please check if the \".atlas\" file is present in the mods or assets folder.");
+	        return null;
+        }
 	}
 	
 	    public static function sound(key:String, ?library:String):Sound
         {
             var path = "sounds/" + key + ".ogg";
-            return findAsset(path);
+            return Sound.fromFile(findAsset(path)); // can be String
         }
 	
 	public static function soundRandom(key:String, min:Int, max:Int, ?library:String)
@@ -661,7 +662,7 @@ class Paths
 	//inline 
 	public static function strip(path:String) return path.indexOf(':') != -1 ? path.substr(path.indexOf(':') + 1, path.length) : path;
 	
-	#if MODS_ALLOWED // in project.xml this #if is just for desktop
+	// in project.xml the #if MODS_ALLOWED is just for desktop
     inline static public function mods(key:String = ""):String
     {
         return "$MODS_DIRECTORY/" + key;
@@ -711,7 +712,8 @@ class Paths
         return findAsset(txtPath);
     }
 
-    static public function modFolders(key:String, ?global:Bool = true):String
+    // Internal Version -- @TheGlauberShow
+    public static function modFolders(key:String, ?global:Bool = true):String
     {
         return "$MODS_DIRECTORY/" + key;
     }
@@ -741,7 +743,7 @@ class Paths
                     {
                         try
                         {
-                            var raw:String = mobile.backend.AssetUtils.getAssetContent(packPath);
+                            var raw:String = mobile.backend.AssetUtils.getText(packPath);
                             if (raw != null && raw.length > 0)
                             {
                                 var info:Dynamic = Json.parse(raw);
@@ -764,19 +766,19 @@ class Paths
 
     public static function getModDirectories():Array<String>
     {
+        var listContent = [
+            'assets/',
+            'assets/shared',
+            'content/'
+        ]
         var list:Array<String> = [];
-        var modsFolder:String = mods();
-        if (mobile.backend.AssetUtils.assetExists(modsFolder))
+        for (folder in listContent)
         {
-            for (folder in FileSystem.readDirectory(modsFolder))
-            {
-                var path = haxe.io.Path.join([modsFolder, folder]);
-                if (sys.FileSystem.isDirectory(path) && !ignoreModFolders.contains(folder) && !list.contains(folder))
-                    list.push(folder);
-            }
+            var path = haxe.io.Path.join(folder);
+            if (!ignoreModFolders.contains(folder) && !list.contains(folder))
+                list.push(folder);
         }
-        return list;
-    }
 
-    #end
+        return listContent;
+    }
 }

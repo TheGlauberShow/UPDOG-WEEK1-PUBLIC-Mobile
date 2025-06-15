@@ -60,19 +60,18 @@ typedef MetaVariables =
 		var json:MetaVariables = null;
 
 		var jsonExists:Bool = false;
-		var path:String = Paths.modFolders('$filePath.json');
-		if (FileSystem.exists(path))
+		var path:String = Paths.findAsset('$filePath.json');
+		if (mobile.backend.AssetUtils.assetExists(path))
 		{
 			jsonExists = true;
-			json = haxe.Json.parse(File.getContent(path));
+			json = haxe.Json.parse(mobile.backend.AssetUtils.getText(path));
 		}
 
 		// try asset dir
 		if (!jsonExists)
 		{
 			path = Paths.getPath('$filePath.json', TEXT);
-			if (FileSystem.exists(path)) json = haxe.Json.parse(File.getContent(path));
-			else if (Assets.exists(path, TEXT)) json = haxe.Json.parse(Assets.getText(path));
+			if (Assets.exists(path, TEXT)) json = haxe.Json.parse(Assets.getText(path));
 		}
 
 		if (json != null)

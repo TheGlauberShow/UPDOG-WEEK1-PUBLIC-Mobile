@@ -8,6 +8,8 @@ import crowplexus.iris.Iris;
 import crowplexus.hscript.*;
 import funkin.objects.*;
 
+import mobile.scripting.NativeAPI;
+
 class InterpEX extends crowplexus.hscript.Interp
 {
 	override function makeIterator(v:Dynamic):Iterator<Dynamic>

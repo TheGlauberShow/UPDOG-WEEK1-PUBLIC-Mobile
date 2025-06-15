@@ -39,6 +39,8 @@ import funkin.objects.*;
 import funkin.states.substates.*;
 import funkin.objects.DialogueBoxPsych.DialogueFile;
 
+import openfl.utils.Assets as OpenFlAssets;
+
 using StringTools;
 
 class FunkinLua extends FunkinScript
