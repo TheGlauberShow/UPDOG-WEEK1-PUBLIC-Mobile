@@ -770,7 +770,7 @@ class Paths
             'assets/',
             'assets/shared',
             'content/'
-        ]
+        ];
         var list:Array<String> = [];
         for (folder in listContent)
         {
