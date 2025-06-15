@@ -129,26 +129,22 @@ class WeekData
 		for (weekName in sexList) {
 			if (!weeksLoaded.exists(weekName)) {
 				for (p in weekFilePaths) {
-				var path = p.replace("{NAME}", weekName);
-				var assetPath = Paths.findAsset(path);
-				if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
-					var week:WeekFile = getWeekFile(assetPath);
+					var path = p.replace("{NAME}", weekName);
 					var assetPath = Paths.findAsset(path);
-				    if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
+					if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
 						var week:WeekFile = getWeekFile(assetPath);
 						if (week != null) {
-							var weekFile:WeekData = new WeekData(week, weekName);
+				    		var weekFile:WeekData = new WeekData(week, weekName);
 							if (weekFile != null
 								&& (isStoryMode == null
-									|| (isStoryMode && !weekFile.hideStoryMode)
-									|| (!isStoryMode && !weekFile.hideFreeplay)))
+								|| (isStoryMode && !weekFile.hideStoryMode)
+								|| (!isStoryMode && !weekFile.hideFreeplay)))
 							{
 								weeksLoaded.set(weekName, weekFile);
 								weeksList.push(weekName);
 							}
-							found = true;
-							break;
 						}
+						break;
 					}
 				}
 			}
