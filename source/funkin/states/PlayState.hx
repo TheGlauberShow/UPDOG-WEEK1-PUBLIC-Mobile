@@ -1577,36 +1577,35 @@ class PlayState extends MusicBeatState
 				for (i in 0...event[1].length)
 				{
 					var newEventNote:Array<Dynamic> = [event[0], event[1][i][0], event[1][i][1], event[1][i][2]];
-					var subEvent:EventNote =
-						{
-							strumTime: newEventNote[0] + ClientPrefs.noteOffset,
-							event: newEventNote[1],
-							value1: newEventNote[2],
-							value2: newEventNote[3]
-						};
-					if (!shouldPush(subEvent)) continue;
-					events.push(subEvent);
-				}
-			}
-			// this is mainly to shut my syntax highlighting up
-		
-		for (event in songData.events) // Event Notes
-		{
-			for (i in 0...event[1].length)
-			{
-				var newEventNote:Array<Dynamic> = [event[0], event[1][i][0], event[1][i][1], event[1][i][2]];
-				var subEvent:EventNote =
-					{
+					var subEvent:EventNote = {
 						strumTime: newEventNote[0] + ClientPrefs.noteOffset,
 						event: newEventNote[1],
 						value1: newEventNote[2],
 						value2: newEventNote[3]
 					};
-				if (!shouldPush(subEvent)) continue;
-				events.push(subEvent);
+					if (!shouldPush(subEvent)) continue;
+					events.push(subEvent);
+				}
+			}
+			// this is mainly to shut my syntax highlighting up
+
+			for (event in songData.events) // Event Notes
+			{
+				for (i in 0...event[1].length)
+				{
+					var newEventNote:Array<Dynamic> = [event[0], event[1][i][0], event[1][i][1], event[1][i][2]];
+					var subEvent:EventNote = {
+						strumTime: newEventNote[0] + ClientPrefs.noteOffset,
+						event: newEventNote[1],
+						value1: newEventNote[2],
+						value2: newEventNote[3]
+					};
+					if (!shouldPush(subEvent)) continue;
+					events.push(subEvent);
+				}
 			}
 		}
-		
+
 		return events;
 	}
 	
