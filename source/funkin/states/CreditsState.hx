@@ -78,7 +78,7 @@ class CreditsState extends MusicBeatState
 		// were gonna need to update these credits later lol //data todo //still todo lol
 		var pisspoop:Array<Array<String>> = [
 			// Name - Icon name - Description - Link - BG Color
-			['SOURCING TEAM']
+			['SOURCING TEAM'],
 			[
 				'source-xyz',
 				'soulbf10',
