@@ -1763,21 +1763,26 @@ class FunkinLua extends FunkinScript
 		});
 		Lua_helper.add_callback(lua, "startVideo", function(videoFile:String) {
 			#if VIDEOS_ALLOWED
-			if (FileSystem.exists(Paths.video(videoFile)))
-			{
-				PlayState.instance.startVideo(videoFile);
+			var videoPath = Paths.video(videoFile);
+			var assetExists = false;
+			var assetPath = Paths.findAsset('videos/' + videoFile + '.' + Paths.VIDEO_EXT);
+			if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
+				videoPath = assetPath;
+				assetExists = true;
+			} else if (mobile.backend.AssetUtils.assetExists(videoPath)) {
+				assetExists = true;
+			} else if (OpenFlAssets.exists(videoPath)) {
+				assetExists = true;
 			}
-			else
-			{
+			if (assetExists) {
+				PlayState.instance.startVideo(videoFile);
+			} else {
 				luaTrace('Video file not found: ' + videoFile);
 			}
 			#else
-			if (PlayState.instance.endingSong)
-			{
+			if (PlayState.instance.endingSong) {
 				PlayState.instance.endSong();
-			}
-			else
-			{
+			} else {
 				PlayState.instance.startCountdown();
 			}
 			#end
