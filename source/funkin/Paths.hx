@@ -38,7 +38,7 @@ class Paths
 	inline public static var SOUND_EXT = #if web "mp3" #else "ogg" #end;
 	inline public static var VIDEO_EXT = "mp4";
 	
-	#if MODS_ALLOWED
+	//#if MODS_ALLOWED
 	public static var ignoreModFolders:Array<String> = [
 		'characters',
 		'custom_events',
@@ -57,7 +57,7 @@ class Paths
 		'scripts',
 		'achievements'
 	];
-	#end
+	//#end
 	
 	public static function excludeAsset(key:String)
 	{
@@ -389,8 +389,8 @@ class Paths
     }
 
 	public static function listOggFilesInSongs():Array<String> {
-        var assetsSongs = [for (path in mobile.backend.AssetUtils.listAssets()) if (path.startsWith("assets/songs") && path.endsWith(".ogg")) path];
-        var contentSongs = [for (path in mobile.backend.AssetUtils.listAssets()) if (path.startsWith("content/songs") && path.endsWith(".ogg")) path];
+        var assetsSongs = [for (path in mobile.backend.AssetUtils.listAssets("assets/songs", null)) if (path.endsWith(".ogg")) path];
+        var contentSongs = [for (path in mobile.backend.AssetUtils.listAssets("content/songs", null)) if (path.endsWith(".ogg")) path];
         return assetsSongs.concat(contentSongs);
     }
 
@@ -774,7 +774,7 @@ class Paths
         var list:Array<String> = [];
         for (folder in listContent)
         {
-            var path = haxe.io.Path.join(folder);
+            var path = haxe.io.Path.join([folder]);
             if (!ignoreModFolders.contains(folder) && !list.contains(folder))
                 list.push(folder);
         }

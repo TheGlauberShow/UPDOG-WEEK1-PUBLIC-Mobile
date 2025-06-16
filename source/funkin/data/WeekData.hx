@@ -121,10 +121,10 @@ class WeekData
 
 		if (sexList == null) return;
 		var weekFilePaths = [
-			'weeks/$weekName.json',
-			'assets/weeks/$weekName.json',
-			'assets/shared/weeks/$weekName.json',
-			'content/weeks/$weekName.json'
+			'weeks/{NAME}.json',
+			'assets/weeks/{NAME}.json',
+			'assets/shared/weeks/{NAME}.json',
+			'content/weeks/{NAME}.json'
 		];
 		for (weekName in sexList) {
 			if (!weeksLoaded.exists(weekName)) {

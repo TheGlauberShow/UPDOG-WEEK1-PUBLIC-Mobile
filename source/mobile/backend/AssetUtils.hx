@@ -157,9 +157,9 @@ class AssetUtils
      * Você usaria `openfl.filesystem.File.readDirectory()` para listar arquivos
      * e subdiretórios em um caminho específico no sistema de arquivos.
      */
-    public static function listAssets(?type:AssetType):Array<String>
+    public static function listAssets(prefix:String, ?type:AssetType):Array<String>
     {
-        return Assets.list(type);
+        return openfl.utils.Assets.list(prefix, type);
     }
     // ou este usando o OpenFLAssets
     // Exemplo: (later...)

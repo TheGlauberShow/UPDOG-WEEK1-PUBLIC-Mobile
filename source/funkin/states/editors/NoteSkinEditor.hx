@@ -1239,7 +1239,7 @@ class NoteSkinEditor extends MusicBeatState
 		];
 		for (dir in directories)
 		{
-			var list = mobile.backend.AssetUtils.listAssets(dir);
+			var list:Array<String> = cast mobile.backend.AssetUtils.listAssets(dir, null);
 			for (file in list)
 			{
 				if (file.endsWith('.json'))
