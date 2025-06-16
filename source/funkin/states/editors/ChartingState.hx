@@ -1355,7 +1355,7 @@ class ChartingState extends MusicBeatState
 		];
 		for (directory in directories)
 		{
-			var files:Array<String> = mobile.backend.AssetUtils.listAssetsOpenFL(directory);
+			var files:Array<String> = mobile.backend.AssetUtils.listOpenFL(directory);
 			for (file in files)
 			{
 				for (ext in exts)
@@ -1431,7 +1431,7 @@ class ChartingState extends MusicBeatState
 
 		for (directory in directories)
 		{
-			var files:Array<String> = mobile.backend.AssetUtils.listAssetsOpenFL(directory);
+			var files:Array<String> = mobile.backend.AssetUtils.listOpenFL(directory);
 			for (file in files)
 			{
 				if (file == 'readme.txt') continue;

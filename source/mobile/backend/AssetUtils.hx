@@ -1,6 +1,6 @@
 package mobile.backend;
 
-import openfl.utils.Assets;
+//import openfl.utils.Assets;
 import openfl.utils.AssetType;
 import openfl.display.BitmapData;
 import openfl.media.Sound;
@@ -157,15 +157,25 @@ class AssetUtils
      * Você usaria `openfl.filesystem.File.readDirectory()` para listar arquivos
      * e subdiretórios em um caminho específico no sistema de arquivos.
      */
-    public static function listAssets(prefix:String, ?type:Null<AssetType>):Array<String>
+    public static function listFromPrefix(prefix:String):Array<String>
     {
-        return openfl.utils.Assets.list(prefix, type);
+        return Assets.listFromPrefix(prefix);
+    }
+    public static function listOpenFL(prefix:String):Array<String>
+    {
+        return openfl.utils.Assets.listFromPrefix(prefix);
+    }
+
+     // update, example: var song:Array<String> = AssetUtils.listAssetsByType(AssetType.SOUND);
+    public static function listAssetsByType(?type:Null<AssetType>):Array<String>
+    {
+        return Assets.list(type);
     }
     // ou este usando o OpenFLAssets
-    // Exemplo: (later...)
-    public static function listAssetsOpenFL(prefix:String):Array<String>
+    // Exemplo: var file:Array<String> = AssetUtils.listAssetsFromPrefix("assets/songs/");
+    public static function listAssetsFromPrefix(prefix:String):Array<String>
     {
-        return openfl.utils.Assets.list(prefix, null);
+        return Assets.listFromPrefix(prefix);
     }
 
     /**

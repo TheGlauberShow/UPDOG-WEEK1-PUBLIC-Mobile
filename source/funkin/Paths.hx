@@ -391,8 +391,8 @@ class Paths
     }
 
 	public static function listOggFilesInSongs():Array<String> {
-        var assetsSongs = [for (path in mobile.backend.AssetUtils.listAssets("assets/songs", null)) if (path.endsWith(".ogg")) path];
-        var contentSongs = [for (path in mobile.backend.AssetUtils.listAssets("content/songs", null)) if (path.endsWith(".ogg")) path];
+        var assetsSongs = [for (path in mobile.backend.AssetUtils.listFromPrefix("assets/songs")) if (path.endsWith(".ogg")) path];
+        var contentSongs = [for (path in mobile.backend.AssetUtils.listFromPrefix("content/songs")) if (path.endsWith(".ogg")) path];
         return assetsSongs.concat(contentSongs);
     }
 
