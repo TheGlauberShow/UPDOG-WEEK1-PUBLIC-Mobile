@@ -289,18 +289,19 @@ class Paths
 	
 	public static function textureAtlas(key:String, ?library:String)
 	{
-        var finalPath = getPath('images/$key.atlas', AssetType.BINARY, library);
-        try {
-	        if (mobile.backend.AssetUtils.assetExists(finalPath))
-	        	return finalPath;
-	        else if (OpenFlAssets.exists(finalPath, AssetType.BINARY))
-	        	return finalPath;
+            var finalPath = getPath('images/$key.atlas', AssetType.BINARY, library);
+            try {
+	            if (mobile.backend.AssetUtils.assetExists(finalPath))
+	            	return finalPath;
+	            else if (OpenFlAssets.exists(finalPath, AssetType.BINARY))
+	            	return finalPath;
 
-            return null;
-        } catch (e:Dynamic) {
-	        trace('Error: atlas not found for "$key" in any path ($finalPath)');
-	        NativeAPI.showMessageBox("Path Error", "The texture atlas \"" + key + "\" could not be found. Please check if the \".atlas\" file is present in the mods or assets folder.");
-        }
+                return null;
+            } catch (e:Dynamic) {
+	            trace('Error: atlas not found for "$key" in any path ($finalPath)');
+	            NativeAPI.showMessageBox("Path Error", "The texture atlas \"" + key + "\" could not be found. Please check if the \".atlas\" file is present in the mods or assets folder.");
+                return null;
+            }
 	}
 	
 	    public static function sound(key:String, ?library:String):Sound
