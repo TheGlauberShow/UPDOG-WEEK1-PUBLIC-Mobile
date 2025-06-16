@@ -163,19 +163,19 @@ class AssetUtils
     }
     public static function listOpenFL(prefix:String):Array<String>
     {
-        return openfl.utils.Assets.list(prefix);
+        return openfl.utils.Assets.list(prefix, null);
     }
 
      // update, example: var song:Array<String> = AssetUtils.listAssetsByType(AssetType.SOUND);
     public static function listAssetsByType(?type:Null<AssetType>):Array<String>
     {
-        return openfl.utils.Assets.list(type);
+        return openfl.utils.Assets.list(null, type);
     }
     // ou este usando o OpenFLAssets
     // Exemplo: var file:Array<String> = AssetUtils.listAssetsFromPrefix("assets/songs/");
     public static function listAssetsFromPrefix(prefix:String):Array<String>
     {
-        return OpenFlAssets.list(prefix, null);
+        return openfl.utils.Assets.list(prefix, null);
     }
 
     /**
