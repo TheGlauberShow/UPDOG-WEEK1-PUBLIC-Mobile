@@ -159,7 +159,7 @@ class AssetUtils
      */
     public static function listFromPrefix(prefix:String):Array<String>
     {
-        return openfl.utils.Assets.listFromPrefix(prefix);
+        return openfl.utils.Assets.list(prefix, null);
     }
     public static function listOpenFL(prefix:String):Array<String>
     {
@@ -175,7 +175,7 @@ class AssetUtils
     // Exemplo: var file:Array<String> = AssetUtils.listAssetsFromPrefix("assets/songs/");
     public static function listAssetsFromPrefix(prefix:String):Array<String>
     {
-        return openfl.utils.Assets.listFromPrefix(prefix);
+        return OpenFlAssets.list(prefix, null);
     }
 
     /**
