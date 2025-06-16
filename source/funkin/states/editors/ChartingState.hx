@@ -1355,14 +1355,14 @@ class ChartingState extends MusicBeatState
 		];
 		for (directory in directories)
 		{
-			var files:Array<String> = mobile.backend.AssetUtils.listOpenFL(directory);
+			var files:Array<String> = mobile.backend.AssetUtils.listAssetsFromPrefix(directory);
 			for (file in files)
 			{
 				for (ext in exts)
 				{
 					if (file.endsWith(ext))
 					{
-						var fileToCheck:String = file.substr(0, file.length - ext.length);
+						var fileToCheck:String = file.substr(directory.length, file.length - directory.length - ext.length);
 						if (!noteTypeMap.exists(fileToCheck))
 						{
 							displayNameList.push(fileToCheck);
@@ -1371,8 +1371,7 @@ class ChartingState extends MusicBeatState
 
 							if (ext != '.lua')
 							{
-								var path = directory + file;
-								var script = FunkinIris.fromFile(path, fileToCheck);
+								var script = FunkinIris.fromFile(file, fileToCheck);
 								notetypeScripts.set(fileToCheck, script);
 							}
 							key++;
@@ -1431,15 +1430,15 @@ class ChartingState extends MusicBeatState
 
 		for (directory in directories)
 		{
-			var files:Array<String> = mobile.backend.AssetUtils.listOpenFL(directory);
+			var files:Array<String> = mobile.backend.AssetUtils.listAssetsFromPrefix(directory);
 			for (file in files)
 			{
-				if (file == 'readme.txt') continue;
+				if (file.endsWith('readme.txt')) continue;
 				for (ext in 0...eventexts.length)
 				{
 					if (file.endsWith(eventexts[ext]))
 					{
-						var fileToCheck:String = file.substr(0, file.length - removeShit[ext]);
+						var fileToCheck:String = file.substr(directory.length, file.length - directory.length - removeShit[ext]);
 						if (!eventPushedMap.exists(fileToCheck))
 						{
 							eventPushedMap.set(fileToCheck, true);
@@ -1449,8 +1448,7 @@ class ChartingState extends MusicBeatState
 							}
 							else
 							{
-								var path = directory + file;
-								var content = mobile.backend.AssetUtils.getText(path);
+								var content = mobile.backend.AssetUtils.getText(file);
 								eventStuff.push([fileToCheck, content]);
 							}
 						}

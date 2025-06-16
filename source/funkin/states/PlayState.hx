@@ -578,7 +578,7 @@ class PlayState extends MusicBeatState
 		// "GLOBAL" SCRIPTS
 		var filesPushed:Array<String> = [];
 		//var foldersToCheck:Array<String> = [Paths.getSharedPath('scripts/')];
-		var listContents:Array<String> = cast mobile.backend.AssetUtils.listOpenFL('scripts/');
+		var listContents:Array<String> = mobile.backend.AssetUtils.listAssetsFromPrefix('scripts/');
 		
 		for (file in listContents)
 		{
@@ -781,7 +781,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 		if (songAssetPrefix == '') songAssetPrefix = 'songs/' + Paths.formatToSongPath(SONG.song) + '/';
-		var listofSongs:Array<String> = mobile.backend.AssetUtils.listFromPrefix(songAssetPrefix);
+		var listofSongs:Array<String> = mobile.backend.AssetUtils.listAssetsFromPrefix(songAssetPrefix);
 
 		for (file in listofSongs)
 		{
