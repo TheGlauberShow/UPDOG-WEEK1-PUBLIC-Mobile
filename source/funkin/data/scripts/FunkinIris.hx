@@ -593,7 +593,7 @@ class FunkinIris extends FunkinScript
 			catch (e:Dynamic)
 			{
 				trace("Shader compilation error:" + e.message);
-				NativeAPI.showMessageBox("Funkin Iris", "Shader compilation error:\n" + Std.string(e), MessageBoxIcon.ERROR);
+				NativeAPI.showMessageBox("Funkin Iris", "Shader compilation error:\n" + Std.string(e), MSG_ERROR);
 			}
 
 			return runtime ?? new flixel.addons.display.FlxRuntimeShader();
