@@ -1,6 +1,6 @@
 package mobile.backend;
 
-//import openfl.utils.Assets;
+import openfl.utils.Assets;
 import openfl.utils.AssetType;
 import openfl.display.BitmapData;
 import openfl.media.Sound;
@@ -52,7 +52,7 @@ class AssetUtils
     public static function assetExists(id:String, ?type:AssetType):Bool
     {
         //NativeAPI.showMessageBox("Asset Exists", "Checking if asset '${id}' exists: ${Assets.exists(id, type)}");
-        return Assets.exists(id, type);
+        return openfl.utils.Assets.exists(id, type);
     }
 
     /**
@@ -67,7 +67,7 @@ class AssetUtils
     public static function getBitmap(id:String):BitmapData
     {
         try {
-            return Assets.getBitmapData(id);
+            return openfl.utils.Assets.getBitmapData(id);
         } catch (e:Dynamic) {
             trace('Error in load image "${id}": ${e}');
             return null; // Retorna null em caso de erro
@@ -86,7 +86,7 @@ class AssetUtils
     public static function getSound(id:String):Sound
     {
         try {
-            return Assets.getSound(id);
+            return openfl.utils.Assets.getSound(id);
         } catch (e:Dynamic) {
             trace('Error in load sound "${id}": ${e}');
             return null;
@@ -105,7 +105,7 @@ class AssetUtils
     public static function getFont(id:String):Font
     {
         try {
-            return Assets.getFont(id);
+            return openfl.utils.Assets.getFont(id);
         } catch (e:Dynamic) {
             trace('Error in load font "${id}": ${e}');
             return null;
@@ -123,7 +123,7 @@ class AssetUtils
     public static function getText(id:String):String
     {
         try {
-            return Assets.getText(id);
+            return openfl.utils.Assets.getText(id);
         } catch (e:Dynamic) {
             trace('Error in load text "${id}": ${e}');
             return null;
@@ -141,7 +141,7 @@ class AssetUtils
     public static function getBytes(id:String):ByteArray
     {
         try {
-            return Assets.getBytes(id);
+            return openfl.utils.Assets.getBytes(id);
         } catch (e:Dynamic) {
             trace('Error in load bytes "${id}": ${e}');
             return null;
@@ -159,23 +159,23 @@ class AssetUtils
      */
     public static function listFromPrefix(prefix:String):Array<String>
     {
-        return Assets.listFromPrefix(prefix);
+        return openfl.utils.Assets.listFromPrefix(prefix);
     }
     public static function listOpenFL(prefix:String):Array<String>
     {
-        return openfl.utils.Assets.listFromPrefix(prefix);
+        return openfl.utils.Assets.list(prefix);
     }
 
      // update, example: var song:Array<String> = AssetUtils.listAssetsByType(AssetType.SOUND);
     public static function listAssetsByType(?type:Null<AssetType>):Array<String>
     {
-        return Assets.list(type);
+        return openfl.utils.Assets.list(type);
     }
     // ou este usando o OpenFLAssets
     // Exemplo: var file:Array<String> = AssetUtils.listAssetsFromPrefix("assets/songs/");
     public static function listAssetsFromPrefix(prefix:String):Array<String>
     {
-        return Assets.listFromPrefix(prefix);
+        return openfl.utils.Assets.listFromPrefix(prefix);
     }
 
     /**
