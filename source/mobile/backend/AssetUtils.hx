@@ -185,6 +185,15 @@ class AssetUtils
         return filtered;
     }
 
+    public static function assetDirectoryExists(prefix:String):Bool
+    {
+        var all = openfl.utils.Assets.list();
+        for (id in all)
+            if (id.startsWith(prefix))
+                return true;
+        return false;
+    }
+
     /**
      * Lê o conteúdo de um asset interno (arquivo embutido no app) como texto.
      * 

@@ -283,7 +283,7 @@ class Character extends FlxSprite
 		final baseScriptFile:String = 'characters/' + character;
 
 		var scriptFile = FunkinIris.getPath(baseScriptFile);
-		if (FileSystem.exists(scriptFile))
+		if (mobile.backend.AssetUtils.assetExists(scriptFile))
 		{
 			var script = FunkinIris.fromFile(scriptFile);
 			curCharacterScript = script;

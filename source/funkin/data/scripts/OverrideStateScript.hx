@@ -8,7 +8,7 @@ class OverrideStateScript extends FunkinIris
 	{
 		if (name == null) name = file;
 
-		return new OverrideStateScript(File.getContent(file), name, additionalVars);
+		return new OverrideStateScript(mobile.backend.AssetUtils.getText(file), name, additionalVars);
 	}
 
 	public function new(script:String, ?name:String = "Script", ?custom:Bool = true, ?additionalVars:Map<String, Any>)

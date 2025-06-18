@@ -44,12 +44,17 @@ class TitleState extends MusicBeatState
 		static var checked = false;
 		if (checked) return;
 		checked = true;
-		
+
+		#if sys
 		final appDataPath = Sys.getEnv("AppData");
-		
-		PLAYED_V4 = FileSystem.isDirectory('$appDataPath/ShadowMario/VS Impostor');
-		
-		PLAYED_V3 = FileSystem.isDirectory('$appDataPath/Team Funktastic/Kade Engine'); // is this the actual path of v3 ? idk
+		// if really needs just remove the #if and replace the sys.FileSystem.exists to mobile.backend.AssetUtils.assetDirectoryExists and try create a function to replace the Sys.getEnv
+		PLAYED_V4 = sys.FileSystem.exists('$appDataPath/ShadowMario/VS Impostor');
+		PLAYED_V3 = sys.FileSystem.exists('$appDataPath/Team Funktastic/Kade Engine'); // is this the actual path of v3 ? idk
+		#else
+		// In mobile, no exists AppData, so just return false
+		PLAYED_V4 = false;
+		PLAYED_V3 = false;
+		#end
 	}
 	
 	var trophy:FlxSprite = null;

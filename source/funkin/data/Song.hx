@@ -103,7 +103,7 @@ class Song
 		var formattedFolder:String = Paths.formatToSongPath(folder);
 		var formattedSong:String = Paths.formatToSongPath(jsonInput);
 
-		var assetPath = Paths.findAsset(formattedFolder + '/' + formattedSong + '.json');
+		var assetPath = Paths.findAsset('songs/' + formattedFolder + '/' + formattedSong + '.json');
 
 		#if sys
 		if (assetPath != null && sys.FileSystem.exists(assetPath)) {
@@ -118,13 +118,15 @@ class Song
 		if (rawJson == null) {
 			try {
 				rawJson = openfl.Assets.getText('assets/songs/$formattedFolder/$formattedSong.json');
-				if (rawJson != null) rawJson = rawJson.trim();
+				if (rawJson != null) // try in content folder too
+					rawJson = openfl.Assets.getText('content/songs/$formattedFolder/$formattedSong.json');
+				if (rawJson != null)  rawJson = rawJson.trim();
 			} catch (e) {
 				#if sys
-				if (FileSystem.exists(Paths.json(formattedFolder + '/' + formattedSong)))
-					rawJson = File.getContent(Paths.json(formattedFolder + '/' + formattedSong)).trim();
+				if (FileSystem.exists(Paths.json(formattedFolder + '/' + formattedSong)))if (FileSystem.exists(Paths.json('songs/' + formattedFolder + '/' + formattedSong)))
+					rawJson = File.getContent(Paths.json('songs/' + formattedFolder + '/' + formattedSong)).trim();
 				#else
-				rawJson = openfl.Assets.getText(Paths.json(formattedFolder + '/' + formattedSong));
+				rawJson = openfl.Assets.getText(Paths.json('songs/' + formattedFolder + '/' + formattedSong));
 				if (rawJson != null) rawJson = rawJson.trim();
 				#end
 			}

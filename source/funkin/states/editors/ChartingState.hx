@@ -79,7 +79,7 @@ class OurLittleFriend extends FlxSprite
 	{
 		super();
 		final basePath = 'images/editors/friends/$char';
-		if (FileSystem.exists(Paths.getSharedPath('$basePath.png')))
+		if (mobile.backend.AssetUtils.assetExists(Paths.findAsset('$basePath.png')))
 		{
 			frames = Paths.getSparrowAtlas(basePath.substr(basePath.indexOf('/') + 1));
 			animation.addByPrefix('idle', 'i', 24);
@@ -100,7 +100,7 @@ class OurLittleFriend extends FlxSprite
 	function buildOffsets(?path:String)
 	{
 		path ??= _offsetPath;
-		if (FileSystem.exists(Paths.getSharedPath('$path.txt'))) for (k => i in File.getContent(Paths.getSharedPath('$path.txt')).trim().split('\n'))
+		if (mobile.backend.AssetUtils.assetExists(Paths.findAsset('$path.txt'))) for (k => i in mobile.backend.AssetUtils.getText(Paths.getSharedPath('$path.txt')).trim().split('\n'))
 		{
 			var value = i.trim().split(',');
 			offsets.set(k, [Std.parseFloat(value[0]), Std.parseFloat(value[1])]);
@@ -3104,7 +3104,7 @@ class ChartingState extends MusicBeatState
 
 		if (!FileSystem.exists(path))
 		#else
-		var path:String = Paths.getSharedPath(characterPath);
+		var path:String = Paths.findAsset(characterPath); // getSharedPath
 		if (!OpenFlAssets.exists(path))
 		#end
 		{

@@ -98,7 +98,7 @@ class ScriptMacros
 
 							var scriptFile = funkin.data.scripts.FunkinIris.getPath('scripts/menus/' + clName, false);
 
-							var found = sys.FileSystem.exists(scriptFile);
+							var found = mobile.backend.AssetUtils.assetExists(scriptFile);
 
 							if (found)
 							{

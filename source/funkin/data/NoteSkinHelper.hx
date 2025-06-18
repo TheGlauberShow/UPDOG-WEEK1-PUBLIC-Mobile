@@ -284,7 +284,7 @@ class NoteSkinHelper
 
 		try
 		{
-			rawJson = File.getContent(path).trim();
+			rawJson = mobile.backend.AssetUtils.getText(path).trim();
 			data = parseJSON(rawJson);
 		}
 		catch (e:Dynamic)

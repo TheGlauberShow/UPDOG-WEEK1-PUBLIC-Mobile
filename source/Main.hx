@@ -129,120 +129,116 @@ class Main extends Sprite
 #if CRASH_HANDLER
 class FNFGame extends FlxGame
 {
-	private static function crashGame()
-	{
-		null
-		.draw();
-	}
+    private static var crashed = false;
 
-	/**
-	 * Used to instantiate the guts of the flixel game object once we have a valid reference to the root.
-	 */
-	override function create(_):Void
-	{
-		try
-		{
-			_skipSplash = true;
-			super.create(_);
-		}
-		catch (e)
-		{
-			onCrash(e);
-		}
-	}
+    private static function crashGame()
+    {
+        null
+        .draw();
+    }
 
-	override function onFocus(_):Void
-	{
-		try
-		{
-			super.onFocus(_);
-		}
-		catch (e)
-		{
-			onCrash(e);
-		}
-	}
+    override function create(_):Void
+    {
+        try
+        {
+            _skipSplash = true;
+            super.create(_);
+        }
+        catch (e:haxe.Exception)
+        {
+            onCrash(e);
+        }
+    }
 
-	override function onFocusLost(_):Void
-	{
-		try
-		{
-			super.onFocusLost(_);
-		}
-		catch (e)
-		{
-			onCrash(e);
-		}
-	}
+    override function onFocus(_):Void
+    {
+        try
+        {
+            super.onFocus(_);
+        }
+        catch (e:haxe.Exception)
+        {
+            onCrash(e);
+        }
+    }
 
-	/**
-	 * Handles the `onEnterFrame` call and figures out how many updates and draw calls to do.
-	 */
-	override function onEnterFrame(_):Void
-	{
-		try
-		{
-			super.onEnterFrame(_);
-		}
-		catch (e)
-		{
-			onCrash(e);
-		}
-	}
+    override function onFocusLost(_):Void
+    {
+        try
+        {
+            super.onFocusLost(_);
+        }
+        catch (e:haxe.Exception)
+        {
+            onCrash(e);
+        }
+    }
 
-	/**
-	 * This function is called by `step()` and updates the actual game state.
-	 * May be called multiple times per "frame" or draw call.
-	 */
-	override function update():Void
-	{
-		#if CRASH_TEST
-		if (FlxG.keys.justPressed.F9)
-			crashGame();
-		#end
-		try
-		{
-			super.update();
-		}
-		catch (e)
-		{
-			onCrash(e);
-		}
-	}
+    override function onEnterFrame(_):Void
+    {
+        try
+        {
+            super.onEnterFrame(_);
+        }
+        catch (e:haxe.Exception)
+        {
+            onCrash(e);
+        }
+    }
 
-	/**
-	 * Goes through the game state and draws all the game objects and special effects.
-	 */
-	override function draw():Void
-	{
-		try
-		{
-			super.draw();
-		}
-		catch (e)
-		{
-			onCrash(e);
-		}
-	}
+    override function update():Void
+    {
+        #if CRASH_TEST
+        if (FlxG.keys.justPressed.F9)
+            crashGame();
+        #end
+        try
+        {
+            super.update();
+        }
+        catch (e:haxe.Exception)
+        {
+            onCrash(e);
+        }
+    }
 
-	private final function onCrash(e:haxe.Exception):Void
-	{
-		var emsg:String = "";
-		for (stackItem in haxe.CallStack.exceptionStack(true))
-		{
-			switch (stackItem)
-			{
-				case FilePos(s, file, line, column):
-					emsg += file + " (line " + line + ")\n";
-				default:
-					Sys.println(stackItem);
-					trace(stackItem);
-			}
-		}
+    override function draw():Void
+    {
+        try
+        {
+            super.draw();
+        }
+        catch (e:haxe.Exception)
+        {
+            onCrash(e);
+        }
+    }
 
-		final crashReport = 'Error caught:' + e.message + '\nCallstack:\n' + emsg;
+    private final function onCrash(e:haxe.Exception):Void
+    {
+        if (crashed) return;
+        crashed = true;
 
-		FlxG.switchState(new funkin.backend.FallbackState(crashReport, () -> FlxG.switchState(() -> new TitleState())));
-	}
+        var emsg:String = "";
+        for (stackItem in haxe.CallStack.exceptionStack(true))
+        {
+            switch (stackItem)
+            {
+                case FilePos(s, file, line, column):
+                    emsg += file + " (line " + line + ")\n";
+                default:
+                    Sys.println(stackItem);
+                    trace(stackItem);
+            }
+        }
+
+        final crashReport = 'Error caught: ' + e.message + '\nCallstack:\n' + emsg;
+
+        #if mobile
+        mobile.scripting.NativeAPI.showMessageBox("Crash", e.message);
+        #end
+
+        FlxG.switchState(new funkin.backend.FallbackState(crashReport, () -> FlxG.switchState(() -> new TitleState())));
+    }
 }
 #end

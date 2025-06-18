@@ -167,7 +167,7 @@ class FreeplayState extends MusicBeatState
 	
 	function createShader(fragFile:String = null, vertFile:String = null):FunkinRuntimeShader
 	{
-		return new FunkinRuntimeShader(fragFile == null ? null : File.getContent(Paths.modsShaderFragment(fragFile)));
+		return new FunkinRuntimeShader(fragFile == null ? null : mobile.backend.AssetUtils.getText(Paths.modsShaderFragment(fragFile)));
 	}
 	
 	function reloadWeekShit()
