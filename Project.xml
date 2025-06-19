@@ -65,9 +65,14 @@
 	<assets path="assets/shared"        exclude="*.mp3" 		unless="web"/>
 	<assets path="assets/videos"        library="videos"        if="VIDEOS_ALLOWED"/>
 	<assets path="content/fonts" /> <!-- fonts for the game, not the engine -->
+	<assets path="content/songs" library="songs" />
+	<assets path="content/videos" library="videos" if="VIDEOS_ALLOWED"/>
 
 	<library name="videos"        preload="true" if="VIDEOS_ALLOWED"/>
 	<library name="songs"         preload="true" />
+
+	<assets path="assets" rename="assets" />
+	<assets path="content" rename="content" />
 
 	<assets path="content" embed="true"/> <!-- embed true for mods to work properly internally -->
 

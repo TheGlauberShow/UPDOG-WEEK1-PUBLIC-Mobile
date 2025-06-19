@@ -80,7 +80,7 @@ class MusicBeatState extends FlxUIState
 		if (!foundScript)
 		{
 			trace('$scriptName script [$scriptFile] is null!');
-			NativeAPI.showMessageBox("MusicBeatState Error", "$scriptName script [$scriptFile] is null!.");
+			//NativeAPI.showMessageBox("MusicBeatState Error", "$scriptName script [$scriptFile] is null!.");
 		}
 
 		callOnScript('onCreate', []);

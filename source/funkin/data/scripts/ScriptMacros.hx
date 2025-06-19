@@ -96,17 +96,14 @@ class ScriptMacros
 							var clName = Type.getClassName(Type.getClass(this));
 							if (clName.contains('.')) clName = clName.substr(clName.lastIndexOf('.') + 1, clName.length);
 
-							var scriptFile = funkin.data.scripts.FunkinIris.getPath('scripts/menus/' + clName, false);
-
-							var found = mobile.backend.AssetUtils.assetExists(scriptFile);
-
-							if (found)
+							var script = funkin.data.scripts.FunkinIris.fromFile('scripts/menus/' + clName);
+							if (script != null)
 							{
-								this.__script = funkin.data.scripts.FunkinIris.fromFile(scriptFile);
+								this.__script = script;
 								this.__script.set('game', FlxG.state);
+								return true;
 							}
-
-							return found;
+							return false;
 						}
 					}),
 				pos: position,

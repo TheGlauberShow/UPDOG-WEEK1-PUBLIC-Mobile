@@ -70,23 +70,19 @@ class FNFSprite extends FlxSprite
 		var json:Character.CharacterFile = getCharacterFile(character, mod);
 		var spriteType = "sparrow";
 
+		var charSpritePath = Paths.findAnyAsset('images/characters/' + json.image, ['.png', '.xml']);
+		if (charSpritePath != null && mobile.backend.AssetUtils.assetExists(charSpritePath)) {
+    		spriteType = "sparrow";
+			// sprite (.png and .xml)
+		}
+
 		var txtAssetPath = Paths.findAsset('images/' + json.image + '.txt');
-		#if sys
-		if (txtAssetPath != null && sys.FileSystem.exists(txtAssetPath))
-			spriteType = "packer";
-		else
-		#end
 		if (txtAssetPath != null && mobile.backend.AssetUtils.assetExists(txtAssetPath))
 			spriteType = "packer";
 
-		var animAssetPath = Paths.findAsset('images/' + json.image + '/Animation.json');
-		#if sys
-		if (animAssetPath != null && sys.FileSystem.exists(animAssetPath))
-			spriteType = "texture";
-		else
-		#end
+		/*var animAssetPath = Paths.findAsset('images/' + json.image + '/Animation.json');
 		if (animAssetPath != null && mobile.backend.AssetUtils.assetExists(animAssetPath))
-			spriteType = "texture";
+			spriteType = "texture";*/
 
 		switch (spriteType)
 		{
@@ -151,24 +147,19 @@ class FNFSprite extends FlxSprite
 		var rawJson:Dynamic = null;
 		var assetPath = Paths.findAsset(characterPath);
 
-		#if sys
-		if (assetPath != null && sys.FileSystem.exists(assetPath)) {
-			rawJson = sys.io.File.getContent(assetPath);
-		} else
-		#end
+		var charSpritePath = Paths.findAnyAsset(characterPath]);
+		if (charSpritePath != null && mobile.backend.AssetUtils.assetExists(charSpritePath)) {
+    		rawJson = mobile.backend.AssetUtils.getText(assetPath);
+		}
+
 		if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
-			rawJson = mobile.backend.AssetUtils.getAssetContent(assetPath);
+			rawJson = mobile.backend.AssetUtils.getText(assetPath);
 		}
 
 		if (rawJson == null) {
 			var defaultPath = Paths.findAsset('characters/' + DEFAULT_CHARACTER + '.json');
-			#if sys
-			if (defaultPath != null && sys.FileSystem.exists(defaultPath)) {
-				rawJson = sys.io.File.getContent(defaultPath);
-			} else
-			#end
 			if (defaultPath != null && mobile.backend.AssetUtils.assetExists(defaultPath)) {
-				rawJson = mobile.backend.AssetUtils.getAssetContent(defaultPath);
+				rawJson = mobile.backend.AssetUtils.getText(defaultPath);
 			}
 		}
 

@@ -250,20 +250,53 @@ class FunkinIris extends FunkinScript
 	{
 		if (name == null)
 			name = file;
-
 		var scriptContent:String = null;
-		var assetPath = Paths.findAsset(file);
-		if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath))
+
+		// the exts is files with the extensions of: 'hx', 'hxs', 'hscript'
+		var funnyFolders = [
+			"assets/shared/characters/",
+			"content/characters/",
+			"assets/songs/",
+			"content/songs/",
+			"assets/shared/scripts/",
+			"content/scripts/",
+			"assets/shared/stages/",
+			"content/stages/"
+		];
+		var fileName = file + ".$exts";
+		for (folder in funnyFolders)
+		{
+			var files = mobile.backend.AssetUtils.listAssetsFromPrefix(folder);
+			for (ext in exts)
+			{
+				var fileName = file + "." + ext;
+				for (f in files)
+				{
+					if (f.endsWith("/" + fileName) || f.endsWith("\\" + fileName) || f.endsWith(fileName))
+					{
+						scriptContent = mobile.backend.AssetUtils.getAssetContent(f);
+						if (scriptContent != null)
+							return fromString(scriptContent, name, additionalVars);
+					}
+				}
+			}
+		}
+		trace('Script not found: $file');
+		//NativeAPI.showMessageBox("Script Error", "The script \"" + file + "\" could not be found.");
+		return null;
+
+		// -- Other way --- \\
+		/*if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath))
 			scriptContent = mobile.backend.AssetUtils.getAssetContent(assetPath);
 
 		if (scriptContent == null)
 		{
 			trace('Script not found: $file');
-			NativeAPI.showMessageBox("Script Error", "The script \"" + file + "\" could not be found.");
+			//NativeAPI.showMessageBox("Script Error", "The script \"" + file + "\" could not be found.");
 			return null;
 		}
 
-		return fromString(scriptContent, name, additionalVars);
+		return fromString(scriptContent, name, additionalVars);*/
 	}
 
 	public static function InitLogger()
@@ -577,23 +610,41 @@ class FunkinIris extends FunkinScript
 
 			function getShaderContent(path:String):String
 			{
-				if (path == null) return null;
+				if (shaderName == null) return null;
+				var searchShaders = [
+					"assets/shared/shaders/",
+					"content/shaders/"
+				];
+				var fileName = shaderName + ext;
+				for (folder in searchShaders)
+				{
+					var files = mobile.backend.AssetUtils.listAssetsFromPrefix(folder);
+					for (f in files)
+					{
+						if (f.endsWith("/" + fileName) || f.endsWith("\\" + fileName) || f.endsWith(fileName))
+							return mobile.backend.AssetUtils.getAssetContent(f);
+					}
+				}
+				return null;
+
+				// --- Other way --- \\
+				/*if (path == null) return null;
 				var assetPath = Paths.findAsset(path);
 				if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath))
-					return mobile.backend.AssetUtils.getAssetContent(assetPath);
-				return null;
+					return mobile.backend.AssetUtils.getText(assetPath);
+				return null;*/
 			}
 
 			try
 			{
-				var fragContent = fragFile == null ? null : getShaderContent(Paths.modsShaderFragment(fragFile));
-				var vertContent = vertFile == null ? null : getShaderContent(Paths.modsShaderVertex(vertFile));
+				var fragContent = fragFile == null ? null : getShaderContent(fragFile, ".frag");
+				var vertContent = vertFile == null ? null : getShaderContent(vertFile, ".vert");
 				runtime = new flixel.addons.display.FlxRuntimeShader(fragContent, vertContent);
 			}
 			catch (e:Dynamic)
 			{
 				trace("Shader compilation error:" + e.message);
-				NativeAPI.showMessageBox("Funkin Iris", "Shader compilation error:\n" + Std.string(e), MSG_ERROR);
+				//NativeAPI.showMessageBox("Funkin Iris", "Shader compilation error:\n" + Std.string(e), MSG_ERROR);
 			}
 
 			return runtime ?? new flixel.addons.display.FlxRuntimeShader();

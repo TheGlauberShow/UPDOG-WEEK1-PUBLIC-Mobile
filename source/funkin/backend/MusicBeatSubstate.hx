@@ -73,7 +73,7 @@ class MusicBeatSubstate extends FlxSubState
 		if (!foundScript)
 		{
 			trace('$scriptName script [$scriptFile] is null!');
-			NativeAPI.showMessageBox("MusicBeatSubstate Error", "$scriptName script [$scriptFile] is null!.");
+			//NativeAPI.showMessageBox("MusicBeatSubstate Error", "$scriptName script [$scriptFile] is null!.");
 		}
 
 		setOnScript('add', this.add);

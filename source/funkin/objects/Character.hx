@@ -114,22 +114,18 @@ class Character extends FlxSprite
 		var rawJson:Dynamic = null;
 		var assetPath = Paths.findAsset(characterPath);
 
-		#if sys
-		if (assetPath != null && sys.FileSystem.exists(assetPath)) {
-			rawJson = sys.io.File.getContent(assetPath);
-		} else
-		#end
+		// Search character file with extension json or hx
+		var charConfigPath = Paths.findAnyAsset('characters/' + character, ['.json', '.hx']);
+		if (charConfigPath != null) {
+    		var rawJson = mobile.backend.AssetUtils.getAssetContent(charConfigPath);
+		}
+
 		if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
-			rawJson = mobile.backend.AssetUtils.getAssetContent(assetPath);
+			rawJson = mobile.backend.AssetUtils.getText(assetPath);
 		}
 
 		if (rawJson == null) {
 			var defaultPath = Paths.findAsset('characters/' + DEFAULT_CHARACTER + '.json');
-			#if sys
-			if (defaultPath != null && sys.FileSystem.exists(defaultPath)) {
-				rawJson = sys.io.File.getContent(defaultPath);
-			} else
-			#end
 			if (defaultPath != null && mobile.backend.AssetUtils.assetExists(defaultPath)) {
 				rawJson = mobile.backend.AssetUtils.getAssetContent(defaultPath);
 			}
@@ -164,23 +160,20 @@ class Character extends FlxSprite
 				var json:CharacterFile = getCharacterFile(curCharacter);
 				var spriteType = "sparrow";
 
-				var txtAssetPath = Paths.findAsset('images/' + json.image + '.txt');
-				#if sys
-				if (txtAssetPath != null && sys.FileSystem.exists(txtAssetPath))
+				var txtImagesPath = AssetUtils.listAssetsFromPrefix("assets/shared/images/characters/")
+    				.concat(AssetUtils.listAssetsFromPrefix("content/images/characters/"))
+    				.filter(path -> path.endsWith(".txt"));
+				//var txtAssetPath = Paths.findAsset('images/' + json.image + '.txt');
+				if (txtImagesPath != null && mobile.backend.AssetUtils.assetExists(txtImagesPath))
+				{
 					spriteType = "packer";
-				else
-				#end
-				if (txtAssetPath != null && mobile.backend.AssetUtils.assetExists(txtAssetPath))
-					spriteType = "packer";
+				}
 
 				var animAssetPath = Paths.findAsset('images/' + json.image + '/Animation.json');
-				#if sys
-				if (animAssetPath != null && sys.FileSystem.exists(animAssetPath))
-					spriteType = "texture";
-				else
-				#end
 				if (animAssetPath != null && mobile.backend.AssetUtils.assetExists(animAssetPath))
+				{
 					spriteType = "texture";
+				}
 
 				switch (spriteType)
 				{
@@ -282,11 +275,13 @@ class Character extends FlxSprite
 
 		final baseScriptFile:String = 'characters/' + character;
 
-		var scriptFile = FunkinIris.getPath(baseScriptFile);
-		if (mobile.backend.AssetUtils.assetExists(scriptFile))
+		var charscript = FunkinIris.fromFile(baseScriptFile);
+
+		//var scriptFile = FunkinIris.getPath(baseScriptFile);
+		if (charscript != null)
 		{
-			var script = FunkinIris.fromFile(scriptFile);
-			curCharacterScript = script;
+			curCharacterScript = charscript;
+			return true;
 		}
 		#if LUA_ALLOWED
 		else if (Paths.fileExists('$baseScriptFile.lua', TEXT))
