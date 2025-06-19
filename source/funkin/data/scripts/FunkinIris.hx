@@ -610,18 +610,17 @@ class FunkinIris extends FunkinScript
 
 			function getShaderContent(path:String):String
 			{
-				if (shaderName == null) return null;
+				if (path == null) return null;
 				var searchShaders = [
 					"assets/shared/shaders/",
 					"content/shaders/"
 				];
-				var fileName = shaderName + ext;
 				for (folder in searchShaders)
 				{
 					var files = mobile.backend.AssetUtils.listAssetsFromPrefix(folder);
 					for (f in files)
 					{
-						if (f.endsWith("/" + fileName) || f.endsWith("\\" + fileName) || f.endsWith(fileName))
+						if (f.endsWith("/" + path) || f.endsWith("\\" + path) || f.endsWith(path))
 							return mobile.backend.AssetUtils.getAssetContent(f);
 					}
 				}
@@ -637,8 +636,8 @@ class FunkinIris extends FunkinScript
 
 			try
 			{
-				var fragContent = fragFile == null ? null : getShaderContent(fragFile, ".frag");
-				var vertContent = vertFile == null ? null : getShaderContent(vertFile, ".vert");
+				var fragContent = fragFile == null ? null : getShaderContent(fragFile + ".frag");
+				var vertContent = vertFile == null ? null : getShaderContent(vertFile + ".vert");
 				runtime = new flixel.addons.display.FlxRuntimeShader(fragContent, vertContent);
 			}
 			catch (e:Dynamic)

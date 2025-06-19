@@ -41,7 +41,7 @@ class HScriptSprite extends FlxSprite
 {
 	public function loadImage(path:String, ?lib:String, anim:Bool = false, w:Int = 0, h:Int = 0, unique:Bool = false, ?key:String)
 	{
-		this.loadGraphic(Paths.image(path, lib), anim, w, h, unique, key);
+		this.loadGraphic(Paths.image(path), anim, w, h, unique, key);
 		return this;
 	}
 

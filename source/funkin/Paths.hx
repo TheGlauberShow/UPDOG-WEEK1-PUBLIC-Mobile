@@ -540,7 +540,7 @@ class Paths
 
     public static function modsShaderFragment(key:String, ?library:String):Null<String>
     {
-        var shaderPath = Paths.findAnyAsset('shaders/' + $key, ['.frag']);
+        var shaderPath = Paths.findAnyAsset('shaders/' + key, ['.frag']);
         if (shaderPath != null) {
             var shaderContent = mobile.backend.AssetUtils.getAssetContent(shaderPath);
         }

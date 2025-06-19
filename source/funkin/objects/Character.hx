@@ -24,6 +24,8 @@ import openfl.utils.Assets;
 import haxe.Json;
 import haxe.format.JsonParser;
 
+import mobile.backend.AssetUtils;
+
 using StringTools;
 
 typedef CharacterFile =
@@ -281,7 +283,6 @@ class Character extends FlxSprite
 		if (charscript != null)
 		{
 			curCharacterScript = charscript;
-			return true;
 		}
 		#if LUA_ALLOWED
 		else if (Paths.fileExists('$baseScriptFile.lua', TEXT))

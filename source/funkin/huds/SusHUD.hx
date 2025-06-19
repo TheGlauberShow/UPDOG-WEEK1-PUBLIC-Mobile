@@ -8,6 +8,8 @@ import funkin.objects.Bar;
 import funkin.objects.HealthIcon;
 import funkin.huds.BaseHUD.ScoreData;
 
+import flixel.graphics.frames.FlxAtlasFrames;
+
 // renaming class cuz i felt like it also good to have the og hud just incase, will be deleted later
 @:access(funkin.states.PlayState)
 class SusHUD extends BaseHUD

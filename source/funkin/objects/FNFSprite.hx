@@ -147,7 +147,7 @@ class FNFSprite extends FlxSprite
 		var rawJson:Dynamic = null;
 		var assetPath = Paths.findAsset(characterPath);
 
-		var charSpritePath = Paths.findAnyAsset(characterPath);
+		var charSpritePath = Paths.findAnyAsset(characterPath, [".png", ".xml"]);
 		if (charSpritePath != null && mobile.backend.AssetUtils.assetExists(charSpritePath)) {
     		rawJson = mobile.backend.AssetUtils.getText(assetPath);
 		}

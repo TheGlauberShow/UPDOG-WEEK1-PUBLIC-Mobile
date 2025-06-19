@@ -128,7 +128,7 @@ class MacroUtil
 				],
 				expr: macro
 				{
-					this.frames = funkin.Paths.getSparrowAtlas(path, library);
+					this.frames = funkin.Paths.getSparrowAtlas(path);
 					return this;
 				}
 			}),
