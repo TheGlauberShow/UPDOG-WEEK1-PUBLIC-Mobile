@@ -166,7 +166,7 @@ class Character extends FlxSprite
     				.concat(AssetUtils.listAssetsFromPrefix("content/images/characters/"))
     				.filter(path -> path.endsWith(".txt"));
 				//var txtAssetPath = Paths.findAsset('images/' + json.image + '.txt');
-				if (txtImagesPath != null && mobile.backend.AssetUtils.assetExists(txtImagesPath))
+				if (txtImagesPath.length > 0)
 				{
 					spriteType = "packer";
 				}
