@@ -102,7 +102,46 @@ class WeekData
 		weeksList = [];
 		weeksLoaded.clear();
 
-		var weekListPaths = [
+		var directories:Array<String> = [
+			Paths.getSharedPath(),
+			Paths.findAsset()
+		];
+		var originalLength:Int = directories.length;
+
+		var sexList:Array<String> = CoolUtil.coolTextFile(Paths.findAsset('weeks/weekList.txt')); // Paths.getSharedPath
+		for (i in 0...sexList.length)
+		{
+			for (j in 0...directories.length)
+			{
+				var fileToCheck:String = directories[j] + 'weeks/' + sexList[i] + '.json';
+				if (!weeksLoaded.exists(sexList[i]))
+				{
+					var week:WeekFile = getWeekFile(fileToCheck);
+					if (week != null)
+					{
+						var weekFile:WeekData = new WeekData(week, sexList[i]);
+
+						#if MODS_ALLOWED
+						if (j >= originalLength)
+						{
+							weekFile.folder = directories[j].substring(Paths.mods().length, directories[j].length - 1);
+						}
+						#end
+
+						if (weekFile != null
+							&& (isStoryMode == null
+								|| (isStoryMode && !weekFile.hideStoryMode)
+								|| (!isStoryMode && !weekFile.hideFreeplay)))
+						{
+							weeksLoaded.set(sexList[i], weekFile);
+							weeksList.push(sexList[i]);
+						}
+					}
+				}
+			}
+		}
+
+		/*var weekListPaths = [
 			"weeks/weekList.txt",
 			"assets/weeks/weekList.txt",
 			"assets/shared/weeks/weekList.txt",
@@ -148,7 +187,7 @@ class WeekData
 					}
 				}
 			}
-		}
+		}*/
 	}
 
 	private static function addWeek(weekToCheck:String, path:String, directory:String, i:Int, originalLength:Int)
@@ -178,14 +217,19 @@ class WeekData
 	{
 		var rawJson:String = null;
 
-		var assetPath = Paths.findAsset(path);
+		if (OpenFlAssets.exists(path))
+		{
+			rawJson = Assets.getText(path);
+		}
+
+		/*var assetPath = Paths.findAsset(path);
 		if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
 			rawJson = mobile.backend.AssetUtils.getAssetContent(assetPath);
-		}
+		}*/
 
 		if (rawJson != null && rawJson.length > 0)
 		{
-			return cast haxe.Json.parse(rawJson); // Json.parse(rawJson)
+			return cast Json.parse(rawJson); // can be haxe.Json.parse(rawJson)
 		}
 		return null;
 	}
