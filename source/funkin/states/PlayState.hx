@@ -44,6 +44,8 @@ import funkin.backend.SyncedFlxSoundGroup;
 import funkin.utils.DifficultyUtil;
 import funkin.game.RatingInfo;
 
+import mobile.scripting.NativeAPI;
+
 @:structInit class SpeedEvent
 {
 	public var position:Float; // the y position where the change happens (modManager.getVisPos(songTime))
@@ -1591,7 +1593,6 @@ class PlayState extends MusicBeatState
 			return events;
 		} catch (e:Dynamic) {
 			NativeAPI.showMessageBox("PlayState Error", "An error occurred during getEvents function:\n" + Std.string(e));
-			return events;
 		}
 	}
 	
