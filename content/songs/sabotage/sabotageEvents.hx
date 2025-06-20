@@ -23,6 +23,7 @@ var devCutscene:Bool = false;
 
 var detective:Bool = false;
 
+import Reflect;
 import mobile.scripting.NativeAPI;
 
 // Funções utilitárias para checagem segura
@@ -188,7 +189,7 @@ function onCreate()
 			flxBar.setParent(null, "x", "y", true);
 			flxBar.percent = 0;
 			flxBar.scale.set(1.3, 1.3);
-			flxBar.alpha = 0;
+			if (flxBar != null) flxBar.alpha = 0;
 			flxBar.cameras = [game.camHUD];
 			safeInsertGame(flxBar, members.indexOf(playHUD));
 			struct.flxBar = flxBar;
@@ -206,7 +207,7 @@ function onCreate()
 		if (investigationText != null) {
 			investigationText.setFormat(Paths.font("bahn"), 24, 0xFFFFFF, "center");
 			investigationText.cameras = [game.camHUD];
-			investigationText.alpha = 1;
+			if (investigationText != null) investigationText.alpha = 1;
 			investigationText.antialiasing = ClientPrefs.globalAntialiasing;
 			safeInsertGame(investigationText, members.indexOf(playHUD));
 			struct.investigationText = investigationText;
@@ -295,7 +296,7 @@ function sabotageCutscene2ndHalf()
 
 		var blackSprite = global.get('blackSprite');
 		if (blackSprite != null && Reflect.hasField(blackSprite, "alpha")) {
-			blackSprite.alpha = 1;
+			if (blackSprite != null) blackSprite.alpha = 1;
 			blackSprite.cameras = [camGame];
 			blackSprite.zIndex = 1900;
 			if (Reflect.hasField(blackSprite, "scale")) blackSprite.scale.set(3000, 2000);
@@ -327,7 +328,7 @@ function sabotageCutscene2ndHalf()
 			}});
 		}});
 
-		camHUD.alpha = 0;
+		if (camHUD != null) camHUD.alpha = 0;
 		if (shield != null && shield.animation != null) shield.animation.play('break');
 		if (bfCutscene != null && bfCutscene.animation != null) {
 			bfCutscene.animation.play('covered-grey');
@@ -342,7 +343,7 @@ function sabotageCutscene2ndHalf()
 					invertMask.animation.play('glow');
 					invertMask.animation.pause();
 				}
-				invertMask.alpha = 0;
+				if (invertMask != null) invertMask.alpha = 0;
 				invertMask.scale.set(1.5, 1.5);
 				FlxTween.tween(invertMask, {alpha: 1, 'scale.x': .6, 'scale.y': .6}, .5, {ease: FlxEase.quadIn});
 			}

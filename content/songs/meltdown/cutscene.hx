@@ -1,5 +1,6 @@
 package content.songs.meltdown;
 
+import Reflect;
 import funkin.objects.BGSprite;
 
 // Utilitários seguros

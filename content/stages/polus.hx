@@ -31,6 +31,8 @@ var bv:Int = 0;
 var roseTable:FlxSprite = null;
 var greenTable:FlxSprite = null;
 
+import Reflect;
+
 import mobile.scripting.NativeAPI;
 
 // Safe helpers
@@ -85,12 +87,12 @@ function onLoad()
 		snowEmitter = new SnowEmitter(floor.x, floor.y - 200, floor.width);
 		if (snowEmitter != null) {
 			snowEmitter.start(false, ClientPrefs.lowQuality ? 0.1 : 0.05);
-			if (snowEmitter.scrollFactor != null && snowEmitter.scrollFactor.x != null && snowEmitter.scrollFactor.y != null) {
-				snowEmitter.scrollFactor.x.set(1, 1.5);
-				snowEmitter.scrollFactor.y.set(1, 1.5);
+			if (snowEmitter.scrollFactor != null) {
+				snowEmitter.scrollFactor.x = 1;
+				snowEmitter.scrollFactor.y = 1.5;
 			}
 			safeAdd(snowEmitter);
-			if (snowEmitter.alpha != null) snowEmitter.alpha.active = false;
+			// if (snowEmitter.alpha != null) snowEmitter.alpha.active = false;
 			snowEmitter.onEmit.add((particle) -> particle.alpha = snowAlpha);
 			snowEmitter.zIndex = 13;
 			global.set('snowEmitter', snowEmitter);
@@ -114,19 +116,19 @@ function onLoad()
 
 		vignette = new BGSprite(ext + "polusvignette");
 		vignette.cameras = [game.camOther];
-		vignette.alpha = 0.8;
+		if (vignette != null) vignette.alpha = 0.8;
 		safeAdd(vignette);
 
 		blackSprite = new FlxSprite(0, 0).makeScaledGraphic(1280, 720, 0xff000000);
 		blackSprite.cameras = [game.camOther];
 		safeAdd(blackSprite);
-		blackSprite.alpha = 0;
+		if (blackSprite != null) blackSprite.alpha = 0;
 		global.set('blackSprite', blackSprite);
 
 		nigga = new FlxSprite(0, 0).makeScaledGraphic(1280, 720, 0xff000000);
 		nigga.cameras = [game.camOther];
 		safeAdd(nigga);
-		nigga.alpha = 0;
+		if (nigga != null) nigga.alpha = 0;
 		global.set('nigga', nigga);
 
 		for (i in [bg, stars, mountains, mountains2, floor, thingy, thingy2])
@@ -150,9 +152,9 @@ function onCreatePost()
 		if (PlayState.SONG.song.toLowerCase() == 'sussus moogus') {
 			game.isCameraOnForcedPos = true;
 			game.snapCamFollowToPos(1025, -800);
-			game.camHUD.alpha = 0;
+			if (game.camHUD != null) game.camHUD.alpha = 0;
 			FlxG.camera.zoom = 0.4;
-			nigga.alpha = 1;
+			if (nigga != null) nigga.alpha = 1;
 		}
 
 		if (PlayState.SONG.song.toLowerCase() == 'meltdown') {
@@ -174,7 +176,7 @@ function onCreatePost()
 				evilGreen.animation.addByPrefix('cutscene', 'scene instance 1', 24, false);
 				evilGreen.scale.set(2.3, 2.3);
 				evilGreen.scrollFactor(1.2, 1.2);
-				evilGreen.alpha = 0;
+				if (evilGreen != null) evilGreen.alpha = 0;
 				safeAdd(evilGreen);
 			}
 			evilCam = CameraUtil.quickCreateCam(false);
@@ -187,7 +189,7 @@ function onCreatePost()
 
 		vignette2 = new BGSprite(ext + "vignette2", 0, 0);
 		vignette2.cameras = [anotherCam];
-		vignette2.alpha = 0;
+		if (vignette2 != null) vignette2.alpha = 0;
 		safeAdd(vignette2);
 
 		refreshZ();

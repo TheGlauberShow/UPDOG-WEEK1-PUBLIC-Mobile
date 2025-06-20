@@ -8,6 +8,7 @@ var green:BGSprite;
 var redCutscene:BGSprite;
 var gunshot:BGSprite;
 
+import Reflect;
 import mobile.scripting.NativeAPI;
 
 global.set('ignoreCountdown',true);
@@ -164,7 +165,7 @@ function sabotageCutscene1stHalf()
         redCutscene.animation.onFinish.add((mad)->{
             var blackSprite = global.get('blackSprite');
             if (blackSprite != null && Reflect.hasField(blackSprite, "alpha")) {
-                blackSprite.alpha = 1;
+                if (blackSprite != null) blackSprite.alpha = 1;
                 blackSprite.cameras = [camGame];
                 blackSprite.zIndex = 1900;
                 if (Reflect.hasField(blackSprite, "scale")) blackSprite.scale.set(3000, 2000);
