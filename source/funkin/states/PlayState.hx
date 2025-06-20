@@ -1538,13 +1538,13 @@ class PlayState extends MusicBeatState
 	
 	function getEvents()
 	{
+		// Internal Version -- @TheGlauberShow
+		var songData = SONG;
+		var events:Array<EventNote> = [];
+		var songName:String = Paths.formatToSongPath(SONG.song);
+		var file:String = Paths.json(songName + '/events');
+		var loaded:Bool = false;
 		try {
-			// Internal Version -- @TheGlauberShow
-			var songData = SONG;
-			var events:Array<EventNote> = [];
-			var songName:String = Paths.formatToSongPath(SONG.song);
-			var file:String = Paths.json(songName + '/events');
-			var loaded:Bool = false;
 			if (
 				OpenFlAssets.exists(file) ||
 				mobile.backend.AssetUtils.assetExists(file) ||
@@ -1593,6 +1593,7 @@ class PlayState extends MusicBeatState
 			return events;
 		} catch (e:Dynamic) {
 			NativeAPI.showMessageBox("PlayState Error", "An error occurred during getEvents function:\n" + Std.string(e));
+			return events;
 		}
 	}
 	
