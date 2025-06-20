@@ -102,13 +102,10 @@ class WeekData
 		weeksList = [];
 		weeksLoaded.clear();
 
-		var directories:Array<String> = [
-			Paths.getSharedPath(),
-			Paths.findAsset()
-		];
+		var directories:Array<String> = [Paths.getSharedPath()];
 		var originalLength:Int = directories.length;
 
-		var sexList:Array<String> = CoolUtil.coolTextFile(Paths.findAsset('weeks/weekList.txt')); // Paths.getSharedPath
+		var sexList:Array<String> = CoolUtil.coolTextFile(Paths.getSharedPath('weeks/weekList.txt'));
 		for (i in 0...sexList.length)
 		{
 			for (j in 0...directories.length)
@@ -217,9 +214,9 @@ class WeekData
 	{
 		var rawJson:String = null;
 
-		if (OpenFlAssets.exists(path))
+		if (mobile.backend.AssetUtils.assetExists(path))
 		{
-			rawJson = Assets.getText(path);
+			rawJson = mobile.backend.AssetUtils.getText(path);
 		}
 
 		/*var assetPath = Paths.findAsset(path);
