@@ -41,15 +41,11 @@ class HealthIcon extends FlxSprite
 		{
 			var name:String = 'icons/' + char;
 			var assetPath = Paths.findAsset('images/' + name + '.png');
-			#if sys
-			if (assetPath == null || !sys.FileSystem.exists(assetPath))
-			#end
+			if (assetPath == null)
 			{
 				name = 'icons/icon-' + char;
 				assetPath = Paths.findAsset('images/' + name + '.png');
-				#if sys
-				if (assetPath == null || !sys.FileSystem.exists(assetPath))
-				#end
+				if (assetPath == null)
 				{
 					name = 'icons/icon-face';
 					assetPath = Paths.findAsset('images/' + name + '.png');

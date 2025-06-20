@@ -12,7 +12,6 @@ import openfl.utils.Assets as OpenFlAssets;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.FlxG;
-import flixel.text.FlxTextBorderStyle;
 
 //import haxe.concurrent.Future;
 #if sys
