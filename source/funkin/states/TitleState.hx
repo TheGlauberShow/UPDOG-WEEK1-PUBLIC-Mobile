@@ -282,6 +282,12 @@ class TitleState extends MusicBeatState
 		// Color swap/grayscale, remove in V2.
 		colorSwap = new ColorSwap();
 		colorSwap.saturation = -1;
+
+		// testing watermark
+		var watermark:FlxText = new FlxText(12, FlxG.height - 664, 0, "Port by sysource-xyz", 12);
+		watermark.scrollFactor.set();
+		watermark.setFormat(Paths.font("bahn"), 24, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(watermark);
 		
 		var versionText:FlxText = new FlxText(0, (alreadyBeenInMenu ? 0 : -70), 1280, versionString);
 		versionText.setFormat(Paths.font("bahn"), 25, FlxColor.WHITE, FlxTextAlign.CENTER);
