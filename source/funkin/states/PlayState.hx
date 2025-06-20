@@ -1536,59 +1536,63 @@ class PlayState extends MusicBeatState
 	
 	function getEvents()
 	{
-		// Internal Version -- @TheGlauberShow
-		var songData = SONG;
-		var events:Array<EventNote> = [];
-		var songName:String = Paths.formatToSongPath(SONG.song);
-		var file:String = Paths.json(songName + '/events');
-		var loaded:Bool = false;
-		if (
-			OpenFlAssets.exists(file) ||
-			mobile.backend.AssetUtils.assetExists(file) ||
-			Paths.findAsset(file) != null
-		)
-		{
-			loaded = true;
-		}
-		if (loaded)
-		{
-			trace('events loaded');
-			var eventsData:Array<Dynamic> = Song.loadFromJson('events', songName).events;
-			for (event in eventsData) // Event Notes
+		try {
+			// Internal Version -- @TheGlauberShow
+			var songData = SONG;
+			var events:Array<EventNote> = [];
+			var songName:String = Paths.formatToSongPath(SONG.song);
+			var file:String = Paths.json(songName + '/events');
+			var loaded:Bool = false;
+			if (
+				OpenFlAssets.exists(file) ||
+				mobile.backend.AssetUtils.assetExists(file) ||
+				Paths.findAsset(file) != null
+			)
 			{
-				for (i in 0...event[1].length)
+				loaded = true;
+			}
+			if (loaded)
+			{
+				trace('events loaded');
+				var eventsData:Array<Dynamic> = Song.loadFromJson('events', songName).events;
+				for (event in eventsData) // Event Notes
 				{
-					var newEventNote:Array<Dynamic> = [event[0], event[1][i][0], event[1][i][1], event[1][i][2]];
-					var subEvent:EventNote = {
-						strumTime: newEventNote[0] + ClientPrefs.noteOffset,
-						event: newEventNote[1],
-						value1: newEventNote[2],
-						value2: newEventNote[3]
-					};
-					if (!shouldPush(subEvent)) continue;
-					events.push(subEvent);
+					for (i in 0...event[1].length)
+					{
+						var newEventNote:Array<Dynamic> = [event[0], event[1][i][0], event[1][i][1], event[1][i][2]];
+						var subEvent:EventNote = {
+							strumTime: newEventNote[0] + ClientPrefs.noteOffset,
+							event: newEventNote[1],
+							value1: newEventNote[2],
+							value2: newEventNote[3]
+						};
+						if (!shouldPush(subEvent)) continue;
+						events.push(subEvent);
+					}
+				}
+				// this is mainly to shut my syntax highlighting up
+
+				for (event in songData.events) // Event Notes
+				{
+					for (i in 0...event[1].length)
+					{
+						var newEventNote:Array<Dynamic> = [event[0], event[1][i][0], event[1][i][1], event[1][i][2]];
+						var subEvent:EventNote = {
+							strumTime: newEventNote[0] + ClientPrefs.noteOffset,
+							event: newEventNote[1],
+							value1: newEventNote[2],
+							value2: newEventNote[3]
+						};
+						if (!shouldPush(subEvent)) continue;
+						events.push(subEvent);
+					}
 				}
 			}
-			// this is mainly to shut my syntax highlighting up
-
-			for (event in songData.events) // Event Notes
-			{
-				for (i in 0...event[1].length)
-				{
-					var newEventNote:Array<Dynamic> = [event[0], event[1][i][0], event[1][i][1], event[1][i][2]];
-					var subEvent:EventNote = {
-						strumTime: newEventNote[0] + ClientPrefs.noteOffset,
-						event: newEventNote[1],
-						value1: newEventNote[2],
-						value2: newEventNote[3]
-					};
-					if (!shouldPush(subEvent)) continue;
-					events.push(subEvent);
-				}
-			}
+			return events;
+		} catch (e:Dynamic) {
+			NativeAPI.showMessageBox("PlayState Error", "An error occurred during getEvents function:\n" + Std.string(e));
+			return events;
 		}
-
-		return events;
 	}
 	
 	function generateSong(dataPath:String):Void

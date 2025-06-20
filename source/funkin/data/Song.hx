@@ -104,12 +104,6 @@ class Song
 		var formattedSong:String = Paths.formatToSongPath(jsonInput);
 
 		var assetPath = Paths.findAsset('songs/' + formattedFolder + '/' + formattedSong + '.json');
-
-		#if sys
-		if (assetPath != null && sys.FileSystem.exists(assetPath)) {
-			rawJson = sys.io.File.getContent(assetPath).trim();
-		} else
-		#end
 		if (assetPath != null && mobile.backend.AssetUtils.assetExists(assetPath)) {
 			rawJson = mobile.backend.AssetUtils.getAssetContent(assetPath);
 			if (rawJson != null) rawJson = rawJson.trim();
@@ -122,13 +116,8 @@ class Song
 					rawJson = openfl.Assets.getText('content/songs/$formattedFolder/$formattedSong.json');
 				if (rawJson != null)  rawJson = rawJson.trim();
 			} catch (e) {
-				#if sys
-				if (FileSystem.exists(Paths.json(formattedFolder + '/' + formattedSong)))if (FileSystem.exists(Paths.json('songs/' + formattedFolder + '/' + formattedSong)))
-					rawJson = File.getContent(Paths.json('songs/' + formattedFolder + '/' + formattedSong)).trim();
-				#else
 				rawJson = openfl.Assets.getText(Paths.json('songs/' + formattedFolder + '/' + formattedSong));
 				if (rawJson != null) rawJson = rawJson.trim();
-				#end
 			}
 		}
 

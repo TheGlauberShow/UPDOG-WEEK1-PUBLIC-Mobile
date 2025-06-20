@@ -85,28 +85,40 @@ function onCreate()
 
 function onBeatHit()
 {
-	var anim = bfStar.animation.curAnim.name;
-	if (!StringTools.contains(anim, 'sing') && game.curBeat % 2 == 0) bfStar.dance();
+	try {
+		var anim = bfStar.animation.curAnim.name;
+		if (!StringTools.contains(anim, 'sing') && game.curBeat % 2 == 0) bfStar.dance();
 	
-	var anim2 = redStar.animation.curAnim.name;
-	if (!StringTools.contains(anim2, 'sing') && game.curBeat % 2 == 0) redStar.dance();
+		var anim2 = redStar.animation.curAnim.name;
+		if (!StringTools.contains(anim2, 'sing') && game.curBeat % 2 == 0) redStar.dance();
+	} catch (e:Dynamic) {
+		NativeAPI.showMessageBox("Event Script Error", "An error occurred during onBeatHit function:\n" + Std.string(e));
+	}
 }
 
 function opponentNoteHit(note)
 {
-	if (redStar.alpha != 0.0)
-	{
-		redStar.playAnim(singAnimations[note.noteData], true);
-		redStar.holdTimer = 0;
+	try {
+		if (redStar.alpha != 0.0)
+		{
+			redStar.playAnim(singAnimations[note.noteData], true);
+			redStar.holdTimer = 0;
+		}
+	} catch (e:Dynamic) {
+		NativeAPI.showMessageBox("Event Script Error", "An error occurred during opponentNoteHit function:\n" + Std.string(e));
 	}
 }
 
 function goodNoteHit(note)
 {
-	if (bfStar.alpha != 0.0)
-	{
-		bfStar.playAnim(singAnimations[note.noteData], true);
-		bfStar.holdTimer = 0;
+	try {
+		if (bfStar.alpha != 0.0)
+		{
+			bfStar.playAnim(singAnimations[note.noteData], true);
+			bfStar.holdTimer = 0;
+		}
+	} catch (e:Dynamic) {
+		NativeAPI.showMessageBox("Event Script Error", "An error occurred during goodNoteHit function:\n" + Std.string(e));
 	}
 }
 

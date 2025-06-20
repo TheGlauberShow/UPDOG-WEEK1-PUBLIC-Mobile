@@ -54,7 +54,7 @@
 	<define name="VIDEOS_ALLOWED" if="cpp" />
 	<define name="DISCORD_ALLOWED" if="desktop"/>
 
-	<assets path='assets/embeds' 		rename='assets'			embed="true" />
+	<assets path='assets/embeds' rename='assets' />
 
     <!-- Mobile Controls Images -->
     <assets path="assets/shared/images/mobileControls" include="*.png" if="mobile || android || MODS_ALLOWED"/>
@@ -73,6 +73,12 @@
 
 	<assets path="assets" rename="assets" />
 	<assets path="content" rename="content" />
+
+	<!--    UTILS    -->
+	<!-- <assets path="content/characters" rename="assets/shared/characters"/>
+	<assets path="content/images" rename="assets/shared/images"/>
+	<assets path="content/scripts" rename="assets/shared/scripts"/>
+	<assets path="content/noteskins" rename="assets/shared/noteskins"/> -->
 
 	<assets path="content" embed="true"/> <!-- embed true for mods to work properly internally -->
 

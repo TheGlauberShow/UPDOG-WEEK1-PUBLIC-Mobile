@@ -1,0 +1,10 @@
+{
+  "image": "stage/polus/orange",
+  "scale": 0.8,
+  "animations": [
+    {"anim": "idle", "name": "orange_idle instance 1", "fps": 24, "loop": true},
+    {"anim": "wave", "name": "wave instance 1", "fps": 24, "loop": true},
+    {"anim": "walk", "name": "frolicking instance 1", "fps": 24, "loop": true},
+    {"anim": "die", "name": "death instance 1", "fps": 24, "loop": false}
+  ]
+}

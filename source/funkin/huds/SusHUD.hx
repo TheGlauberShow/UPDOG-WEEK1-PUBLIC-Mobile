@@ -36,19 +36,9 @@ class SusHUD extends BaseHUD
 		healthBar.antialiasing = ClientPrefs.globalAntialiasing;
 		reloadHealthBarColors();
 		add(healthBar);
-		
-		var imgPath = Paths.findImageAsset('hud/healthBarFG');
-		if (imgPath != null) {
-   			tablet = new FlxSprite(-46, !ClientPrefs.downScroll ? -38 : -143).loadGraphic(imgPath);
-		} else {
-    		// fallback for a default asset or error
-    		tablet = new FlxSprite();
-		}
 
-		var atlasPath = Paths.findAtlasAsset('hud/healthBarFG');
-		if (atlasPath != null) {
-    		tablet.frames = FlxAtlasFrames.fromSparrow(tablet.graphic, atlasPath);
-		}
+		tablet = new FlxSprite(-46, !ClientPrefs.downScroll ? -38 : -143).loadGraphic(Paths.image('hud/healthBarFG'));
+		tablet.frames = Paths.getSparrowAtlas('hud/healthBarFG');
 		tablet.setGraphicSize(Std.int(tablet.width * 0.53), Std.int(tablet.height * 0.53)); // asset is wayyy too big oops
 		tablet.updateHitbox();
 		tablet.animation.addByPrefix('idle', 'healthbar', 48, true);

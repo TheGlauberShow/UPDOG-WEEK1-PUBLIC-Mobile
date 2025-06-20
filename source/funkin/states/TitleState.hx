@@ -22,6 +22,9 @@ import funkin.objects.*;
 import funkin.data.options.*;
 import funkin.objects.shader.*;
 
+
+import mobile.backend.AssetUtils;
+
 class TitleState extends MusicBeatState
 {
 	public static var initialized:Bool = false;
@@ -284,10 +287,13 @@ class TitleState extends MusicBeatState
 		colorSwap.saturation = -1;
 
 		// testing watermark
-		var watermark:FlxText = new FlxText(12, FlxG.height - 664, 0, "Port by sysource-xyz", 12);
+		add(AssetUtils.createWatermark("Port by sysource-xyz")); // more easier
+		/* or can be:
+		var watermark:FlxText = new FlxText(12, FlxG.height - 670, 0, "Port by sysource-xyz", 12);
 		watermark.scrollFactor.set();
 		watermark.setFormat(Paths.font("bahn"), 24, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(watermark);
+		*/
 		
 		var versionText:FlxText = new FlxText(0, (alreadyBeenInMenu ? 0 : -70), 1280, versionString);
 		versionText.setFormat(Paths.font("bahn"), 25, FlxColor.WHITE, FlxTextAlign.CENTER);

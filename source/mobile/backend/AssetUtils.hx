@@ -9,6 +9,11 @@ import openfl.utils.ByteArray;
 
 import openfl.utils.Assets as OpenFlAssets;
 
+import flixel.text.FlxText;
+import flixel.util.FlxColor;
+import flixel.FlxG;
+import flixel.text.FlxTextBorderStyle;
+
 //import haxe.concurrent.Future;
 #if sys
 import sys.io.File;
@@ -30,6 +35,7 @@ import sys.io.File;
  * ```
  * E dentro da pasta 'Assets' do seu projeto, ter os arquivos de exemplo:
  * - 'image.png' (ou .jpg, .gif)
+ * - 'image.png' (ou .jpg, .gif)
  * - 'sound.mp3' (ou .wav, .ogg)
  * - 'font.ttf' (ou .otf)
  * - 'text_data.txt'
@@ -37,6 +43,19 @@ import sys.io.File;
  */
 class AssetUtils
 {
+    public static function createWatermark(text:String, fontSize:Int = 24, offsetX:Float = 995, offsetY:Float = 50):FlxText {
+        // Isso ajusta posição proporcional com base na resolução 1280x720
+        var xPos:Float = FlxG.width * (offsetX / 1280);
+        var yPos:Float = FlxG.height * (offsetY / 720);
+
+        var watermark:FlxText = new FlxText(xPos, yPos, 0, text, fontSize);
+        watermark.scrollFactor.set();
+        // Ajustado o caminho da fonte e para quem quiser só remova se não usar Paths.font e use o watermark.setFormat que está comentado abaixo.
+        watermark.setFormat(Paths.font("bahn"), fontSize, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        // watermark.setFormat(null, fontSize, FlxColor.WHITE, "left", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        return watermark; // pode ser qualquer fonte que tiver nos assets
+    }
+
     /**
      * Verifica se um asset interno existe.
      * @param id O identificador do asset (ex: "assets/image.png").
